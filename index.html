@@ -24,6 +24,46 @@
         .control-btn { background: white; border: 1px solid #e5e7eb; padding: 10px; rounded-full: 9999px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 50px; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; }
         .color-dot { width: 16px; height: 16px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
         .color-dot.active { border-color: #2D5BFF; transform: scale(1.2); }
+         :root {
+          --brand-blue: #007AFF; /* Adjust to match your specific branding */
+        }
+
+        .logo-container {
+          display: flex;
+          align-items: center;
+          gap: 1px;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* The Superellipse Shape */
+        .superellipse {
+          width: 36px;
+          height: 36px;
+          background-color: var(--brand-blue);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          /* Using a SVG path to define the specific superellipse curvature */
+          clip-path: path('M 0,18 C 0,5 5,0 18,0 C 31,0 36,5 36,18 C 36,31 31,36 18,36 C 5,36 0,31 0,18 Z');
+          
+          /* Fallback for older browsers */
+          border-radius: 40%; 
+        }
+
+        .logo-text-white {
+          color: white;
+          font-weight: bold;
+          font-size: 18px;
+          line-height: 1;
+        }
+
+        .logo-label {
+          font-size: 20px;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          color: #1d1d1f;
+        }
     </style>
 </head>
 <body x-data="studyHub" :style="{ fontSize: fontSize + 'px' }">
@@ -56,11 +96,11 @@
 
     <!-- NAVIGATION -->
     <nav class="bg-white px-8 py-4 flex items-center justify-between sticky top-0 z-40 border-b border-gray-50">
-        <div class="flex items-center gap-0.2">
-            <div class="w-9 h-9 btn-blue-pill rounded-[40%] flex items-center justify-center">
-            <span class="text-white font-bold text-[20px]">Re</span>
-            </div>
-            <span class="text-xl font-bold tracking-tight">Tools</span>
+        <div class="logo-container">
+          <div class="superellipse">
+            <span class="logo-text-white">Re</span>
+          </div>
+          <span class="logo-label">Tools</span>
         </div>
 
         <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
