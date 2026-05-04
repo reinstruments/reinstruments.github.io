@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReTools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <style>
+        [x-cloak] { display: none !important; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: #1E1E1E; transition: font-size 0.2s ease; }
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+        .btn-blue-pill { background: #2D5BFF; color: white; border-radius: 9999px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; border: none; }
+        .btn-blue-pill:hover { background: #1a44db; transform: translateY(-1px); }
+        .btn-outline-pill { background: transparent; color: #2D5BFF; border: 2px solid #D1D5DB; border-radius: 9999px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .card-shadow { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
+        .hero-bg-gradient { 
+            background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 50%, #dbeafe 100%); 
+        }
+        .floating-controls { position: fixed; bottom: 20px; left: 20px; z-index: 100; display: flex; gap: 10px; }
+        .control-btn { background: white; border: 1px solid #e5e7eb; padding: 10px; rounded-full: 9999px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 50px; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; }
+        .color-dot { width: 16px; height: 16px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+        .color-dot.active { border-color: #2D5BFF; transform: scale(1.2); }
+    </style>
+</head>
+<body x-data="studyHub" :style="{ fontSize: fontSize + 'px' }">
+
+    <!-- AUDIO ELEMENT -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- FLOATING ACCESSIBILITY CONTROLS -->
+    <div class="floating-controls">
+        <div class="control-btn hover:bg-gray-50">
+            <button @click="toggleMusic" class="flex items-center gap-2">
+                <i class="fa-solid" :class="isMuted ? 'fa-volume-xmark text-red-500' : 'fa-volume-high text-blue-600'"></i>
+                <span x-text="isMuted ? 'Muted' : 'Music On'"></span>
+            </button>
+            <input type="range" min="0" max="1" step="0.1" x-model="volume" @input="updateVolume" class="w-16 h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+        </div>
+
+        <div class="control-btn">
+            <i class="fa-solid fa-font text-gray-400"></i>
+            <select x-model="fontSize" class="bg-transparent outline-none cursor-pointer">
+                <option value="14">Small</option>
+                <option value="16">Medium</option>
+                <option value="20">Large</option>
+                <option value="24">Extra Large</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="bg-white px-8 py-4 flex items-center justify-between sticky top-0 z-40 border-b border-gray-50">
+        <div class="flex items-center gap-0.2">
+            <div class="w-9 h-9 btn-blue-pill rounded-[40%] flex items-center justify-center">
+            <span class="text-white font-bold text-[20px]">Re</span>
+            </div>
+            <span class="text-xl font-bold tracking-tight">Tools</span>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
+            <a href="#" class="hover:text-blue-600">Home</a>
+            <a href="#shop" class="hover:text-blue-600">Shop</a>
+            <a href="#about" class="hover:text-blue-600">About</a>
+            <a href="#contact" class="hover:text-blue-600">Contact</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <select x-model="currency" class="bg-transparent text-xs font-bold text-gray-500 border-none outline-none cursor-pointer">
+                <option value="USD">USD</option>
+                <option value="PHP">PHP</option>
+                <option value="EUR">EUR</option>
+            </select>
+
+            <template x-if="!isLoggedIn">
+                <button @click="showAuth = true; authMode = 'login'" class="text-sm font-bold text-gray-600 hover:text-blue-600 px-2">Sign In</button>
+            </template>
+            
+            <template x-if="isLoggedIn">
+                <div class="flex items-center gap-3 pl-2 border-l border-gray-100">
+                    <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-[10px] font-bold" 
+                         x-text="userName ? userName.split(' ').map(n => n[0]).join('') : '?'"></div>
+                    <button @click="isLoggedIn = false" class="text-[10px] uppercase font-bold text-gray-400 hover:text-red-500">Exit</button>
+                </div>
+            </template>
+
+            <div class="relative cursor-pointer" @click="showCart = true; view = 'bag'">
+                <i class="fa-solid fa-cart-shopping text-gray-400"></i>
+                <span class="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center" x-text="cart.reduce((sum, item) => sum + item.qty, 0)"></span>
+            </div>
+            <a href="#shop" class="btn-blue-pill px-6 py-2 text-sm hidden md:flex">Shop Now</a>
+        </div>
+    </nav>
+
+    <!-- SIGN IN / SIGN UP MODAL -->
+    <div x-show="showAuth" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="showAuth = false"></div>
+        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl relative z-10 overflow-y-auto max-h-[90vh]"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-90"
+             x-transition:enter-end="opacity-100 scale-100">
+            
+            <button @click="showAuth = false" class="absolute top-6 right-8 text-gray-300 hover:text-gray-500 text-2xl">&times;</button>
+            
+            <h2 class="text-3xl font-bold text-gray-900 mb-2" x-text="authMode === 'login' ? 'Welcome Back' : 'Join StudyHub'"></h2>
+            <p class="text-gray-500 text-sm mb-8" x-text="authMode === 'login' ? 'Enter your details to access your account.' : 'Create an account to start your organized journey.'"></p>
+
+            <form @submit.prevent="isLoggedIn = true; showAuth = false" class="space-y-4">
+                <template x-if="authMode === 'signup'">
+                    <div class="space-y-4">
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-gray-600 ml-1">Full Name</label>
+                            <input type="text" x-model="userName" placeholder="John Smith" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-gray-600 ml-1">Street Address</label>
+                            <input type="text" x-model="shippingInfo.address" placeholder="123 Study Lane" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-gray-600 ml-1">City</label>
+                                <input type="text" x-model="shippingInfo.city" placeholder="Basel" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-gray-600 ml-1">Zip Code</label>
+                                <input type="text" x-model="shippingInfo.zip" placeholder="1001" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-600 ml-1">Email Address</label>
+                    <input type="email" placeholder="name@email.com" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-600 ml-1">Password</label>
+                    <input type="password" placeholder="••••••••" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <button type="submit" class="btn-blue-pill w-full py-4 text-lg mt-4 shadow-lg shadow-blue-100">
+                    <span x-text="authMode === 'login' ? 'Sign In' : 'Create Account'"></span>
+                </button>
+            </form>
+
+            <div class="mt-8 text-center text-sm">
+                <span class="text-gray-500" x-text="authMode === 'login' ? 'New to StudyHub?' : 'Already have an account?'"></span>
+                <button @click="authMode = (authMode === 'login' ? 'signup' : 'login')" class="text-blue-600 font-bold ml-1 hover:underline" x-text="authMode === 'login' ? 'Sign Up' : 'Log In'"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT DETAIL MODAL -->
+    <div x-show="selectedProduct" x-cloak class="fixed inset-0 z-[110] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-md" @click="selectedProduct = null"></div>
+        <div class="bg-white w-full max-w-4xl rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95"
+             x-transition:enter-end="opacity-100 scale-100">
+            
+            <button @click="selectedProduct = null" class="absolute top-6 right-8 text-gray-400 hover:text-gray-900 text-3xl z-20">&times;</button>
+            
+            <!-- Modal Images Slider -->
+            <div class="md:w-1/2 bg-gray-50 relative group h-80 md:h-auto">
+                <template x-if="selectedProduct">
+                    <img :src="selectedProduct.images[selectedProduct.currentImg]" class="w-full h-full object-cover">
+                </template>
+                <div class="absolute inset-0 flex items-center justify-between px-4">
+                    <button @click="prevImg(selectedProduct)" class="w-10 h-10 bg-white/80 rounded-full shadow-lg flex items-center justify-center hover:bg-white"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button @click="nextImg(selectedProduct)" class="w-10 h-10 bg-white/80 rounded-full shadow-lg flex items-center justify-center hover:bg-white"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="md:w-1/2 p-8 md:p-12 overflow-y-auto text-left">
+                <template x-if="selectedProduct">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-2" x-text="selectedProduct.name"></h2>
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="flex text-yellow-400 text-xs">
+                                <template x-for="i in 5">
+                                    <i class="fa-star" :class="i <= selectedProduct.rating ? 'fa-solid' : 'fa-regular'"></i>
+                                </template>
+                            </div>
+                            <span class="text-gray-400 text-xs" x-text="'(' + selectedProduct.rating + '.0)'"></span>
+                        </div>
+                        <p class="text-2xl font-black text-blue-600 mb-6" x-text="formatPrice(selectedProduct.price)"></p>
+                        
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Description</p>
+                        <p class="text-gray-500 text-sm mb-8 leading-relaxed" x-text="selectedProduct.description"></p>
+                        
+                        <div class="mb-8">
+                            <p class="text-xs font-bold text-gray-400 uppercase mb-3">Select Color</p>
+                            <div class="flex gap-3">
+                                <template x-for="cObj in selectedProduct.colors" :key="cObj.hex">
+                                    <div class="color-dot w-8 h-8" 
+                                         :style="{ backgroundColor: cObj.hex }" 
+                                         :class="selectedProduct.selectedColor.hex === cObj.hex ? 'active' : ''"
+                                         @click="selectedProduct.selectedColor = cObj"></div>
+                                </template>
+                            </div>
+                        </div>
+
+                        <button @click="addToCart(selectedProduct); selectedProduct = null" class="btn-blue-pill w-full py-4 text-lg mb-10 shadow-lg shadow-blue-100">Add to Bag</button>
+
+                        <hr class="border-gray-100 mb-8">
+
+                        <!-- Reviews List -->
+                        <div class="space-y-6">
+                            <h3 class="font-bold text-lg">Student Reviews</h3>
+                            <div class="space-y-4">
+                                <template x-for="rev in selectedProduct.reviews">
+                                    <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-bold text-sm text-gray-800" x-text="rev.user"></span>
+                                            <span class="text-[10px] text-gray-400 font-medium" x-text="rev.date"></span>
+                                        </div>
+                                        <!-- Review Stars -->
+                                        <div class="flex text-yellow-400 text-[10px] mb-2" x-show="rev.rating">
+                                            <template x-for="starIdx in 5">
+                                                <i class="fa-star" :class="starIdx <= rev.rating ? 'fa-solid' : 'fa-regular'"></i>
+                                            </template>
+                                        </div>
+                                        <p class="text-gray-600 text-sm" x-text="rev.text"></p>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <!-- New Review Form with Stars -->
+                            <div class="mt-6 p-6 bg-blue-50/50 rounded-2xl border border-blue-100/50">
+                                <p class="text-sm font-bold text-gray-800 mb-3">Leave a Review</p>
+                                
+                                <!-- Star Rating Input -->
+                                <div class="flex items-center gap-1 mb-3" x-data="{ hoverRating: 0 }">
+                                    <template x-for="star in [1,2,3,4,5]">
+                                        <i class="cursor-pointer transition-colors text-lg" 
+                                           :class="(hoverRating || newReviewRating) >= star ? 'fa-solid fa-star text-yellow-400' : 'fa-regular fa-star text-gray-300'"
+                                           @mouseenter="hoverRating = star"
+                                           @mouseleave="hoverRating = 0"
+                                           @click="newReviewRating = star"></i>
+                                    </template>
+                                    <span class="text-xs text-gray-400 ml-2" x-text="newReviewRating ? newReviewRating + '/5' : 'Rate it'"></span>
+                                </div>
+
+                                <textarea x-model="newReviewText" placeholder="How's your experience with this item?" class="w-full p-4 bg-white border border-gray-100 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500 mb-3 h-24"></textarea>
+                                <button @click="submitReview(selectedProduct)" class="btn-outline-pill w-full py-2 text-xs bg-white border-blue-200">Submit Review</button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <!-- HOME / HERO SECTION -->
+    <header class="px-4 md:px-8 py-8 md:py-12">
+        <div class="hero-bg-gradient max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 px-8 md:px-20 py-16 md:py-24 rounded-[2rem] shadow-xl overflow-hidden">
+            <div class="md:w-1/2 space-y-8 text-left">
+                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-gray-900">Smarter School <br> <span class="text-blue-600">Supplies</span></h1>
+                <p class="text-gray-500 text-lg">Everything you need to succeed, all in one hub.</p>
+                
+                <div class="bg-white/50 backdrop-blur-md p-6 rounded-3xl border border-white/50 max-w-sm space-y-4">
+                    <div class="flex flex-col gap-1">
+                        <p class="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Flash Deal</p>
+                        <p class="text-2xl font-bold text-gray-900" x-text="products[heroActiveIndex].name"></p>
+                        <p class="text-xl font-black text-blue-600" x-text="formatPrice(products[heroActiveIndex].price)"></p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button @click="addToCart(products[heroActiveIndex])" class="btn-blue-pill flex-1 py-3 text-sm shadow-lg shadow-blue-200">
+                            <i class="fa-solid fa-bolt mr-2"></i>Quick Order
+                        </button>
+                        <a href="#shop" class="btn-outline-pill px-6 py-3 text-sm bg-white border-none">View All</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="md:w-1/2 relative h-[300px] md:h-[450px] w-full flex items-center justify-center">
+                <template x-for="(p, index) in products" :key="'hero-'+p.id">
+                    <div x-show="heroActiveIndex === index" 
+                         x-transition:enter="transition opacity duration-1000 ease-in-out"
+                         x-transition:enter-start="opacity-0 scale-95"
+                         x-transition:enter-end="opacity-100 scale-100"
+                         x-transition:leave="transition opacity duration-1000 ease-in-out"
+                         x-transition:leave-start="opacity-100 scale-100"
+                         x-transition:leave-end="opacity-0 scale-105"
+                         class="absolute inset-0 flex items-center justify-center">
+                        <img :src="p.images[0]" 
+                             class="w-full h-full max-w-md object-cover rounded-[2.5rem] shadow-2xl border-8 border-white">
+                    </div>
+                </template>
+            </div>
+        </div>
+    </header>
+
+    <!-- THE PROBLEM WE SOLVE -->
+    <section class="py-20 px-8 bg-white">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-12">The Problem We Solve</h2>
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow">
+                    <div class="w-16 h-16 bg-red-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl"><i class="fa-solid fa-dollar-sign"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Expensive Supplies</h3>
+                    <p class="text-gray-500 text-sm">High prices make it hard for students to afford essentials.</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow">
+                    <div class="w-16 h-16 bg-yellow-400 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Hard to Find Items</h3>
+                    <p class="text-gray-500 text-sm">Finding quality school supplies takes time and effort.</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow">
+                    <div class="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl"><i class="fa-solid fa-clock"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Time-Consuming</h3>
+                    <p class="text-gray-500 text-sm">Busy students waste time visiting multiple stores.</p>
+                </div>
+            </div>
+            <div class="bg-blue-50 p-6 rounded-2xl flex items-center gap-6 max-w-5xl mx-auto border border-blue-100">
+                <div class="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xl"><i class="fa-solid fa-lightbulb"></i></div>
+                <p class="text-gray-800 text-left font-medium"><strong>StudyHub</strong> brings everything into one platform — affordable, organized, and student-friendly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOP SECTION -->
+    <section id="shop" class="max-w-7xl mx-auto px-8 py-20">
+        <h2 class="text-3xl font-bold mb-10 text-left">Collections</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <template x-for="p in products" :key="p.id">
+                <div class="bg-white p-5 rounded-[2rem] border border-gray-100 card-shadow group flex flex-col">
+                    
+                    <div class="relative h-48 mb-4 overflow-hidden rounded-2xl bg-gray-50">
+                        <img :src="p.images[p.currentImg]" 
+                             class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500"
+                             @click="selectedProduct = p">
+                        <div class="absolute inset-0 flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button @click.stop="prevImg(p)" class="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button @click.stop="nextImg(p)" class="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <h3 class="font-bold text-gray-800 cursor-pointer hover:text-blue-600 truncate" x-text="p.name" @click="selectedProduct = p"></h3>
+                    
+                    <div class="flex items-center gap-1 my-1">
+                        <template x-for="star in [1, 2, 3, 4, 5]">
+                            <i class="text-[10px]" :class="p.rating >= star ? 'fa-solid fa-star text-yellow-400' : 'fa-regular fa-star text-gray-300'"></i>
+                        </template>
+                        <span class="text-[10px] text-gray-400 ml-1" x-text="`(${p.rating}.0)`"></span>
+                    </div>
+
+                    <div class="flex gap-2 my-3">
+                        <template x-for="cObj in p.colors" :key="cObj.hex">
+                            <div class="color-dot" 
+                                 :style="{ backgroundColor: cObj.hex }" 
+                                 :class="p.selectedColor.hex === cObj.hex ? 'active' : ''"
+                                 @click="p.selectedColor = cObj"></div>
+                        </template>
+                    </div>
+
+                    <p class="text-blue-600 font-black text-lg mt-auto" x-text="formatPrice(p.price)"></p>
+                    <div class="flex gap-2 mt-4">
+                        <button @click="addToCart(p)" class="btn-blue-pill flex-1 py-3 text-[10px] uppercase tracking-wider">Add to Bag</button>
+                        <button @click="selectedProduct = p" class="w-10 h-10 btn-outline-pill border-none bg-gray-50 text-gray-400 hover:text-blue-600"><i class="fa-solid fa-eye text-xs"></i></button>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-24 px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="order-2 md:order-1">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1000" class="rounded-[3rem] shadow-2xl transform -rotate-2" alt="Students studying">
+            </div>
+            <div class="space-y-6 order-1 md:order-2 text-left">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">About StudyHub</h2>
+                <p class="text-gray-600 leading-relaxed">StudyHub was built with one goal in mind — to make school preparation simple, affordable, and stress-free for every student.</p>
+                <p class="text-gray-600 leading-relaxed">We understand how challenging it can be to find complete and budget-friendly school supplies. That’s why we created a platform where everything you need is available in one place.</p>
+                <div class="space-y-3 pt-4">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">🎯</span>
+                        <p class="font-bold text-gray-800">Our Goal: <span class="font-medium text-gray-600">Simplify how students prepare for school</span></p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">🚀</span>
+                        <p class="font-bold text-gray-800">Our Promise: <span class="font-medium text-gray-600">Affordable, organized, and dependable service</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SIDEBAR CHECKOUT -->
+    <div x-show="showCart" x-cloak class="fixed inset-0 z-50">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" @click="showCart = false"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-white flex flex-col shadow-2xl">
+            <div class="p-8 border-b flex justify-between items-center">
+                <h2 class="text-xl font-bold" x-text="view === 'summary' ? 'Order Success' : 'Checkout'"></h2>
+                <button @click="showCart = false" class="text-3xl">&times;</button>
+            </div>
+            
+            <div x-show="view === 'bag'" class="flex-1 overflow-y-auto p-8 text-left">
+                <template x-for="(item, idx) in cart" :key="item.id + item.selectedColor.hex">
+                    <div class="flex gap-4 border-b pb-4 mb-4 items-center">
+                        <img :src="item.images[0]" class="w-16 h-16 rounded-xl object-cover">
+                        <div class="flex-1">
+                            <div class="font-bold text-sm" x-text="item.name"></div>
+                            <div class="flex items-center gap-1 mt-1">
+                                <div class="w-2 h-2 rounded-full" :style="{ backgroundColor: item.selectedColor.hex }"></div>
+                                <span class="text-[10px] text-gray-500 uppercase font-bold" x-text="item.selectedColor.name"></span>
+                            </div>
+                            <div class="flex items-center gap-3 mt-1">
+                                <button @click="updateQty(item, -1)" class="w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600"><i class="fa-solid fa-minus text-[10px]"></i></button>
+                                <span class="text-xs font-bold w-4 text-center" x-text="item.qty"></span>
+                                <button @click="updateQty(item, 1)" class="w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600"><i class="fa-solid fa-plus text-[10px]"></i></button>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-blue-600 font-bold text-sm" x-text="formatPrice(item.price * item.qty)"></div>
+                            <div class="text-[10px] text-gray-400" x-text="formatPrice(item.price) + ' each'"></div>
+                        </div>
+                        <button @click="cart.splice(idx, 1)" class="text-red-400 ml-2"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </template>
+                <div x-show="cart.length === 0" class="text-center py-10 text-gray-400">Your bag is empty</div>
+                
+                <div class="mt-4 pt-4 border-t" x-show="cart.length > 0">
+                    <div class="flex justify-between font-bold text-lg">
+                        <span>Total:</span>
+                        <span x-text="formatPrice(cart.reduce((sum, i) => sum + (i.price * i.qty), 0))"></span>
+                    </div>
+                </div>
+
+                <button @click="view = 'checkout'" class="btn-blue-pill w-full py-4 mt-4" :disabled="cart.length === 0">Next</button>
+            </div>
+
+            <div x-show="view === 'checkout'" class="flex-1 overflow-y-auto p-8 space-y-6 text-left">
+                <button @click="view = 'bag'" class="text-blue-600 font-bold text-sm"><i class="fa-solid fa-arrow-left mr-2"></i>Back</button>
+                
+                <div class="space-y-4">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Shipping Information</p>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-gray-600 ml-1">Full Name</label>
+                        <input type="text" x-model="shippingInfo.name" placeholder="John Smith" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-gray-600 ml-1">Street Address</label>
+                        <input type="text" x-model="shippingInfo.address" placeholder="123 Study Lane" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-gray-600 ml-1">City</label>
+                            <input type="text" x-model="shippingInfo.city" placeholder="Basel" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-gray-600 ml-1">Zip Code</label>
+                            <input type="text" x-model="shippingInfo.zip" placeholder="1001" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Payment Method: <span class="text-blue-600" x-text="payMethod.toUpperCase()"></span></p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button @click="payMethod = 'gcash'" :class="payMethod === 'gcash' ? 'btn-blue-pill' : 'btn-outline-pill'" class="py-3 text-xs">GCash</button>
+                        <button @click="payMethod = 'maya'" :class="payMethod === 'maya' ? 'btn-blue-pill' : 'btn-outline-pill'" class="py-3 text-xs">Maya</button>
+                        <button @click="payMethod = 'card'" :class="payMethod === 'card' ? 'btn-blue-pill' : 'btn-outline-pill'" class="py-3 text-xs">Card</button>
+                        <button @click="payMethod = 'cash'" :class="payMethod === 'cash' ? 'btn-blue-pill' : 'btn-outline-pill'" class="py-3 text-xs">Cash</button>
+                    </div>
+
+                    <template x-if="payMethod !== 'cash'">
+                        <div class="space-y-1 mt-4" x-transition>
+                            <label class="text-xs font-bold text-gray-600 ml-1" x-text="payMethod === 'card' ? 'Card Number' : payMethod.charAt(0).toUpperCase() + payMethod.slice(1) + ' Number'"></label>
+                            <input type="text" x-model="paymentNumber" :placeholder="payMethod === 'card' ? '0000 0000 0000 0000' : '09XX XXX XXXX'" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </template>
+                </div>
+
+                <button @click="confirmPurchase()" class="btn-blue-pill w-full py-5 text-lg mt-6">Confirm Purchase</button>
+            </div>
+
+            <div x-show="view === 'summary'" class="flex-1 overflow-y-auto p-8 text-left space-y-6" x-transition>
+                <div class="text-center space-y-2">
+                    <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto text-2xl">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold">Thank You!</h3>
+                    <p class="text-gray-500 text-sm">Your order #SH-2026 has been placed.</p>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-6 space-y-4">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Order Summary</p>
+                    <template x-for="item in lastOrder.items">
+                        <div class="flex justify-between text-sm">
+                            <div>
+                                <span class="text-gray-600" x-text="item.qty + 'x ' + item.name"></span>
+                                <span class="text-[8px] bg-gray-200 px-1 rounded ml-1" x-text="item.selectedColor.name"></span>
+                            </div>
+                            <span class="font-bold" x-text="formatPrice(item.price * item.qty)"></span>
+                        </div>
+                    </template>
+                    <div class="border-t pt-3 flex justify-between font-bold text-blue-600">
+                        <span>Total Paid</span>
+                        <span x-text="formatPrice(lastOrder.total)"></span>
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Deliver To</p>
+                    <p class="font-bold text-sm" x-text="shippingInfo.name"></p>
+                    <p class="text-gray-500 text-xs" x-text="shippingInfo.address + ', ' + shippingInfo.city + ' ' + shippingInfo.zip"></p>
+                </div>
+
+                <div class="pt-4">
+                    <button @click="showCart = false; view = 'bag'" class="btn-blue-pill w-full py-4">Back to Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT SECTION -->
+    <footer id="contact" class="py-20 px-8 border-t border-gray-100 bg-white">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-left space-y-6">
+                <h2 class="text-4xl font-bold text-gray-900">Contact Us</h2>
+                <p class="text-gray-500 max-w-sm">Have questions or need help with your order? Our team is here to support your learning journey.</p>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center"><i class="fa-solid fa-envelope"></i></div>
+                        <span class="font-bold text-gray-700">reinstruments@gmail.com</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center"><i class="fa-solid fa-phone"></i></div>
+                        <span class="font-bold text-gray-700">+41 (912) 345 6789</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></div>
+                        <span class="font-bold text-gray-700">Oflinger Str., Wehr, PH</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row items-center md:items-end justify-end gap-6">
+                <div class="flex items-center justify-center md:justify-end gap-6">
+                    <div class="flex flex-col items-center gap-2">
+                        <img src="ceo.jpg" class="w-32 h-32 md:w-40 md:h-40 object-cover rounded-xl border border-gray-100">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase">CEO</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="bg-gray-50 p-4 rounded-3xl border border-gray-100">
+                            <img id="dynamicQR" src="" class="w-24 h-24 md:w-32 md:h-32">
+                        </div>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase">Scan to Visit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-20 pt-8 border-t border-gray-50 text-center">
+            <p class="text-gray-400 text-xs tracking-wide">© 2026 StudyHub Platform. v.1.1. All rights reserved. <span id="buildTimestamp"></span></p>
+        </div>
+    </footer>
+
+    <script>
+        const now = new Date();
+        document.getElementById('buildTimestamp').innerText = `Build Date: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('studyHub', () => ({
+                showCart: false, 
+                view: 'bag', 
+                payMethod: 'gcash', 
+                paymentNumber: '',
+                currency: 'USD', 
+                cart: [],
+                isMuted: true,
+                volume: 0.5,
+                fontSize: 16,
+                heroActiveIndex: 0,
+                selectedProduct: null,
+                newReviewText: '',
+                newReviewRating: 0, // Added star rating state
+
+                shippingInfo: {
+                    name: '',
+                    address: '',
+                    city: '',
+                    zip: ''
+                },
+                lastOrder: { items: [], total: 0 },
+
+                showAuth: false,
+                authMode: 'login', 
+                isLoggedIn: false,
+                userName: '', 
+
+                products: [
+                    { id: 1, name: 'Premium Journal', price: 1.99, rating: 5, images: ['https://images.pexels.com/photos/7150986/pexels-photo-7150986.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/6373305/pexels-photo-6373305.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/372748/pexels-photo-372748.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Elegantly crafted journal with acid-free paper, perfect for thoughts, sketches, and daily planning.', reviews: [{user: 'Alex T.', date: 'Jan 12', rating: 5, text: 'Best journal I have ever used. The paper is thick!'}], colors: [{hex: '#000', name: 'Black'}, {hex: '#2D5BFF', name: 'Blue'}, {hex: '#FF5B5B', name: 'Red'}], selectedColor: {hex: '#000', name: 'Black'} },
+                    { id: 2, name: 'Studio Pen Set', price: 0.99, rating: 4, images: ['https://images.pexels.com/photos/4006151/pexels-photo-4006151.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/30537446/pexels-photo-30537446.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/159752/pencil-office-design-creative-159752.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Smooth-writing gel pens in a set of 5. Perfect for long study sessions.', reviews: [{user: 'Mia R.', date: 'Feb 05', rating: 4, text: 'The ink flows so smoothly. Worth every cent.'}], colors: [{hex: '#000', name: 'Black'}, {hex: '#2D5BFF', name: 'Blue'}, {hex: '#FFF', name: 'White'}], selectedColor: {hex: '#000', name: 'Black'} },
+                    { id: 3, name: 'Smart Calculator', price: 2.99, rating: 5, images: ['https://images.pexels.com/photos/626165/pexels-photo-626165.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/626161/pexels-photo-626161.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/433333/pexels-photo-433333.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Essential for math and science. Features an extra large display and solar power.', reviews: [], colors: [{hex: '#333', name: 'Charcoal'}, {hex: '#888', name: 'Gray'}], selectedColor: {hex: '#333', name: 'Charcoal'} },
+                    { id: 4, name: 'Canvas Backpack', price: 19.99, rating: 4, images: ['https://images.pexels.com/photos/1545998/pexels-photo-1545998.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/2905238/pexels-photo-2905238.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/1294731/pexels-photo-1294731.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Durable canvas material with a dedicated laptop compartment and multiple pockets.', reviews: [], colors: [{hex: '#4b5563', name: 'Gray'}, {hex: '#1e40af', name: 'Navy'}], selectedColor: {hex: '#4b5563', name: 'Gray'} },
+                    { id: 5, name: 'Pastel Highlighters', price: 1.59, rating: 5, images: ['https://images.pexels.com/photos/459799/pexels-photo-459799.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/4006143/pexels-photo-4006143.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/4006154/pexels-photo-4006154.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Set of 6 aesthetic pastel colors that wont bleed through paper.', reviews: [], colors: [{hex: '#fef08a', name: 'Yellow'}, {hex: '#bbf7d0', name: 'Mint'}], selectedColor: {hex: '#fef08a', name: 'Yellow'} },
+                    { id: 6, name: 'Wireless Mouse', price: 11.59, rating: 4, images: ['https://images.pexels.com/photos/2115256/pexels-photo-2115256.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/5082570/pexels-photo-5082570.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Ergonomic wireless mouse with silent clicks and long battery life.', reviews: [], colors: [{hex: '#000', name: 'Black'}, {hex: '#ef4444', name: 'Red'}], selectedColor: {hex: '#000', name: 'Black'} },
+                    { id: 7, name: 'Desk Organizer', price: 2.99, rating: 5, images: ['https://images.pexels.com/photos/4006152/pexels-photo-4006152.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/4480505/pexels-photo-4480505.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/4066041/pexels-photo-4066041.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Keep your workspace tidy. Multiple compartments for pens, notes, and clips.', reviews: [], colors: [{hex: '#fff', name: 'White'}, {hex: '#000', name: 'Black'}], selectedColor: {hex: '#fff', name: 'White'} },
+                    { id: 8, name: 'Sticky Note Bundle', price: 5.69, rating: 1, images: ['https://images.pexels.com/photos/6192337/pexels-photo-6192337.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/1206101/pexels-photo-1206101.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/5416480/pexels-photo-5416480.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Colorful sticky notes in various sizes for reminders and bookmarks.', reviews: [], colors: [{hex: '#fef08a', name: 'Yellow'}], selectedColor: {hex: '#fef08a', name: 'Yellow'} },
+                    { id: 9, name: 'Math Geometry Set', price: 3.99, rating: 2, images: ['https://images.pexels.com/photos/4253620/pexels-photo-4253620.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/30557451/pexels-photo-30557451.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/3760323/pexels-photo-3760323.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Complete set including compass, protractor, and rulers in a protective case.', reviews: [], colors: [{hex: '#cbd5e1', name: 'Silver'}], selectedColor: {hex: '#cbd5e1', name: 'Silver'} },
+                    { id: 10, name: 'Noise-Canceling Buds', price: 10.99, rating: 4, images: ['https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/3394666/pexels-photo-3394666.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/3921883/pexels-photo-3921883.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Block out distractions and focus on your studies with premium audio quality.', reviews: [], colors: [{hex: '#fff', name: 'White'}, {hex: '#000', name: 'Black'}], selectedColor: {hex: '#fff', name: 'White'} },
+                    { id: 11, name: 'Lined Legal Pads', price: 7, rating: 3, images: ['https://images.pexels.com/photos/5628244/pexels-photo-5628244.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/5301703/pexels-photo-5301703.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/5538617/pexels-photo-5538617.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Large format pads for detailed notes and drafting.', reviews: [], colors: [{hex: '#fff', name: 'White'}], selectedColor: {hex: '#fff', name: 'White'} },
+                    { id: 12, name: 'Laptop Sleeve', price: 18, rating: 2, images: ['https://images.pexels.com/photos/4067090/pexels-photo-4067090.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/4458519/pexels-photo-4458519.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Water-resistant sleeve with soft lining to protect your tech.', reviews: [], colors: [{hex: '#111', name: 'Ebony'}], selectedColor: {hex: '#111', name: 'Ebony'} },
+                    { id: 13, name: 'Hardcover Sketchbook', price: 4.99, rating: 5, images: ['https://images.pexels.com/photos/6373290/pexels-photo-6373290.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/159621/sketch-art-draw-creative-159621.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/1032000/pexels-photo-1032000.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Heavyweight paper suitable for ink, pencil, and light watercolor.', reviews: [], colors: [{hex: '#000', name: 'Black'}], selectedColor: {hex: '#000', name: 'Black'} },
+                    { id: 14, name: 'USB-C Hub Adapter', price: 2.99, rating: 3, images: ['https://images.pexels.com/photos/4503734/pexels-photo-4503734.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/30553755/pexels-photo-30553755.jpeg?auto=compress&cs=tinysrgb&w=400', 'https://images.pexels.com/photos/5749113/pexels-photo-5749113.jpeg?auto=compress&cs=tinysrgb&w=400'], currentImg: 0, description: 'Expand your laptop connectivity with HDMI, USB, and SD ports.', reviews: [], colors: [{hex: '#94a3b8', name: 'Steel'}], selectedColor: {hex: '#94a3b8', name: 'Steel'} }
+                ],
+
+                init() {
+                    const qrImg = document.getElementById('dynamicQR');
+                    const currentURL = encodeURIComponent(window.location.href);
+                    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${currentURL}&color=2D5BFF`;
+                                
+                    setInterval(() => {
+                        this.heroActiveIndex = (this.heroActiveIndex + 1) % this.products.length;
+                    }, 4000);
+                    document.getElementById('bgMusic').volume = this.volume;
+                    
+                    this.$watch('isLoggedIn', value => {
+                        if (value && this.userName) {
+                            this.shippingInfo.name = this.userName;
+                        }
+                    });
+                },
+                
+                toggleMusic() {
+                    const audio = document.getElementById('bgMusic');
+                    this.isMuted = !this.isMuted;
+                    if (this.isMuted) audio.pause();
+                    else audio.play();
+                },
+
+                updateVolume() {
+                    document.getElementById('bgMusic').volume = this.volume;
+                },
+
+                formatPrice(p) { 
+                    if (this.currency === 'PHP') return '₱' + (p * 58).toFixed(2);
+                    if (this.currency === 'EUR') return '€' + (p * 0.92).toFixed(2);
+                    return '$' + p.toFixed(2); 
+                },
+
+                addToCart(p) { 
+                    const existingItem = this.cart.find(item => item.id === p.id && item.selectedColor.hex === p.selectedColor.hex);
+                    if (existingItem) existingItem.qty++;
+                    else this.cart.push({ ...p, selectedColor: { ...p.selectedColor }, qty: 1 });
+                    this.showCart = true; 
+                    this.view = 'bag'; 
+                },
+
+                updateQty(item, amount) {
+                    item.qty += amount;
+                    if (item.qty <= 0) {
+                        this.cart = this.cart.filter(i => !(i.id === item.id && i.selectedColor.hex === item.selectedColor.hex));
+                    }
+                },
+
+                confirmPurchase() {
+                    if (this.isLoggedIn && !this.shippingInfo.name) {
+                        this.shippingInfo.name = this.userName;
+                    }
+                    if (!this.shippingInfo.name || !this.shippingInfo.address) {
+                        alert('Please fill out shipping information');
+                        return;
+                    }
+                    if (this.payMethod !== 'cash' && !this.paymentNumber) {
+                        alert('Please enter payment details');
+                        return;
+                    }
+                    this.lastOrder = {
+                        items: JSON.parse(JSON.stringify(this.cart)),
+                        total: this.cart.reduce((sum, i) => sum + (i.price * i.qty), 0)
+                    };
+                    this.view = 'summary';
+                    this.cart = [];
+                },
+
+                nextImg(product) {
+                    product.currentImg = (product.currentImg + 1) % product.images.length;
+                },
+
+                prevImg(product) {
+                    product.currentImg = (product.currentImg - 1 + product.images.length) % product.images.length;
+                },
+
+                submitReview(product) {
+                    if (!this.newReviewText.trim()) return;
+                    if (this.newReviewRating === 0) {
+                        alert('Please select a star rating first.');
+                        return;
+                    }
+                    
+                    product.reviews.unshift({
+                        user: this.isLoggedIn ? this.userName : 'Guest Student',
+                        date: 'Just now',
+                        rating: this.newReviewRating, // Store the selected rating
+                        text: this.newReviewText
+                    });
+                    
+                    this.newReviewText = '';
+                    this.newReviewRating = 0; // Reset for next time
+                }
+            }))
+        })
+    </script>
+</body>
+</html>
