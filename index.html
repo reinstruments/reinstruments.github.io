@@ -13,8 +13,8 @@
         html { scroll-behavior: smooth; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1E1E1E; transition: font-size 0.2s ease; }
         h1, h2, h3 { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        .btn-blue-pill { background: #2D5BFF; color: white; border-radius: 9999px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; border: none; }
-        .btn-blue-pill:hover { background: #1a44db; transform: translateY(-1px); }
+        .btn-blue-pill { background: linear-gradient(135deg, #2D5BFF 0%, #7090FF 100%); color: white; border-radius: 9999px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; border: none; }
+        .btn-blue-pill:hover { background: linear-gradient(135deg, #1a44db 0%, #2D5BFF 100%); transform: translateY(-1px); }
         .btn-outline-pill { background: transparent; color: #2D5BFF; border: 2px solid #D1D5DB; border-radius: 9999px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
         .card-shadow { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
         .hero-bg-gradient { 
@@ -24,7 +24,8 @@
         .control-btn { background: white; border: 1px solid #e5e7eb; padding: 10px; rounded-full: 9999px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 50px; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; }
         .color-dot { width: 16px; height: 16px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
         .color-dot.active { border-color: #2D5BFF; transform: scale(1.2); }
-         :root {
+        
+        :root {
           --brand-blue: #007AFF; /* Adjust to match your specific branding */
         }
 
@@ -39,7 +40,7 @@
         .superellipse {
           width: 36px;
           height: 36px;
-          background-color: var(--brand-blue);
+          background: linear-gradient(135deg, #2D5BFF 0%, #7090FF 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -49,6 +50,19 @@
           
           /* Fallback for older browsers */
           border-radius: 40%; 
+        }
+
+        .superellipse:hover {
+          transform: scale(1.05);
+          transition: transform 0.1s ease;
+          background-color: #1a44db; /* Branded blue hover state[cite: 1] */
+          filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.15));
+        }
+
+        .superellipse:active {
+          /* Snappier transition for the click to feel responsive */
+          transition: transform 0.1s ease;
+          transform: scale(0.95);
         }
 
         .logo-text-white {
@@ -64,6 +78,7 @@
           letter-spacing: -0.02em;
           color: #1d1d1f;
         }
+        
     </style>
 </head>
 <body x-data="studyHub" :style="{ fontSize: fontSize + 'px' }">
