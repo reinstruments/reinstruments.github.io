@@ -214,7 +214,7 @@
     <!-- PRODUCT DETAIL MODAL -->
     <div x-show="selectedProduct" x-cloak class="fixed inset-0 z-[110] flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-md" @click="selectedProduct = null"></div>
-        <div class="bg-white w-full max-w-4xl rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
+        <div class="bg-white w-full max-w-7xl rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 scale-95"
              x-transition:enter-end="opacity-100 scale-100">
@@ -222,7 +222,7 @@
             <button @click="selectedProduct = null" class="absolute top-6 right-8 text-gray-400 hover:text-gray-900 text-3xl z-20">&times;</button>
             
             <!-- Modal Images Slider -->
-            <div class="md:w-1/2 bg-gray-50 relative group h-80 md:h-auto">
+            <div class="md:w-4/6 bg-gray-50 relative group h-80 md:h-auto">
                 <template x-if="selectedProduct">
                     <img :src="selectedProduct.images[selectedProduct.currentImg]" class="w-full h-full object-cover">
                 </template>
@@ -233,7 +233,7 @@
             </div>
 
             <!-- Modal Content -->
-            <div class="md:w-1/2 p-8 md:p-12 overflow-y-auto text-left">
+            <div class="md:w-2/6 p-8 md:p-12 overflow-y-auto text-left">
                 <template x-if="selectedProduct">
                     <div>
                         <h2 class="text-3xl font-bold mb-2" x-text="selectedProduct.name"></h2>
@@ -268,7 +268,7 @@
 
                         <!-- Reviews List -->
                         <div class="space-y-6">
-                            <h3 class="font-bold text-lg">Student Reviews</h3>
+                            <h3 class="font-bold text-lg">Customer Reviews</h3>
                             <div class="space-y-4">
                                 <template x-for="rev in selectedProduct.reviews">
                                     <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
@@ -371,10 +371,10 @@
                 <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow">
                     <div class="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl"><i class="fa-solid fa-clock"></i></div>
                     <h3 class="text-xl font-bold mb-3">Time-Consuming</h3>
-                    <p class="text-gray-500 text-sm">Busy students waste time visiting multiple stores.</p>
+                    <p class="text-gray-500 text-sm">Customers waste time visiting multiple stores.</p>
                 </div>
             </div>
-            <div class="bg-blue-50 p-6 rounded-2xl flex items-center gap-6 max-w-5xl mx-auto border border-blue-100">
+            <div class="bg-blue-50 p-6 rounded-2xl flex items-center gap-6 max-w-7xl mx-auto border border-blue-100">
                 <div class="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xl"><i class="fa-solid fa-lightbulb"></i></div>
                 <p class="text-gray-800 text-left font-medium"><strong>ReTools</strong> brings everything into one platform — affordable, organized, and student-friendly.</p>
             </div>
