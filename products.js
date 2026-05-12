@@ -6,10 +6,10 @@ const PRODUCTS_DATA = [
         price: 199.95, 
         rating: 5, 
         images: [
-            'https://photos.app.goo.gl/JCYu1LiZMWE6yjkz6', 
-            'https://photos.app.goo.gl/tWsfFC1jYXHUeAU29', 
-            'https://photos.app.goo.gl/WzPyR7q6JtJeMjFE8'
-        ], 
+            'https://lh3.googleusercontent.com/pw/AP1GczM5q7Vb73DAjlDXVzkPN2U3sOrcCl0uZkOvfRzoUR7M8cbzS7HOeCCf2Ojlj18D_88iaoOY2lR6Gg0bsj5Xim97SvtYf-asbjS0gBTQ35c0uUp5btOvZMvOaO2md_SoyfRZshu7aonrXKlHxz_ydUk=w1128-h933-s-no?authuser=2',
+            'https://lh3.googleusercontent.com/pw/AP1GczNMXK2kaysBcx1_FR3ttZue1hYOWsS6MtWPAVgHzOYnS7UaVKUtdEpj4_QLoahqRs0kBZNhp0gVg4ITV8IBnowYdDkV4_o4nYF9CbgpudsYqsBsBGze0G4wzvjUSnxzauztw-P9kxPKWxfwTdhE_u0=w700-h933-s-no?authuser=0', 
+            'https://lh3.googleusercontent.com/pw/AP1GczNIQNQ3M4iaYGgDpb-AUzzTf_7ORwB8hdhsG59lhKyD32xQjOnLBFRlKU0gH1dd5dIuQTCaiJRFozb7Xds1dPBVtTFHQiyMQi0IXloz--BgBveLkqgv6tYZgZyX4SfyzU3UFcZgWlu3vHkUmf-VOmw=w1244-h933-s-no?authuser=2'
+        ],  
         currentImg: 0, 
         description: 'RePet Filament Extruder. Creates standard 1.75 mm filament from PET bottles.', 
         reviews: [{user: 'Alex T.', date: 'Jan 12', rating: 5, text: 'Best filament extruder I ever used'}], 
