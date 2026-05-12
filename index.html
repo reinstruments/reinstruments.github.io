@@ -385,7 +385,7 @@
     <section id="shop" class="max-w-7xl mx-auto px-8 py-20">
         <h2 class="text-3xl font-bold mb-10 text-left">Collections</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <template x-for="p in products" :key="p.id">
+            <template x-for="p in visibleProducts" :key="p.id">
                 <div class="bg-white p-5 rounded-[2rem] border border-gray-100 card-shadow group flex flex-col">
                     
                     <div class="relative h-48 mb-4 overflow-hidden rounded-2xl bg-gray-50">
@@ -653,15 +653,20 @@
                 userName: '', 
 
                 products: PRODUCTS_DATA,
-
+                
+                get visibleProducts() {
+                    return this.products.filter(p => p.isVisible);
+                },
+                
                 init() {
                     const qrImg = document.getElementById('dynamicQR');
                     const currentURL = encodeURIComponent(window.location.href);
                     qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${currentURL}&color=2D5BFF`;
                                 
                     setInterval(() => {
-                        this.heroActiveIndex = (this.heroActiveIndex + 1) % this.products.length;
+                        this.heroActiveIndex = (this.heroActiveIndex + 1) % this.visibleProducts.length;
                     }, 4000);
+
                     document.getElementById('bgMusic').volume = this.volume;
                     
                     this.$watch('isLoggedIn', value => {
