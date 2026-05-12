@@ -3,9 +3,9 @@ const PRODUCTS_DATA = [
     { 
         id: 1, 
         name: 'RePet Extruder', 
-        price: 1.99, 
+        price: 199.99, 
         rating: 5, 
-        isVisible: true,
+        isVisible: true, 
         images: [
             'https://lh3.googleusercontent.com/pw/AP1GczM5q7Vb73DAjlDXVzkPN2U3sOrcCl0uZkOvfRzoUR7M8cbzS7HOeCCf2Ojlj18D_88iaoOY2lR6Gg0bsj5Xim97SvtYf-asbjS0gBTQ35c0uUp5btOvZMvOaO2md_SoyfRZshu7aonrXKlHxz_ydUk=w1128-h933-s-no?authuser=2',
             'https://lh3.googleusercontent.com/pw/AP1GczNMXK2kaysBcx1_FR3ttZue1hYOWsS6MtWPAVgHzOYnS7UaVKUtdEpj4_QLoahqRs0kBZNhp0gVg4ITV8IBnowYdDkV4_o4nYF9CbgpudsYqsBsBGze0G4wzvjUSnxzauztw-P9kxPKWxfwTdhE_u0=w700-h933-s-no?authuser=0', 
@@ -22,7 +22,7 @@ const PRODUCTS_DATA = [
         name: 'Studio Pen Set', 
         price: 0.99, 
         rating: 4, 
-        isVisible: true,
+        isVisible: true, 
         images: [
             'https://images.pexels.com/photos/4006151/pexels-photo-4006151.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/30537446/pexels-photo-30537446.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -39,7 +39,7 @@ const PRODUCTS_DATA = [
         name: 'Smart Calculator', 
         price: 2.99, 
         rating: 5, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/626165/pexels-photo-626165.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/626161/pexels-photo-626161.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -56,7 +56,7 @@ const PRODUCTS_DATA = [
         name: 'Canvas Backpack', 
         price: 19.99, 
         rating: 4, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/1545998/pexels-photo-1545998.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/2905238/pexels-photo-2905238.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -73,7 +73,7 @@ const PRODUCTS_DATA = [
         name: 'Pastel Highlighters', 
         price: 1.59, 
         rating: 5, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/459799/pexels-photo-459799.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/4006143/pexels-photo-4006143.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -90,7 +90,7 @@ const PRODUCTS_DATA = [
         name: 'Wireless Mouse', 
         price: 11.59, 
         rating: 4, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/2115256/pexels-photo-2115256.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/5082570/pexels-photo-5082570.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -107,7 +107,7 @@ const PRODUCTS_DATA = [
         name: 'Desk Organizer', 
         price: 2.99, 
         rating: 5, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/4006152/pexels-photo-4006152.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/4480505/pexels-photo-4480505.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -124,7 +124,7 @@ const PRODUCTS_DATA = [
         name: 'Sticky Note Bundle', 
         price: 5.69, 
         rating: 2, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/6192337/pexels-photo-6192337.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/1206101/pexels-photo-1206101.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -141,7 +141,7 @@ const PRODUCTS_DATA = [
         name: 'Math Geometry Set', 
         price: 3.99, 
         rating: 2, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/4253620/pexels-photo-4253620.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/30557451/pexels-photo-30557451.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -158,7 +158,7 @@ const PRODUCTS_DATA = [
         name: 'Noise-Canceling Buds', 
         price: 10.99, 
         rating: 4, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/3394666/pexels-photo-3394666.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -175,7 +175,7 @@ const PRODUCTS_DATA = [
         name: 'Lined Legal Pads', 
         price: 7, 
         rating: 3, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/5628244/pexels-photo-5628244.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/5301703/pexels-photo-5301703.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -192,7 +192,7 @@ const PRODUCTS_DATA = [
         name: 'Laptop Sleeve', 
         price: 18, 
         rating: 2, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/4067090/pexels-photo-4067090.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/4458519/pexels-photo-4458519.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -209,7 +209,7 @@ const PRODUCTS_DATA = [
         name: 'Hardcover Sketchbook', 
         price: 4.99, 
         rating: 5, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/6373290/pexels-photo-6373290.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/159621/sketch-art-draw-creative-159621.jpeg?auto=compress&cs=tinysrgb&w=400', 
@@ -226,7 +226,7 @@ const PRODUCTS_DATA = [
         name: 'USB-C Hub Adapter', 
         price: 2.99, 
         rating: 3, 
-        isVisible: false,
+        isVisible: false, 
         images: [
             'https://images.pexels.com/photos/4503734/pexels-photo-4503734.jpeg?auto=compress&cs=tinysrgb&w=400', 
             'https://images.pexels.com/photos/30553755/pexels-photo-30553755.jpeg?auto=compress&cs=tinysrgb&w=400', 
