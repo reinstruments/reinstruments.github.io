@@ -2,17 +2,17 @@
 const PRODUCTS_DATA = [
     { 
         id: 1, 
-        name: 'Premium Journal', 
-        price: 1.99, 
+        name: 'RePet Extruder', 
+        price: 199.95, 
         rating: 5, 
         images: [
-            'https://images.pexels.com/photos/7150986/pexels-photo-7150986.jpeg?auto=compress&cs=tinysrgb&w=400', 
-            'https://images.pexels.com/photos/6373305/pexels-photo-6373305.jpeg?auto=compress&cs=tinysrgb&w=400', 
-            'https://images.pexels.com/photos/372748/pexels-photo-372748.jpeg?auto=compress&cs=tinysrgb&w=400'
+            'https://photos.app.goo.gl/JCYu1LiZMWE6yjkz6', 
+            'https://photos.app.goo.gl/tWsfFC1jYXHUeAU29', 
+            'https://photos.app.goo.gl/WzPyR7q6JtJeMjFE8'
         ], 
         currentImg: 0, 
-        description: 'Elegantly crafted journal with acid-free paper, perfect for thoughts, sketches, and daily planning.', 
-        reviews: [{user: 'Alex T.', date: 'Jan 12', rating: 5, text: 'Best journal I have ever used. The paper is thick!'}], 
+        description: 'RePet Filament Extruder. Creates standard 1.75 mm filament from PET bottles.', 
+        reviews: [{user: 'Alex T.', date: 'Jan 12', rating: 5, text: 'Best filament extruder I ever used'}], 
         colors: [{hex: '#000', name: 'Black'}, {hex: '#2D5BFF', name: 'Blue'}, {hex: '#FF5B5B', name: 'Red'}], 
         selectedColor: {hex: '#000', name: 'Black'} 
     },
