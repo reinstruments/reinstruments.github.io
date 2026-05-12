@@ -12,8 +12,8 @@ const PRODUCTS_DATA = [
             'https://lh3.googleusercontent.com/pw/AP1GczNIQNQ3M4iaYGgDpb-AUzzTf_7ORwB8hdhsG59lhKyD32xQjOnLBFRlKU0gH1dd5dIuQTCaiJRFozb7Xds1dPBVtTFHQiyMQi0IXloz--BgBveLkqgv6tYZgZyX4SfyzU3UFcZgWlu3vHkUmf-VOmw=w1244-h933-s-no?authuser=2'
         ], 
         currentImg: 0, 
-        description: 'Elegantly crafted journal with acid-free paper, perfect for thoughts, sketches, and daily planning.', 
-        reviews: [{user: 'Alex T.', date: 'Jan 12', rating: 5, text: 'Best journal I have ever used. The paper is thick!'}], 
+        description: 'RePet filament extruder designed to make standard FDM 3D Printer filament from PET bottles', 
+        reviews: [{user: 'Alex T.', date: 'Jan 12', rating: 5, text: 'Best filament extruder I have ever used.'}], 
         colors: [{hex: '#000', name: 'Black'}, {hex: '#2D5BFF', name: 'Blue'}, {hex: '#FF5B5B', name: 'Red'}], 
         selectedColor: {hex: '#000', name: 'Black'} 
     },
