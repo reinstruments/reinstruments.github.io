@@ -34,19 +34,17 @@ const PRODUCTS_DATA = [
     },
     { 
         id: 3, 
-        name: 'Smart Calculator', 
-        price: 2.99, 
+        name: 'NiCr Welder Heater Spring', 
+        price: 0.99, 
         rating: 5, 
-        isVisible: false, 
+        isVisible: true, 
         images: [
-            'https://images.pexels.com/photos/626165/pexels-photo-626165.jpeg?auto=compress&cs=tinysrgb&w=400', 
-            'https://images.pexels.com/photos/626161/pexels-photo-626161.jpeg?auto=compress&cs=tinysrgb&w=400', 
-            'https://images.pexels.com/photos/433333/pexels-photo-433333.jpeg?auto=compress&cs=tinysrgb&w=400'
+            'https://lh3.googleusercontent.com/pw/AP1GczNpiE8GOVi1EofHW922b11Sx_RDeUKzZIKB4S5xm7rrTI4igTIR-6nURcwESxJy3m6nX12DpBChMbm06rgCFpOSQ_xbBBW3uhMpz2wTRFKDW07thieLXI3wQTLs3wcfS8XtcndM4QoWdBsyA4ALuHA=w1244-h933-s-no?authuser=2', 
         ], 
         currentImg: 0, 
-        description: 'Essential for math and science. Features an extra large display and solar power.', 
-        reviews: [], 
-        colors: [{hex: '#333', name: 'Charcoal'}, {hex: '#888', name: 'Gray'}], 
+        description: 'NiCr Welder Heater Spring. 12V', 
+        reviews: [{user: 'John W.', date: 'Dec 01', rating: 5, text: 'Very good quality'}], 
+        colors: [{hex: '#333', name: 'Charcoal'}], 
         selectedColor: {hex: '#333', name: 'Charcoal'} 
     },
     { 
