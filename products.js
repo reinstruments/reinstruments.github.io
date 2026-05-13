@@ -19,18 +19,16 @@ const PRODUCTS_DATA = [
     },
     { 
         id: 2, 
-        name: 'Studio Pen Set', 
-        price: 0.99, 
-        rating: 4, 
+        name: 'RePet Tape Width Spacer', 
+        price: 3.99, 
+        rating: 5, 
         isVisible: true, 
         images: [
-            'https://images.pexels.com/photos/4006151/pexels-photo-4006151.jpeg?auto=compress&cs=tinysrgb&w=400', 
-            'https://images.pexels.com/photos/30537446/pexels-photo-30537446.jpeg?auto=compress&cs=tinysrgb&w=400', 
-            'https://images.pexels.com/photos/159752/pencil-office-design-creative-159752.jpeg?auto=compress&cs=tinysrgb&w=400'
+            'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2', 
         ], 
         currentImg: 0, 
-        description: 'Smooth-writing gel pens in a set of 5. Perfect for long study sessions.', 
-        reviews: [{user: 'Mia R.', date: 'Feb 05', rating: 4, text: 'The ink flows so smoothly. Worth every cent.'}], 
+        description: 'Detachable RePet tape width spacer. Adjusts tape width at bottle cutting process', 
+        reviews: [{user: 'Mia R.', date: 'Feb 05', rating: 5, text: 'Shipping was quick'}], 
         colors: [{hex: '#000', name: 'Black'}, {hex: '#2D5BFF', name: 'Blue'}, {hex: '#FFF', name: 'White'}], 
         selectedColor: {hex: '#000', name: 'Black'} 
     },
