@@ -609,7 +609,13 @@
                         <div class="bg-gray-50 p-4 rounded-3xl border border-gray-100">
                             <img id="dynamicQR" src="" class="w-24 h-24 md:w-32 md:h-32">
                         </div>
-                        <p class="text-[10px] font-bold text-gray-400 uppercase">Scan to Visit</p>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase">Homepage</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="bg-gray-50 p-4 rounded-3xl border border-gray-100">
+                            <img id="dynamicQR2" src="" class="w-24 h-24 md:w-32 md:h-32">
+                        </div>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase">eBay</p>
                     </div>
                 </div>
             </div>
@@ -662,7 +668,12 @@
                     const qrImg = document.getElementById('dynamicQR');
                     const currentURL = encodeURIComponent(window.location.href);
                     qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${currentURL}&color=2D5BFF`;
-                                
+                    
+                    const qrImg2 = document.getElementById('dynamicQR2');
+                    const currentURL2 = encodeURIComponent('https://ebay.us/m/q7V6kq');
+                    qrImg2.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${currentURL2}&color=2D5BFF`;
+                    
+                    
                     setInterval(() => {
                         this.heroActiveIndex = (this.heroActiveIndex + 1) % this.visibleProducts.length;
                     }, 4000);
