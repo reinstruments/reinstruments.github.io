@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReTools</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <!--  <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="products.js"></script>
@@ -59,7 +57,7 @@
         .superellipse:hover {
           transform: scale(1.05);
           transition: transform 0.1s ease;
-          background-color: #1a44db; /* Branded blue hover state[cite: 1] */
+          background-color: #1a44db; /* Branded blue hover state */
           filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.15));
         }
 
@@ -144,7 +142,7 @@
                 <div class="flex items-center gap-3 pl-2 border-l border-gray-100">
                     <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-[10px] font-bold" 
                          x-text="userName ? userName.split(' ').map(n => n[0]).join('') : '?'"></div>
-                    <button @click="isLoggedIn = false" class="text-[10px] uppercase font-bold text-gray-400 hover:text-red-500">Exit</button>
+                    <button @click="handleLogout" class="text-[10px] uppercase font-bold text-gray-400 hover:text-red-500">Exit</button>
                 </div>
             </template>
 
@@ -155,6 +153,7 @@
             <a href="#shop" class="btn-blue-pill px-6 py-2 text-sm hidden md:flex">Shop Now</a>
         </div>
     </nav>
+
 
     <!-- SIGN IN / SIGN UP MODAL -->
     <div x-show="showAuth" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -169,7 +168,7 @@
             <h2 class="text-3xl font-bold text-gray-900 mb-2" x-text="authMode === 'login' ? 'Welcome Back' : 'Join StudyHub'"></h2>
             <p class="text-gray-500 text-sm mb-8" x-text="authMode === 'login' ? 'Enter your details to access your account.' : 'Create an account to start your organized journey.'"></p>
 
-            <form @submit.prevent="isLoggedIn = true; showAuth = false" class="space-y-4">
+            <form @submit.prevent="handleAuth" class="space-y-4">
                 <template x-if="authMode === 'signup'">
                     <div class="space-y-4">
                         <div class="space-y-1">
@@ -194,11 +193,11 @@
                 </template>
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-gray-600 ml-1">Email Address</label>
-                    <input type="email" placeholder="name@email.com" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="email" x-model="authEmail" placeholder="name@email.com" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-gray-600 ml-1">Password</label>
-                    <input type="password" placeholder="••••••••" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="password" x-model="authPassword" placeholder="••••••••" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 
                 <button type="submit" class="btn-blue-pill w-full py-4 text-lg mt-4 shadow-lg shadow-blue-100">
@@ -278,6 +277,7 @@
                                             <span class="font-bold text-sm text-gray-800" x-text="rev.user"></span>
                                             <span class="text-[10px] text-gray-400 font-medium" x-text="rev.date"></span>
                                         </div>
+
                                         <!-- Review Stars -->
                                         <div class="flex text-yellow-400 text-[10px] mb-2" x-show="rev.rating">
                                             <template x-for="starIdx in 5">
@@ -288,6 +288,7 @@
                                     </div>
                                 </template>
                             </div>
+
 
                             <!-- New Review Form with Stars -->
                             <div class="mt-6 p-6 bg-blue-50/50 rounded-2xl border border-blue-100/50">
@@ -363,12 +364,12 @@
                 <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow">
                     <div class="w-16 h-16 bg-red-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl"><i class="fa-solid fa-dollar-sign"></i></div>
                     <h3 class="text-xl font-bold mb-3">Expensive Supplies</h3>
-                    <p class="text-gray-500 text-sm">High prices make it hard for customers to afford essentials.</p>
+                    <p class="text-gray-500 text-sm">High prices make it hard for students to afford essentials.</p>
                 </div>
                 <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow">
                     <div class="w-16 h-16 bg-yellow-400 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl"><i class="fa-solid fa-magnifying-glass"></i></div>
                     <h3 class="text-xl font-bold mb-3">Hard to Find Items</h3>
-                    <p class="text-gray-500 text-sm">Finding quality 3d printer supplies takes time and effort.</p>
+                    <p class="text-gray-500 text-sm">Finding quality school supplies takes time and effort.</p>
                 </div>
                 <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow">
                     <div class="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl"><i class="fa-solid fa-clock"></i></div>
@@ -378,7 +379,7 @@
             </div>
             <div class="bg-blue-50 p-6 rounded-2xl flex items-center gap-6 max-w-7xl mx-auto border border-blue-100">
                 <div class="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xl"><i class="fa-solid fa-lightbulb"></i></div>
-                <p class="text-gray-800 text-left font-medium"><strong>ReTools</strong> brings everything into one platform — affordable, organized, and customer-friendly.</p>
+                <p class="text-gray-800 text-left font-medium"><strong>ReTools</strong> brings everything into one platform — affordable, organized, and student-friendly.</p>
             </div>
         </div>
     </section>
@@ -645,7 +646,15 @@
                 heroActiveIndex: 0,
                 selectedProduct: null,
                 newReviewText: '',
-                newReviewRating: 0, // Added star rating state
+                newReviewRating: 0, 
+
+                // Auth states
+                authEmail: '',
+                authPassword: '',
+                showAuth: false,
+                authMode: 'login', 
+                isLoggedIn: false,
+                userName: '', 
 
                 shippingInfo: {
                     name: '',
@@ -654,11 +663,6 @@
                     zip: ''
                 },
                 lastOrder: { items: [], total: 0 },
-
-                showAuth: false,
-                authMode: 'login', 
-                isLoggedIn: false,
-                userName: '', 
 
                 products: PRODUCTS_DATA,
                 
@@ -675,7 +679,15 @@
                     const currentURL2 = encodeURIComponent('https://ebay.us/m/q7V6kq');
                     qrImg2.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${currentURL2}&color=2D5BFF`;
                     
-                    
+                    // CHECK LOCAL STORAGE FOR LOGGED IN SESSION
+                    const savedSession = localStorage.getItem('reTools_session');
+                    if (savedSession) {
+                        const userData = JSON.parse(savedSession);
+                        this.isLoggedIn = true;
+                        this.userName = userData.name;
+                        this.shippingInfo = { ...userData.shippingInfo };
+                    }
+
                     setInterval(() => {
                         this.heroActiveIndex = (this.heroActiveIndex + 1) % this.visibleProducts.length;
                     }, 4000);
@@ -687,6 +699,49 @@
                             this.shippingInfo.name = this.userName;
                         }
                     });
+                },
+
+                handleAuth() {
+                    const users = JSON.parse(localStorage.getItem('reTools_users') || '[]');
+
+                    if (this.authMode === 'signup') {
+                        // Registration Logic
+                        const newUser = {
+                            name: this.userName,
+                            email: this.authEmail,
+                            password: this.authPassword,
+                            shippingInfo: { ...this.shippingInfo }
+                        };
+                        users.push(newUser);
+                        localStorage.setItem('reTools_users', JSON.stringify(users));
+                        
+                        // Set active session
+                        localStorage.setItem('reTools_session', JSON.stringify(newUser));
+                        this.isLoggedIn = true;
+                        this.showAuth = false;
+                    } else {
+                        // Login Logic
+                        const user = users.find(u => u.email === this.authEmail && u.password === this.authPassword);
+                        if (user) {
+                            this.userName = user.name;
+                            this.shippingInfo = { ...user.shippingInfo };
+                            localStorage.setItem('reTools_session', JSON.stringify(user));
+                            this.isLoggedIn = true;
+                            this.showAuth = false;
+                        } else {
+                            alert('Invalid email or password');
+                        }
+                    }
+                    // Reset fields
+                    this.authEmail = '';
+                    this.authPassword = '';
+                },
+
+                handleLogout() {
+                    localStorage.removeItem('reTools_session');
+                    this.isLoggedIn = false;
+                    this.userName = '';
+                    this.shippingInfo = { name: '', address: '', city: '', zip: '' };
                 },
                 
                 toggleMusic() {
@@ -757,14 +812,14 @@
                     }
                     
                     product.reviews.unshift({
-                        user: this.isLoggedIn ? this.userName : 'Guest Customer',
+                        user: this.isLoggedIn ? this.userName : 'Guest Student',
                         date: 'Just now',
-                        rating: this.newReviewRating, // Store the selected rating
+                        rating: this.newReviewRating, 
                         text: this.newReviewText
                     });
                     
                     this.newReviewText = '';
-                    this.newReviewRating = 0; // Reset for next time
+                    this.newReviewRating = 0; 
                 }
             }))
         })
