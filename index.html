@@ -209,7 +209,12 @@ nav select {
     background-color: rgba(30, 58, 138, 0.2) !important;
 }
         
-        
+/* Hide the custom cursor elements by default on mobile/touch */
+@media (pointer: coarse) {
+    .cursor-dot, .cursor-outline {
+        display: none !important;
+    }
+}        
         
     </style>
 </head>
