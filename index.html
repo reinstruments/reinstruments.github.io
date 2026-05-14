@@ -113,7 +113,7 @@
         }
 
         /* Hide default cursor everywhere */
-        html, body, button, a, input {
+        html, body, button, a, input, select, .cursor-pointer {
             cursor: none !important;
         }
         
@@ -122,6 +122,95 @@
         [style*="cursor: pointer"] {
             cursor: none !important;
         }
+        
+        
+        /* Specifically target the select dropdowns and their options */
+select, 
+option,
+.control-btn select,
+nav select {
+    cursor: none !important;
+    -webkit-appearance: none; /* Helps remove some default OS styling */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Ensure the container also hides the cursor */
+.control-btn, 
+.flex.items-center.gap-4 select {
+    cursor: none !important;
+}
+        
+        
+        /* Dark Mode Overrides */
+        .dark body {
+            background-color: #121212;
+            color: #F5F5F5;
+        }
+
+        .dark nav, .dark .card-shadow { background-color: #1E1E1E !important; }
+
+        .dark .logo-label,
+        .dark h1, 
+        .dark h2, 
+        .dark h3,
+        .dark .text-gray-900 {
+            color: #FFFFFF !important;
+        }
+
+        .dark .text-gray-500, 
+        .dark .text-gray-600 {
+            color: #A0A0A0 !important;
+        }
+
+        .dark .hero-bg-gradient {
+            background: linear-gradient(135deg, #1a1a1a 0%, #121212 100%);
+        }
+
+        .dark .control-btn, 
+        .dark .bg-gray-50 {
+            background-color: #2D2D2D !important;
+            color: #FFF;
+        }
+
+        /* Ensure custom cursor is visible in dark mode */
+        .dark .cursor-outline {
+            border-color: #2D5BFF; /* Blue border in dark mode for contrast */
+        }
+        
+        /* Specific overrides for lighter text in Dark Mode */
+        .dark #about .text-gray-800,
+        .dark #about .font-bold {
+            color: #E5E7EB !important; /* Lighter gray for 'Our Goal' and 'Our Promise' */
+        }
+
+        .dark #about .text-gray-600 {
+            color: #D1D5DB !important; /* Lighter gray for the descriptive text */
+        }
+
+        .dark #contact .font-bold.text-gray-700 {
+            color: #F3F4F6 !important; /* Very light color for Email, Phone, and Address */
+        }
+
+        .dark #contact .text-gray-500 {
+            color: #A0A0A0 !important; /* Light gray for the contact intro paragraph */
+        }
+        
+        /* Custom Dropdown Styling */
+[x-cloak] { display: none !important; }
+
+/* Ensure the custom buttons in the menu hide the system cursor */
+.relative button {
+    cursor: none !important;
+}
+
+/* Optional: Subtle hover effect for the currency items */
+.dark .hover\:bg-blue-900\/20:hover {
+    background-color: rgba(30, 58, 138, 0.2) !important;
+}
+        
+        
+        
     </style>
 </head>
 <body x-data="ReTools" :style="{ fontSize: fontSize + 'px' }">
@@ -169,11 +258,38 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <select x-model="currency" class="bg-transparent text-xs font-bold text-gray-500 border-none outline-none cursor-pointer">
-                <option value="USD">USD</option>
-                <option value="PHP">PHP</option>
-                <option value="EUR">EUR</option>
-            </select>
+            <div class="flex items-center gap-4">
+            <button @click="toggleTheme" 
+                      class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-yellow-400 transition-all duration-300">
+                  <i class="fa-solid" :class="darkMode ? 'fa-sun' : 'fa-moon'"></i>
+            </button>
+        
+            <div class="relative" x-data="{ open: false }">
+                <button @click="open = !open" 
+                        @click.away="open = false"
+                        class="flex items-center gap-1 text-xs font-bold text-gray-500 hover:text-blue-600 transition-colors uppercase tracking-wider">
+                    <span x-text="currency"></span>
+                    <i class="fa-solid fa-chevron-down text-[8px] transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+
+                <div x-show="open" 
+                     x-cloak 
+                     x-transition:enter="transition ease-out duration-100"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     /* FIX: Changed mt-2 to mt-[13px] (5px more) and right-0 to -right-[10px] (10px right) */
+                     class="absolute -right-[10px] mt-[13px] w-24 border rounded-xl shadow-xl z-50 overflow-hidden"
+                     :class="darkMode ? 'bg-[#1E1E1E] border-gray-800' : 'bg-white border-gray-200'">
+                    
+                    <template x-for="curr in ['USD', 'PHP', 'EUR']">
+                        <button @click="currency = curr; open = false"
+                                class="w-full text-left px-4 py-2 text-[10px] font-bold transition-colors"
+                                :class="darkMode ? 'text-gray-300 hover:bg-blue-900/20' : 'text-gray-700 hover:bg-gray-100'"
+                                x-text="curr">
+                        </button>
+                    </template>
+                </div>
+            </div>
 
             <template x-if="!isLoggedIn">
                 <button @click="showAuth = true; authMode = 'login'" class="text-sm font-bold text-gray-600 hover:text-blue-600 px-2">Sign In</button>
@@ -398,7 +514,7 @@
     </header>
 
     <!-- THE PROBLEM WE SOLVE -->
-    <section class="py-20 px-8 bg-white">
+    <section class="py-20 px-8 bg-gray-50">
         <div class="max-w-7xl mx-auto text-center">
             <h2 class="text-3xl font-bold mb-12">The Problem We Solve</h2>
             <div class="grid md:grid-cols-3 gap-6 mb-8">
@@ -623,7 +739,7 @@
     </div>
 
     <!-- CONTACT SECTION -->
-    <footer id="contact" class="py-20 px-8 border-t border-gray-100 bg-white">
+    <footer id="contact" class="py-20 px-8 border-t border-gray-100">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div class="text-left space-y-6">
                 <h2 class="text-4xl font-bold text-gray-900">Contact Us</h2>
@@ -675,6 +791,7 @@
 
         document.addEventListener('alpine:init', () => {
             Alpine.data('ReTools', () => ({
+                darkMode: localStorage.getItem('theme') === 'dark',
                 showCart: false, 
                 view: 'bag', 
                 payMethod: 'gcash', 
@@ -745,8 +862,27 @@
                             this.shippingInfo.name = this.userName;
                         }
                     });
+                    
+                    // Apply theme on load
+                    if (this.darkMode) {
+                        document.documentElement.classList.add('dark');
+                    }
                 },
+                
+                toggleTheme() {
+                        this.darkMode = !this.darkMode;
+                        localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
+                        this.applyTheme();
+                    },
 
+                    applyTheme() {
+                        if (this.darkMode) {
+                            document.documentElement.classList.add('dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                        }
+                    },
+                
                 handleAuth() {
                     const users = JSON.parse(localStorage.getItem('reTools_users') || '[]');
 
