@@ -425,7 +425,7 @@ nav select {
                             </div>
                         </div>
 
-                        <button @click="addToCart(selectedProduct); selectedProduct = null" class="btn-blue-pill w-full py-4 text-lg mb-10 shadow-lg shadow-blue-100">Add to Bag</button>
+                        <button @click="addToCart(selectedProduct); selectedProduct = null" class="btn-blue-pill w-full py-4 text-lg mb-10 shadow-lg shadow-blue-100">Add to Cart</button>
 
                         <hr class="border-gray-100 mb-8">
 
@@ -583,7 +583,7 @@ nav select {
 
                     <p class="text-blue-600 font-black text-base md:text-lg mt-auto" x-text="formatPrice(p.price)"></p>
                     <div class="flex gap-2 mt-4">
-                        <button @click="addToCart(p)" class="btn-blue-pill flex-1 py-3 text-[9px] md:text-[10px] uppercase tracking-wider">Add to Bag</button>
+                        <button @click="addToCart(p)" class="btn-blue-pill flex-1 py-3 text-[9px] md:text-[10px] uppercase tracking-wider">Add to Cart</button>
                         <button @click="selectedProduct = p" class="hidden md:flex w-10 h-10 btn-outline-pill border-none bg-gray-50 text-gray-400 hover:text-blue-600"><i class="fa-solid fa-eye text-xs"></i></button>
                     </div>
                 </div>
