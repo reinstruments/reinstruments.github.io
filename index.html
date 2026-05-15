@@ -549,21 +549,21 @@ nav select {
     <!-- SHOP SECTION -->
     <section id="shop" class="max-w-7xl mx-auto px-8 py-20">
         <h2 class="text-3xl font-bold mb-10 text-left">Collections</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <template x-for="p in visibleProducts" :key="p.id">
-                <div class="bg-white p-5 rounded-[2rem] border border-gray-100 card-shadow group flex flex-col">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8"> <template x-for="p in visibleProducts" :key="p.id">
+                <div class="bg-white p-4 md:p-5 rounded-[2rem] border border-gray-100 card-shadow group flex flex-col">
                     
-                    <div class="relative h-48 mb-4 overflow-hidden rounded-2xl bg-gray-50">
+                    <div class="relative aspect-square mb-4 overflow-hidden rounded-2xl bg-gray-50">
                         <img :src="p.images[p.currentImg]" 
-                             class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-500"
+                             class="w-full h-full object-cover cursor-none hover:scale-105 transition-transform duration-500"
                              @click="selectedProduct = p">
-                        <div class="absolute inset-0 flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        
+                        <div class="absolute inset-0 hidden md:flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity">
                             <button @click.stop="prevImg(p)" class="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white"><i class="fa-solid fa-chevron-left"></i></button>
                             <button @click.stop="nextImg(p)" class="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white"><i class="fa-solid fa-chevron-right"></i></button>
                         </div>
                     </div>
 
-                    <h3 class="font-bold text-gray-800 cursor-pointer hover:text-blue-600 truncate" x-text="p.name" @click="selectedProduct = p"></h3>
+                    <h3 class="font-bold text-sm md:text-base text-gray-800 cursor-none hover:text-blue-600 truncate" x-text="p.name" @click="selectedProduct = p"></h3>
                     
                     <div class="flex items-center gap-1 my-1">
                         <template x-for="star in [1, 2, 3, 4, 5]">
@@ -581,10 +581,10 @@ nav select {
                         </template>
                     </div>
 
-                    <p class="text-blue-600 font-black text-lg mt-auto" x-text="formatPrice(p.price)"></p>
+                    <p class="text-blue-600 font-black text-base md:text-lg mt-auto" x-text="formatPrice(p.price)"></p>
                     <div class="flex gap-2 mt-4">
-                        <button @click="addToCart(p)" class="btn-blue-pill flex-1 py-3 text-[10px] uppercase tracking-wider">Add to Bag</button>
-                        <button @click="selectedProduct = p" class="w-10 h-10 btn-outline-pill border-none bg-gray-50 text-gray-400 hover:text-blue-600"><i class="fa-solid fa-eye text-xs"></i></button>
+                        <button @click="addToCart(p)" class="btn-blue-pill flex-1 py-3 text-[9px] md:text-[10px] uppercase tracking-wider">Add to Bag</button>
+                        <button @click="selectedProduct = p" class="hidden md:flex w-10 h-10 btn-outline-pill border-none bg-gray-50 text-gray-400 hover:text-blue-600"><i class="fa-solid fa-eye text-xs"></i></button>
                     </div>
                 </div>
             </template>
