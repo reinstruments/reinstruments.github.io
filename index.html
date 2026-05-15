@@ -225,8 +225,8 @@ nav select {
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- FLOATING ACCESSIBILITY CONTROLS -->
-    <div class="floating-controls">
+    <!-- NG ACCESSIBILITY CONTROLS -->
+    <div class="floating-controls hidden md:flex">
         <div class="control-btn hover:bg-gray-50">
             <button @click="toggleMusic" class="flex items-center gap-2">
                 <i class="fa-solid" :class="isMuted ? 'fa-volume-xmark text-red-500' : 'fa-volume-high text-blue-600'"></i>
