@@ -389,10 +389,15 @@ nav select {
                 <template x-if="selectedProduct">
                     <img :src="selectedProduct.images[selectedProduct.currentImg]" class="w-full h-full object-cover">
                 </template>
-                <div class="absolute inset-0 flex items-center justify-between px-4">
-                    <button @click="prevImg(selectedProduct)" class="w-10 h-10 bg-white/80 rounded-full shadow-lg flex items-center justify-center hover:bg-white"><i class="fa-solid fa-chevron-left"></i></button>
-                    <button @click="nextImg(selectedProduct)" class="w-10 h-10 bg-white/80 rounded-full shadow-lg flex items-center justify-center hover:bg-white"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
+            <div class="absolute inset-0 flex items-center justify-between px-4" 
+                 x-show="selectedProduct && selectedProduct.images.length > 1">
+                <button @click="prevImg(selectedProduct)" class="w-10 h-10 bg-white/80 rounded-full shadow-lg flex items-center justify-center hover:bg-white">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button @click="nextImg(selectedProduct)" class="w-10 h-10 bg-white/80 rounded-full shadow-lg flex items-center justify-center hover:bg-white">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
             </div>
 
             <!-- Modal Content -->
@@ -557,10 +562,15 @@ nav select {
                              class="w-full h-full object-cover cursor-none hover:scale-105 transition-transform duration-500"
                              @click="selectedProduct = p">
                         
-                        <div class="absolute inset-0 hidden md:flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button @click.stop="prevImg(p)" class="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white"><i class="fa-solid fa-chevron-left"></i></button>
-                            <button @click.stop="nextImg(p)" class="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white"><i class="fa-solid fa-chevron-right"></i></button>
-                        </div>
+                    <div class="absolute inset-0 hidden md:flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity" 
+                         x-show="p.images.length > 1">
+                        <button @click.stop="prevImg(p)" class="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button @click.stop="nextImg(p)" class="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
                     </div>
 
                     <h3 class="font-bold text-sm md:text-base text-gray-800 cursor-none hover:text-blue-600 truncate" x-text="p.name" @click="selectedProduct = p"></h3>
