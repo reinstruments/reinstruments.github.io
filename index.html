@@ -797,6 +797,14 @@ nav select {
                         </div>
                         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">eBay</p>
                     </div>
+                    
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 w-28 h-28 md:w-40 md:h-40 flex items-center justify-center">
+                            <img id="dynamicQR3" src="" class="w-full h-full object-contain">
+                        </div>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">YouTube</p>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -856,6 +864,11 @@ nav select {
                     const qrImg2 = document.getElementById('dynamicQR2');
                     const currentURL2 = encodeURIComponent('https://ebay.us/m/q7V6kq');
                     qrImg2.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${currentURL2}&color=2D5BFF`;
+
+                    const qrImg3 = document.getElementById('dynamicQR3');
+                    const currentURL3 = encodeURIComponent('https://www.youtube.com/@ReInstruments');
+                    qrImg3.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${currentURL3}&color=2D5BFF`;
+                    
                     
                     // CHECK LOCAL STORAGE FOR LOGGED IN SESSION
                     const savedSession = localStorage.getItem('reTools_session');
