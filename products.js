@@ -25,7 +25,7 @@ const PRODUCTS_DATA = [
         price: 3.99, 
         rating: 5, 
         isVisible: true,
-        downloadUrl: 'https://drive.google.com/uc?export=download&id=1YMHcb2ZrTu7014qup8AXLSSAJnhL44xX', // Ссылка на ZIP или PDF
+        downloadUrl: 'https://drive.usercontent.google.com/uc?export=download&id=1YMHcb2ZrTu7014qup8AXLSSAJnhL44xX', // Ссылка на ZIP или PDF
         images: [
             'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2', 
         ], 
