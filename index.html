@@ -473,8 +473,14 @@ iframe {
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 scale-95"
              x-transition:enter-end="opacity-100 scale-100">
-            
+             
+            <!--
             <button @click="selectedProduct = null" class="absolute top-6 right-8 text-gray-400 hover:text-gray-900 text-3xl z-20">&times;</button>
+			-->
+			 <!-- Кнопка закрытия модального окна (крестик в кружке) -->
+			<button @click="selectedProduct = null" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm text-gray-500 hover:text-gray-800 hover:bg-white shadow-md flex items-center justify-center transition-all">
+				<i class="fa-solid fa-xmark text-lg"></i>
+			</button>
             
 <!-- Modal Images/Video Slider -->
 <div class="md:w-4/6 bg-gray-50 relative group min-h-[350px] md:h-auto flex flex-col justify-center items-center">
@@ -808,7 +814,7 @@ iframe {
     <section class="py-24 px-8 bg-white">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div class="space-y-6 text-left">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Transformation of Packaging into Tape</h2>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Transformation of Bottle into Tape</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">Carried out using a bearing-based bottle cutter. At this stage, you can adjust the angle of the bottle (according to its diameter) and the width of the resulting tape using a changable preadjusted tape width guider.</p>
                 <div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
