@@ -237,22 +237,22 @@
         /* Custom Dropdown Styling */
 [x-cloak] { display: none !important; }
 
-/* Ensure the custom buttons in the menu hide the system cursor */
-.relative button {
-    cursor: none !important;
-}
+		/* Ensure the custom buttons in the menu hide the system cursor */
+		.relative button {
+			cursor: none !important;
+		}
 
-/* Optional: Subtle hover effect for the currency items */
-.dark .hover\:bg-blue-900\/20:hover {
-    background-color: rgba(30, 58, 138, 0.2) !important;
-}
-        
-/* Hide the custom cursor elements by default on mobile/touch */
-@media (pointer: coarse) {
-    .cursor-dot, .cursor-outline {
-        display: none !important;
-    }
-}        
+		/* Optional: Subtle hover effect for the currency items */
+		.dark .hover\:bg-blue-900\/20:hover {
+			background-color: rgba(30, 58, 138, 0.2) !important;
+		}
+				
+		/* Hide the custom cursor elements by default on mobile/touch */
+		@media (pointer: coarse) {
+			.cursor-dot, .cursor-outline {
+				display: none !important;
+			}
+		}        
         
 
 .cursor-outline, .cursor-dot {
@@ -264,6 +264,12 @@ iframe {
     position: relative;
     z-index: 50;
     pointer-events: auto !important;
+}
+
+
+.video-container {
+    isolation: isolate;
+    transform: translateZ(0); /* Включает аппаратное ускорение, заставляя браузер рендерить элемент как обычный слой */
 }
 
     </style>
@@ -759,7 +765,7 @@ iframe {
                     </div>                    
                 </div>                
             </div>
-            <div class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black">
+            <div style="isolation: isolate;" class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black">
                 <iframe class="w-full h-full" src="https://www.youtube.com/embed/GzDiOcrPyL4" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
         </div>
@@ -857,7 +863,7 @@ iframe {
                     </div>                    
                 </div>            
             </div>
-            <div class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black">
+            <div style="isolation: isolate;" class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black">
                  <!-- <iframe class="w-full h-full" src="https://www.youtube.com/embed/GzDiOcrPyL4" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  -->
                 <!--  <iframe class="w-full h-full" src="https://embedd.srv.habr.com/iframe/638708d1248bff9a8b016dff" title="Filament welding 1" frameborder="0" allowfullscreen></iframe> -->
                 <iframe class="w-full h-full" src="https://www.youtube.com/embed/Jl8NKu6hZWU" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -952,7 +958,7 @@ iframe {
                 <p class="text-gray-600 leading-relaxed text-lg mb-4">This video features a timelapse of the machine in action, a demonstration of plastic types, and the operation of the ReTool manual welder (more on that later).</p>
                 <p class="text-gray-600 leading-relaxed text-lg">The machine operates in a temperature range of 175 °C, and theoretically allows cutting anything that has the shape of a ribbon or a thin-walled cylinder (bottles, cups, pre-prepared tape).</p>
             </div>
-            <div class="w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black">
+            <div style="isolation: isolate;" class="w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black">
                 <!-- <iframe class="w-full h-full" src="https://embedd.srv.habr.com/iframe/6311e6ef9fd9c5cec245adc1" title="Machine timelapse and ReTool welder" frameborder="0" allowfullscreen></iframe>-->
                 <iframe class="w-full h-full" src="https://www.youtube.com/embed/I6aGNNQ39JI" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
