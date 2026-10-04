@@ -473,6 +473,7 @@ iframe {
              x-transition:enter-start="opacity-0 scale-95"
              x-transition:enter-end="opacity-100 scale-100">
              
+            <!-- Кнопка закрытия модального окна (крестик без кружка) -->
             <!--
             <button @click="selectedProduct = null" class="absolute top-6 right-8 text-gray-400 hover:text-gray-900 text-3xl z-20">&times;</button>
 			-->
@@ -485,44 +486,41 @@ iframe {
 			<div class="md:w-4/6 bg-gray-50 relative group h-72 sm:h-80 md:h-auto flex-shrink-0 flex flex-col justify-center items-center overflow-hidden">
 				<template x-if="selectedProduct">
 					<div class="w-full h-full flex items-center justify-center">
-						
-						<!-- 
-						<template x-if="selectedProduct.youtubeId && selectedProduct.currentImg === selectedProduct.images.length">
-							<div class="w-full aspect-video h-full relative z-30 pointer-events-auto bg-black">
-								<iframe class="w-full h-full"
-										:src="'https://www.youtube.com/embed/' + selectedProduct.youtubeId.split('?')[0] + '?controls=0&modestbranding=1'" 
-										title="YouTube video player" 
-										frameborder="0" 
-										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-										allowfullscreen>
-								</iframe>
-							</div>
-						</template>
-						 -->
-						
-						<!-- Проверяем, заполнено ли хотя бы одно поле для видео -->
-						<template x-if="(selectedProduct.youtubeId || selectedProduct.videoUrl) && selectedProduct.currentImg === selectedProduct.images.length">
-							<div class="w-full aspect-video h-full relative z-30 pointer-events-auto bg-black">
-								<iframe class="w-full h-full"
-										:src="selectedProduct.youtubeId 
-											? 'https://www.youtube.com/embed/' + selectedProduct.youtubeId.split('?')[0] + '?controls=0&modestbranding=1' 
-											: selectedProduct.videoUrl" 
-										frameborder="0" 
-										allow="autoplay" 
+
+						<!-- Видео с Google Диска -->
+						<template x-if="selectedProduct.videoUrl && selectedProduct.currentImg === selectedProduct.images.length">
+							<div class="w-full h-full relative z-30 pointer-events-auto bg-black flex items-center justify-center">
+								<iframe class="w-full aspect-video pointer-events-auto"
+										:src="selectedProduct.videoUrl"
+										title="Extruder video"
+										frameborder="0"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 										allowfullscreen>
 								</iframe>
 							</div>
 						</template>
 
-						<template x-if="!selectedProduct.youtubeId || selectedProduct.currentImg < selectedProduct.images.length">
+						<!-- Видео с YouTube -->
+						<template x-if="selectedProduct.youtubeId && selectedProduct.currentImg === selectedProduct.images.length">
+							<div class="w-full h-full relative z-30 pointer-events-auto bg-black flex items-center justify-center">
+								<iframe class="w-full aspect-video pointer-events-auto"
+										:src="'https://www.youtube.com/embed/' + selectedProduct.youtubeId.split('?')[0] + '?controls=0&modestbranding=1'"
+										frameborder="0"
+										allow="autoplay"
+										allowfullscreen>
+								</iframe>
+							</div>
+						</template>
+
+						<template x-if="(!selectedProduct.youtubeId && !selectedProduct.videoUrl) || selectedProduct.currentImg < selectedProduct.images.length">
 							<img :src="selectedProduct.images[selectedProduct.currentImg]" class="w-full h-full object-cover">
 						</template>
-						
+
 					</div>
-				</template>
-				
+				</template>				
+
 				<div class="absolute inset-0 flex items-center justify-between px-4 pointer-events-none z-40" 
-					 x-show="selectedProduct && ((selectedProduct.youtubeId ? 1 : 0) + selectedProduct.images.length) > 1">
+					 x-show="selectedProduct && (((selectedProduct.youtubeId || selectedProduct.videoUrl) ? 1 : 0) + selectedProduct.images.length) > 1">
 					<button @click.stop="prevImg(selectedProduct)" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full shadow-lg flex items-center justify-center transition-all cursor-pointer">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
 					</button>
@@ -698,6 +696,7 @@ iframe {
                     
 			<div class="relative aspect-square mb-4 overflow-hidden rounded-2xl bg-gray-50">
 				
+				<!-- YouTube видео для карточки в каталоге -->
 				<template x-if="p.youtubeId && p.currentImg === p.images.length">
 					<div class="w-full h-full relative z-30 pointer-events-auto bg-black">
 						<iframe class="w-full h-full"
@@ -710,14 +709,27 @@ iframe {
 					</div>
 				</template>
 
-				<template x-if="!p.youtubeId || p.currentImg < p.images.length">
+				<!-- Google Диск видео для карточки в каталоге -->
+				<template x-if="p.videoUrl && p.currentImg === p.images.length">
+					<div class="w-full h-full relative z-30 pointer-events-auto bg-black overflow-hidden">
+						<iframe class="absolute top-1/2 left-1/2 w-[130%] h-[130%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
+								:src="p.videoUrl"
+								title="Google Drive preview player" 
+								frameborder="0" 
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+								allowfullscreen>
+						</iframe>
+					</div>
+				</template>
+
+				<template x-if="(!p.youtubeId && !p.videoUrl) || p.currentImg < p.images.length">
 					<img :src="p.images[p.currentImg]" 
 						 class="w-full h-full object-cover cursor-none hover:scale-105 transition-transform duration-500"
 						 @click="selectedProduct = p">
 				</template>
 				
 				<div class="absolute inset-0 hidden md:flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-40" 
-					 x-show="((p.youtubeId ? 1 : 0) + p.images.length) > 1">
+					 x-show="(((p.youtubeId || p.videoUrl) ? 1 : 0) + p.images.length) > 1">
 					<button @click.stop="prevImg(p)" class="pointer-events-auto w-8 h-8 custom-slider-btn rounded-full flex items-center justify-center shadow text-xs">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
 					</button>
@@ -806,7 +818,10 @@ iframe {
                 </div>                
             </div>
             <div style="isolation: isolate;" class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black rotate-2">
+				<!-- 
                 <iframe class="w-full h-full" src="https://www.youtube.com/embed/GzDiOcrPyL4" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                -->
+                <iframe class="w-full h-full" src="https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
         </div>
     </section>
@@ -1612,16 +1627,17 @@ iframe {
                     this.cart = [];
                 },
 
-                nextImg(product) {
-                    // Total slides calculate the total images array length + 1 additional slide if a YouTube ID exists
-                    const totalSlides = product.images.length + (product.youtubeId ? 1 : 0);
-                    product.currentImg = (product.currentImg + 1) % totalSlides;
-                },
+				nextImg(product) {
+					// Добавлена проверка || product.videoUrl
+					const totalSlides = product.images.length + ((product.youtubeId || product.videoUrl) ? 1 : 0);
+					product.currentImg = (product.currentImg + 1) % totalSlides;
+				},
 
-                prevImg(product) {
-                    const totalSlides = product.images.length + (product.youtubeId ? 1 : 0);
-                    product.currentImg = (product.currentImg - 1 + totalSlides) % totalSlides;
-                },
+				prevImg(product) {
+					// Добавлена проверка || product.videoUrl
+					const totalSlides = product.images.length + ((product.youtubeId || product.videoUrl) ? 1 : 0);
+					product.currentImg = (product.currentImg - 1 + totalSlides) % totalSlides;
+				},
 
                 submitReview(product) {
                     if (!this.newReviewText.trim()) return;
