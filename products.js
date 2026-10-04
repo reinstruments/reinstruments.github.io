@@ -50,18 +50,16 @@ const PRODUCTS_DATA = [
     },
     { 
         id: 4, 
-        name: 'Canvas Backpack', 
-        price: 19.99, 
-        rating: 4, 
-        isVisible: false, 
+        name: 'Filament Afterweld Cleaner', 
+        price: 3.99, 
+        rating: 5, 
+        isVisible: true, 
         images: [
-            'https://images.pexels.com/photos/1545998/pexels-photo-1545998.jpeg?auto=compress&cs=tinysrgb&w=400', 
-            'https://images.pexels.com/photos/2905238/pexels-photo-2905238.jpeg?auto=compress&cs=tinysrgb&w=400', 
-            'https://images.pexels.com/photos/1294731/pexels-photo-1294731.jpeg?auto=compress&cs=tinysrgb&w=400'
+			'https://lh3.googleusercontent.com/pw/AP1GczM6RVrSL-m62cgg07rzhc7LhSxP8EufTPtYIw3q6FU_eQXdPH84oXci1KFdWiNwqcUw-UcCk1Fzp8grzS8bZKO2Gmbpt2FOuSBYFxUx-m2BntybUIWdFk9Ktx9Ax3iIkcCYJNHYybQf-0EgpNH8G9o=w1440-h1080-s-no?authuser=0',
         ], 
         currentImg: 0, 
-        description: 'Durable canvas material with a dedicated laptop compartment and multiple pockets.', 
-        reviews: [], 
+        description: 'Сleans the weld seam from burrs', 
+        reviews: [{user: 'Markus S.', date: 'Jan 19', rating: 5, text: 'Funktioniert einwandfrei!'}], 
         colors: [{hex: '#4b5563', name: 'Gray'}, {hex: '#1e40af', name: 'Navy'}], 
         selectedColor: {hex: '#4b5563', name: 'Gray'} 
     },
