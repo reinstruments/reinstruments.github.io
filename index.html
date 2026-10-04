@@ -296,7 +296,7 @@ iframe {
         </div>
     </div>
 
-    <!-- NAVIGATION -->
+	<!-- NAVIGATION -->
     <nav class="bg-white px-8 py-4 flex items-center justify-between sticky top-0 z-40 border-b border-gray-50">
         <div class="logo-container">
           <div class="superellipse">
@@ -313,12 +313,13 @@ iframe {
         </div>
 
         <div class="flex items-center gap-4">
-            <div class="flex items-center gap-4">
+            <!-- Кнопка темы -->
             <button @click="toggleTheme" 
-                      class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-yellow-400 transition-all duration-300">
+                    class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-yellow-400 transition-all duration-300">
                   <i class="fa-solid" :class="darkMode ? 'fa-sun' : 'fa-moon'"></i>
             </button>
         
+            <!-- Переключатель валют -->
             <div class="relative" x-data="{ open: false }">
                 <button @click="open = !open" 
                         @click.away="open = false"
@@ -332,7 +333,6 @@ iframe {
                      x-transition:enter="transition ease-out duration-100"
                      x-transition:enter-start="opacity-0 scale-95"
                      x-transition:enter-end="opacity-100 scale-100"
-                     /* FIX: Changed mt-2 to mt-[13px] (5px more) and right-0 to -right-[10px] (10px right) */
                      class="absolute -right-[10px] mt-[13px] w-24 border rounded-xl shadow-xl z-50 overflow-hidden"
                      :class="darkMode ? 'bg-[#1E1E1E] border-gray-800' : 'bg-white border-gray-200'">
                     
@@ -346,6 +346,38 @@ iframe {
                 </div>
             </div>
 
+
+            <!-- Переключатель языков -->
+            <div class="relative" x-data="{ open: false }">
+                <button @click="open = !open" 
+                        @click.away="open = false"
+                        class="flex items-center gap-1 text-xs font-bold text-gray-500 hover:text-blue-600 transition-colors uppercase tracking-wider">
+                    <span x-text="language"></span>
+                    <i class="fa-solid fa-chevron-down text-[8px] transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+
+                <div x-show="open" 
+                     x-cloak 
+                     x-transition:enter="transition ease-out duration-100"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     class="absolute -right-[10px] mt-[13px] w-24 border rounded-xl shadow-xl z-50 overflow-hidden"
+                     :class="darkMode ? 'bg-[#1E1E1E] border-gray-800' : 'bg-white border-gray-200'">
+                    
+                    <template x-for="lang in ['EN', 'GE', 'RU']">
+                        <button @click="language = lang; open = false"
+                                class="w-full text-left px-4 py-2 text-[10px] font-bold transition-colors"
+                                :class="darkMode ? 'text-gray-300 hover:bg-blue-900/20' : 'text-gray-700 hover:bg-gray-100'"
+                                x-text="lang">
+                        </button>
+                    </template>
+                </div>
+            </div>
+
+
+
+
+            <!-- Авторизация -->
             <template x-if="!isLoggedIn">
                 <button @click="showAuth = true; authMode = 'login'" class="text-sm font-bold text-gray-600 hover:text-blue-600 px-2">Sign In</button>
             </template>
@@ -358,11 +390,14 @@ iframe {
                 </div>
             </template>
 
+            <!-- Корзина -->
             <div class="relative cursor-pointer" @click="showCart = true; view = 'bag'">
                 <i class="fa-solid fa-cart-shopping text-gray-400"></i>
                 <span class="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center" x-text="cart.reduce((sum, item) => sum + item.qty, 0)"></span>
             </div>
-            <a href="#shop" class="btn-blue-pill px-6 py-2 text-sm hidden md:flex">Shop Now</a>
+
+            <!-- Кнопка Shop Now -->
+            <a href="#shop" class="btn-blue-pill px-6 py-2 text-sm hidden md:flex">Shop Now</a>          
         </div>
     </nav>
 
@@ -1262,6 +1297,7 @@ iframe {
                 payMethod: 'gcash', 
                 paymentNumber: '',
                 currency: 'USD', 
+                language: 'EN', 
                 cart: [],
                 isMuted: true,
                 volume: 0.5,
