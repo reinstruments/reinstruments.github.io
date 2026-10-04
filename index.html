@@ -167,11 +167,25 @@ nav select {
             background: linear-gradient(135deg, #1a1a1a 0%, #121212 100%);
         }
 
+        .dark .bg-blue-50 {
+            background-color: #013369 !important;
+            color: #FFF;
+        }
+
+
+
         .dark .control-btn, 
         .dark .bg-gray-50 {
             background-color: #2D2D2D !important;
             color: #FFF;
         }
+
+        .dark .bg-white {
+            background-color: #3D3D3D !important;
+            color: #FFF;
+        }
+
+
 
         /* Ensure custom cursor is visible in dark mode */
         .dark .cursor-outline {
@@ -179,8 +193,8 @@ nav select {
         }
         
         /* Specific overrides for lighter text in Dark Mode */
-        .dark #about .text-gray-800,
-        .dark #about .font-bold {
+        .dark .text-gray-800,
+        .dark .font-bold {
             color: #E5E7EB !important; /* Lighter gray for 'Our Goal' and 'Our Promise' */
         }
 
@@ -588,36 +602,36 @@ iframe {
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8"> <template x-for="p in visibleProducts" :key="p.id">
                 <div class="bg-white p-4 md:p-5 rounded-[2rem] border border-gray-100 card-shadow group flex flex-col">
                     
-<div class="relative aspect-square mb-4 overflow-hidden rounded-2xl bg-gray-50">
-    
-    <template x-if="p.youtubeId && p.currentImg === p.images.length">
-        <div class="w-full h-full relative z-30 pointer-events-auto bg-black">
-            <iframe class="w-full h-full"
-                    :src="'https://www.youtube.com/embed/' + p.youtubeId.split('?')[0] + '?controls=0&modestbranding=1'" 
-                    title="YouTube preview player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen>
-            </iframe>
-        </div>
-    </template>
+			<div class="relative aspect-square mb-4 overflow-hidden rounded-2xl bg-gray-50">
+				
+				<template x-if="p.youtubeId && p.currentImg === p.images.length">
+					<div class="w-full h-full relative z-30 pointer-events-auto bg-black">
+						<iframe class="w-full h-full"
+								:src="'https://www.youtube.com/embed/' + p.youtubeId.split('?')[0] + '?controls=0&modestbranding=1'" 
+								title="YouTube preview player" 
+								frameborder="0" 
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+								allowfullscreen>
+						</iframe>
+					</div>
+				</template>
 
-    <template x-if="!p.youtubeId || p.currentImg < p.images.length">
-        <img :src="p.images[p.currentImg]" 
-             class="w-full h-full object-cover cursor-none hover:scale-105 transition-transform duration-500"
-             @click="selectedProduct = p">
-    </template>
-    
-    <div class="absolute inset-0 hidden md:flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-40" 
-         x-show="((p.youtubeId ? 1 : 0) + p.images.length) > 1">
-        <button @click.stop="prevImg(p)" class="pointer-events-auto w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white">
-            <i class="fa-solid fa-chevron-left pointer-events-none"></i>
-        </button>
-        <button @click.stop="nextImg(p)" class="pointer-events-auto w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white">
-            <i class="fa-solid fa-chevron-right pointer-events-none"></i>
-        </button>
-    </div>
-</div>
+				<template x-if="!p.youtubeId || p.currentImg < p.images.length">
+					<img :src="p.images[p.currentImg]" 
+						 class="w-full h-full object-cover cursor-none hover:scale-105 transition-transform duration-500"
+						 @click="selectedProduct = p">
+				</template>
+				
+				<div class="absolute inset-0 hidden md:flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-40" 
+					 x-show="((p.youtubeId ? 1 : 0) + p.images.length) > 1">
+					<button @click.stop="prevImg(p)" class="pointer-events-auto w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click.stop="nextImg(p)" class="pointer-events-auto w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
+			</div>
 
                     <h3 class="font-bold text-sm md:text-base text-gray-800 cursor-none hover:text-blue-600 truncate" x-text="p.name" @click="selectedProduct = p"></h3>
                     
@@ -933,7 +947,7 @@ iframe {
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">🛑</span>
-                        <p class="font-bold text-gray-800">Unbranded bottle <span class="font-medium text-gray-600">Recycle maschine not recognizes them</span></p>
+                        <p class="font-bold text-gray-800">Unbranded bottle: <span class="font-medium text-gray-600">Recycle maschine not recognizes them</span></p>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">🛑</span>
@@ -1013,7 +1027,7 @@ iframe {
             <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Economics of Pulltrusion Technology</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">How much will a spool of filament obtained by drawing PET tape cost us? Let's calculate! One 5-liter water bottle yields 18–19 meters of plastic (c-type filament, 1.6–1.75 mm). A standard spool contains 300 meters of plastic. Thus, 1 spool requires 16 five-liter PET bottles. The average price of a 5-liter PET bottle on platforms like Avito is about 5 rubles. Total: 80 rubles for the raw materials needed to produce 1 spool of plastic. Electricity costs should also be taken into account, which are about 3 times less than 7.5 hours of 3D printer operation — exactly how long it takes to fill one spool with plastic.</p>
-                <p class="text-gray-600 leading-relaxed text-lg">Thank you for your attention! I will be glad to answer any questions regarding the machine's operation.</p>
+                <p class="text-gray-600 leading-relaxed text-lg">Thank you for your attention!</p>
             </div>
 
         </div>
