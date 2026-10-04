@@ -486,6 +486,7 @@ iframe {
 				<template x-if="selectedProduct">
 					<div class="w-full h-full flex items-center justify-center">
 						
+						<!-- 
 						<template x-if="selectedProduct.youtubeId && selectedProduct.currentImg === selectedProduct.images.length">
 							<div class="w-full aspect-video h-full relative z-30 pointer-events-auto bg-black">
 								<iframe class="w-full h-full"
@@ -493,6 +494,21 @@ iframe {
 										title="YouTube video player" 
 										frameborder="0" 
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+										allowfullscreen>
+								</iframe>
+							</div>
+						</template>
+						 -->
+						
+						<!-- Проверяем, заполнено ли хотя бы одно поле для видео -->
+						<template x-if="(selectedProduct.youtubeId || selectedProduct.videoUrl) && selectedProduct.currentImg === selectedProduct.images.length">
+							<div class="w-full aspect-video h-full relative z-30 pointer-events-auto bg-black">
+								<iframe class="w-full h-full"
+										:src="selectedProduct.youtubeId 
+											? 'https://www.youtube.com/embed/' + selectedProduct.youtubeId.split('?')[0] + '?controls=0&modestbranding=1' 
+											: selectedProduct.videoUrl" 
+										frameborder="0" 
+										allow="autoplay" 
 										allowfullscreen>
 								</iframe>
 							</div>
@@ -905,11 +921,6 @@ iframe {
         'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
     ]}">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-			<!--
-			<div>
-                <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/074/242/6f5/0742426f541712158bc36a0fcd56bf1e.png" class="rounded-[3rem] shadow-2xl transform rotate-2 object-cover" alt="Цвета и сырье PET">
-            </div>
-             -->
             <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-2">
                 <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
                 
@@ -974,7 +985,6 @@ iframe {
     </section>
 
 
-
 <!-- ADDITIONAL VIDEO & TEMPERATURE SECTION (Gray) -->
     <section class="py-24 px-8 bg-white">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
@@ -1002,6 +1012,78 @@ iframe {
             </div>
         </div>
     </section>
+    
+    
+    <section id="materials" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq0lquMR8IODMJzrBv2atCC_BlMVa1WR8cVL3WDhQu5WkzNELdOny6q78&s=10',
+        'https://lh3.googleusercontent.com/pw/AP1GczOhEpnhBdKg8A9_QeCbbqAA2S9UW6EfcPwT1YjKKZYdDAKoNyKkQ2HnKBr782zlpNL98QnNmssaqVmoWWuGulbjEyMpIVLQ33p25SHXNicl9UJi9esFD3j1x5QJ25wVONuQH16YRel3dHC8BvgAhpE0=w569-h1207-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczMdb2tIoN6ydzsbS5h7BRoBV2LkCCpaX663X-Hh31hUBOhzELLLYP1ZRcwawXGGQDfFM4IOnUrsog7pWWs_koSy4UcXyDqedgzfEdINCCZLBAEcep0d0ERoEiQkzhj9MSM6RkAZkBNZyeXAazOhwqmT=w500-h1000-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczOE31IKt6hJ7mMbbP-aQVe5PHIIaNubNg_fWJJ8IMv10tSi-450pfVkdxKNeP3BdOXprkpO7c-wkT3rLWJm0C1uOcRtvZgFhPIW2B5ejutVOWRO8gSiNYOk7GS_jl7mR02aTQ75dUQqYaZujx67l_Zc=w1146-h1106-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
+    ]}">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-2">
+                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+                
+                <!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
+					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
+
+                <!-- Индикаторы (точки) -->
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                    <template x-for="(img, idx) in images" :key="idx">
+                        <button @click="currentImg = idx" 
+                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
+                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+                        </button>
+                    </template>
+                </div>
+            </div>
+                        
+            <div class="order-1 md:order-2 space-y-6 text-left">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Features of the Applied Raw Materials</h2>
+                <p class="text-gray-600 leading-relaxed text-lg">During experiments, various types of PET packaging with thick and thin walls were tested. When working with thick-walled containers, it is necessary to simply reduce the width of the tape using the steel limiter on the bottle cutter. Paper labels on the containers must be removed using a heat gun. Plastic labels are easily removed manually. Washing off adhesive residue is not required.</p>
+                <div class="space-y-4 pt-2">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
+                        <div>
+                            <p class="font-bold text-gray-800">5L water bottles</p>
+                            <p class="text-sm text-gray-500">(16–17 meters of plastic per bottle) (dark blue, light blue, transparent, turquoise)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
+                        <div>
+                            <p class="font-bold text-gray-800">1–2 L beer/carbonated water bottles, etc.</p>
+                            <p class="text-sm text-gray-500">(8–9 meters of plastic) (dark brown)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
+                        <div>
+                            <p class="font-bold text-gray-800">PET milk bottles</p>
+                            <p class="text-sm text-gray-500">(white plastic)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
+                        <div>
+                            <p class="font-bold text-gray-800">PET energy drink bottles</p>
+                            <p class="text-sm text-gray-500">(black plastic)</p>
+                        </div>
+                    </div>                                         
+                </div>
+            </div>
+
+        </div>
+    </section>    
+    
 
     <!-- 8. Параметры печати (Gray) -->
     <section class="py-24 px-8 bg-white">
