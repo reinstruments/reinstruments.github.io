@@ -125,21 +125,21 @@
         
         
         /* Specifically target the select dropdowns and their options */
-select, 
-option,
-.control-btn select,
-nav select {
-    cursor: none !important;
-    -webkit-appearance: none; /* Helps remove some default OS styling */
-    -moz-appearance: none;
-    appearance: none;
-}
+		select, 
+		option,
+		.control-btn select,
+		nav select {
+			cursor: none !important;
+			-webkit-appearance: none; /* Helps remove some default OS styling */
+			-moz-appearance: none;
+			appearance: none;
+		}
 
-/* Ensure the container also hides the cursor */
-.control-btn, 
-.flex.items-center.gap-4 select {
-    cursor: none !important;
-}
+		/* Ensure the container also hides the cursor */
+		.control-btn, 
+		.flex.items-center.gap-4 select {
+			cursor: none !important;
+		}
         
         
         /* Dark Mode Overrides */
@@ -147,6 +147,26 @@ nav select {
             background-color: #121212;
             color: #F5F5F5;
         }
+
+
+/* Светлая тема по умолчанию */
+.custom-slider-btn {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #1f2937; /* темная иконка */
+}
+.custom-slider-btn:hover {
+    background-color: #ffffff;
+}
+
+/* Темная тема (если класс .dark переключается на корневом элементе html или body) */
+.dark .custom-slider-btn {
+    background-color: rgba(31, 41, 55, 0.9); /* темный фон */
+    color: #f3f4f6; /* светлая иконка */
+}
+.dark .custom-slider-btn:hover {
+    background-color: rgb(31, 41, 55);
+}
+
 
         .dark nav, .dark .card-shadow { background-color: #1E1E1E !important; }
 
@@ -190,7 +210,11 @@ nav select {
             color: #FFF;
         }
 
-
+		.dark .bg-white/90 {
+            background-color: #3D3D3D !important;
+            color: #FFF;
+        }
+		
 
         /* Ensure custom cursor is visible in dark mode */
         .dark .cursor-outline {
@@ -441,10 +465,10 @@ iframe {
     
     <div class="absolute inset-0 flex items-center justify-between px-4 pointer-events-none z-40" 
          x-show="selectedProduct && ((selectedProduct.youtubeId ? 1 : 0) + selectedProduct.images.length) > 1">
-        <button @click.stop="prevImg(selectedProduct)" class="pointer-events-auto w-10 h-10 bg-white/80 rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-all cursor-pointer">
+        <button @click.stop="prevImg(selectedProduct)" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full shadow-lg flex items-center justify-center transition-all cursor-pointer">
             <i class="fa-solid fa-chevron-left pointer-events-none"></i>
         </button>
-        <button @click.stop="nextImg(selectedProduct)" class="pointer-events-auto w-10 h-10 bg-white/80 rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-all cursor-pointer">
+        <button @click.stop="nextImg(selectedProduct)" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full shadow-lg flex items-center justify-center transition-all cursor-pointer">
             <i class="fa-solid fa-chevron-right pointer-events-none"></i>
         </button>
     </div>
@@ -629,10 +653,10 @@ iframe {
 				
 				<div class="absolute inset-0 hidden md:flex items-center justify-between px-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-40" 
 					 x-show="((p.youtubeId ? 1 : 0) + p.images.length) > 1">
-					<button @click.stop="prevImg(p)" class="pointer-events-auto w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white">
+					<button @click.stop="prevImg(p)" class="pointer-events-auto w-8 h-8 custom-slider-btn rounded-full flex items-center justify-center shadow text-xs">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
 					</button>
-					<button @click.stop="nextImg(p)" class="pointer-events-auto w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow text-xs hover:bg-white">
+					<button @click.stop="nextImg(p)" class="pointer-events-auto w-8 h-8 custom-slider-btn rounded-full flex items-center justify-center shadow text-xs">
 						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
 					</button>
 				</div>
@@ -830,14 +854,14 @@ iframe {
                 <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
                 
                 <!-- Кнопки переключения -->
-                <div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
-                    <button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow text-sm hover:bg-white cursor-pointer">
-                        <i class="fa-solid fa-chevron-left pointer-events-none"></i>
-                    </button>
-                    <button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow text-sm hover:bg-white cursor-pointer">
-                        <i class="fa-solid fa-chevron-right pointer-events-none"></i>
-                    </button>
-                </div>
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
+					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
 
                 <!-- Индикаторы (точки) -->
                 <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
@@ -978,14 +1002,14 @@ iframe {
                 <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
                 
                 <!-- Кнопки переключения -->
-                <div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
-                    <button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow text-sm hover:bg-white cursor-pointer">
-                        <i class="fa-solid fa-chevron-left pointer-events-none"></i>
-                    </button>
-                    <button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow text-sm hover:bg-white cursor-pointer">
-                        <i class="fa-solid fa-chevron-right pointer-events-none"></i>
-                    </button>
-                </div>
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
+					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
 
                 <!-- Индикаторы (точки) -->
                 <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
