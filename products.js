@@ -7,7 +7,7 @@ const PRODUCTS_DATA = [
         rating: 5, 
         isVisible: true, 
         youtubeId: 'GzDiOcrPyL4', 
-        downloadUrl: 'https://drive.google.com/uc?export=download&id=1YMHcb2ZrTu7014qup8AXLSSAJnhL44xX', // Ссылка на ZIP или PDF
+        downloadUrl: 'https://drive.usercontent.google.com/download?export=download&confirm=t&id=1YMHcb2ZrTu7014qup8AXLSSAJnhL44xX',
         images: [
             'https://lh3.googleusercontent.com/pw/AP1GczM5q7Vb73DAjlDXVzkPN2U3sOrcCl0uZkOvfRzoUR7M8cbzS7HOeCCf2Ojlj18D_88iaoOY2lR6Gg0bsj5Xim97SvtYf-asbjS0gBTQ35c0uUp5btOvZMvOaO2md_SoyfRZshu7aonrXKlHxz_ydUk=w1128-h933-s-no?authuser=2',
             'https://lh3.googleusercontent.com/pw/AP1GczNMXK2kaysBcx1_FR3ttZue1hYOWsS6MtWPAVgHzOYnS7UaVKUtdEpj4_QLoahqRs0kBZNhp0gVg4ITV8IBnowYdDkV4_o4nYF9CbgpudsYqsBsBGze0G4wzvjUSnxzauztw-P9kxPKWxfwTdhE_u0=w700-h933-s-no?authuser=0', 
@@ -25,7 +25,7 @@ const PRODUCTS_DATA = [
         price: 3.99, 
         rating: 5, 
         isVisible: true,
-        downloadUrl: 'https://drive.usercontent.google.com/uc?export=download&id=1YMHcb2ZrTu7014qup8AXLSSAJnhL44xX', // Ссылка на ZIP или PDF
+        downloadUrl: 'https://drive.usercontent.google.com/download?export=download&confirm=t&id=1YMHcb2ZrTu7014qup8AXLSSAJnhL44xX',
         images: [
             'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2', 
         ], 
