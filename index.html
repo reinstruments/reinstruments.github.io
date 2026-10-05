@@ -155,16 +155,16 @@
 			color: #1f2937; /* темная иконка */
 		}
 		.custom-slider-btn:hover {
-			background-color: #ffffff;
+			background-color: rgba(255, 0, 0, 0.8);
 		}
 
 		/* Темная тема (если класс .dark переключается на корневом элементе html или body) */
 		.dark .custom-slider-btn {
-			background-color: rgba(31, 41, 55, 0.8); /* темный фон */
-			color: #f3f4f6; /* светлая иконка */
+			background-color: rgba(255, 255, 255, 0.8);
+			color: #1f2937; /* темная иконка */
 		}
 		.dark .custom-slider-btn:hover {
-			background-color: rgb(31, 41, 55);
+			background-color: rgba(255, 0, 0, 0.8);
 		}
 
 
@@ -383,18 +383,19 @@ iframe {
 
 
 
-            <!-- Авторизация -->
-            <template x-if="!isLoggedIn">
-                <button @click="showAuth = true; authMode = 'login'" class="text-sm font-bold text-gray-600 hover:text-blue-600 px-2">Sign In</button>
-            </template>
-            
-            <template x-if="isLoggedIn">
-                <div class="flex items-center gap-3 pl-2 border-l border-gray-100">
-                    <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-[10px] font-bold" 
-                         x-text="userName ? userName.split(' ').map(n => n[0]).join('') : '?'"></div>
-                    <button @click="handleLogout" class="text-[10px] uppercase font-bold text-gray-400 hover:text-red-500">Exit</button>
-                </div>
-            </template>
+			<!-- Авторизация -->
+			<template x-if="!isLoggedIn">
+				<button @click="showAuth = true; authMode = 'login'" class="text-sm font-bold text-gray-600 hover:text-blue-600 px-2">Sign In</button>
+			</template>
+
+			<template x-if="isLoggedIn">
+				<div class="flex items-center gap-3 pl-2 border-l border-gray-100">
+					<!-- Кликабельная иконка пользователя -->
+					<div @click="openProfile()" class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-[10px] font-bold cursor-pointer hover:bg-blue-200 transition-colors" 
+						 x-text="userName ? userName.split(' ').map(n => n[0]).join('') : '?'" title="Редактировать профиль"></div>
+					<button @click="handleLogout" class="text-[10px] uppercase font-bold text-gray-400 hover:text-red-500">Exit</button>
+				</div>
+			</template>
 
             <!-- Корзина -->
             <div class="relative cursor-pointer" @click="showCart = true; view = 'bag'">
@@ -408,15 +409,21 @@ iframe {
     </nav>
 
 
-    <!-- SIGN IN / SIGN UP MODAL -->
+	<!-- SIGN IN / SIGN UP MODAL -->
     <div x-show="showAuth" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="showAuth = false"></div>
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="showAuth = false; authError = ''; showPassword = false;"></div>
         <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl relative z-10 overflow-y-auto max-h-[90vh]"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 scale-90"
              x-transition:enter-end="opacity-100 scale-100">
             
-            <button @click="showAuth = false" class="absolute top-6 right-8 text-gray-300 hover:text-gray-500 text-2xl">&times;</button>
+            <!--
+            <button @click="showAuth = false; authError = ''; showPassword = false;" class="absolute top-6 right-8 text-gray-300 hover:text-gray-500 text-2xl">&times;</button>
+            -->
+            
+			<button @click="showAuth = false; authError = ''; showPassword = false;" class="absolute top-6 right-6 z-50 w-10 h-10 rounded-full custom-slider-btn backdrop-blur-sm shadow-md flex items-center justify-center transition-all">
+				<i class="fa-solid fa-xmark text-black"></i>
+			</button>            
             
             <h2 class="text-3xl font-bold text-gray-900 mb-2" x-text="authMode === 'login' ? 'Welcome Back' : 'Join ReTools'"></h2>
             <p class="text-gray-500 text-sm mb-8" x-text="authMode === 'login' ? 'Enter your details to access your account.' : 'Create an account to start your organized journey.'"></p>
@@ -444,15 +451,41 @@ iframe {
                         </div>
                     </div>
                 </template>
+                
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-gray-600 ml-1">Email Address</label>
                     <input type="email" x-model="authEmail" placeholder="name@email.com" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
+
+                <!-- Поле ввода пароля с кнопкой показа/скрытия -->
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-gray-600 ml-1">Password</label>
-                    <input type="password" x-model="authPassword" placeholder="••••••••" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                    <div class="relative">
+                        <input :type="showPassword ? 'text' : 'password'" 
+                               x-model="authPassword" 
+                               placeholder="••••••••" 
+                               required 
+                               class="w-full p-4 pr-12 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                        
+                        <button type="button" @click="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none">
+                            <!-- Иконка: глаз закрыт -->
+                            <svg x-show="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            <!-- Иконка: глаз открыт -->
+                            <svg x-show="showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.05 10.05 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 
+                <!-- Блок вывода ошибки в нижней части модального окна -->
+                <template x-if="authError">
+                    <div class="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-2xl text-center" x-text="authError"></div>
+                </template>
+
                 <button type="submit" class="btn-blue-pill w-full py-4 text-lg mt-4 shadow-lg shadow-blue-100">
                     <span x-text="authMode === 'login' ? 'Sign In' : 'Create Account'"></span>
                 </button>
@@ -460,7 +493,7 @@ iframe {
 
             <div class="mt-8 text-center text-sm">
                 <span class="text-gray-500" x-text="authMode === 'login' ? 'New to ReTools?' : 'Already have an account?'"></span>
-                <button @click="authMode = (authMode === 'login' ? 'signup' : 'login')" class="text-blue-600 font-bold ml-1 hover:underline" x-text="authMode === 'login' ? 'Sign Up' : 'Log In'"></button>
+                <button @click="authMode = (authMode === 'login' ? 'signup' : 'login'); authError = '';" class="text-blue-600 font-bold ml-1 hover:underline" x-text="authMode === 'login' ? 'Sign Up' : 'Log In'"></button>
             </div>
         </div>
     </div>
@@ -478,8 +511,8 @@ iframe {
             <button @click="selectedProduct = null" class="absolute top-6 right-8 text-gray-400 hover:text-gray-900 text-3xl z-20">&times;</button>
 			-->
 			 <!-- Кнопка закрытия модального окна (крестик в кружке) -->
-			<button @click="selectedProduct = null" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full custom-slider-btn backdrop-blur-sm text-gray-500  shadow-md flex items-center justify-center transition-all">
-				<i class="fa-solid fa-xmark text-lg"></i>
+			<button @click="selectedProduct = null" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full custom-slider-btn backdrop-blur-sm shadow-md flex items-center justify-center transition-all">
+				<i class="fa-solid fa-xmark text-black"></i>
 			</button>
             
 			<!-- Modal Images/Video Slider -->
@@ -620,6 +653,94 @@ iframe {
         </div>
     </div>
 
+    
+<!-- PROFILE EDIT MODAL -->
+<div x-show="showProfileModal" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="showProfileModal = false; profileError = ''; showPassword = false;"></div>
+    <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl relative z-10 overflow-y-auto max-h-[90vh]"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 scale-90"
+         x-transition:enter-end="opacity-100 scale-100">
+        
+        <!-- Кружок светлый (bg-gray-100), крестик черный (text-black) 
+        <button @click="showProfileModal = false; profileError = ''; showPassword = false;" class="absolute top-6 right-6 w-10 h-10 bg-gray-100 hover:bg-gray-200 text-black dark:text-yellow-400 rounded-full flex items-center justify-center transition-colors text-xl font-bold">&times;</button>
+        -->
+        
+        <button @click="showProfileModal = false; profileError = ''; showPassword = false;" class="absolute top-6 right-6 w-10 h-10 rounded-full custom-slider-btn backdrop-blur-sm text-gray-500  shadow-md flex items-center justify-center transition-all">
+		<i class="fa-solid fa-xmark text-black"></i>
+		</button>
+        
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Edit Profile</h2>
+        <p class="text-gray-500 text-sm mb-6">Update your personal details and shipping information.</p>
+
+        <form @submit.prevent="saveProfile" class="space-y-4">
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-gray-600 ml-1">Full Name</label>
+                <input type="text" x-model="userName" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-gray-600 ml-1">Street Address</label>
+                <input type="text" x-model="shippingInfo.address" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-600 ml-1">City</label>
+                    <input type="text" x-model="shippingInfo.city" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-600 ml-1">Zip Code</label>
+                    <input type="text" x-model="shippingInfo.zip" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-gray-600 ml-1">Email Address</label>
+                <input type="email" x-model="authEmail" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-gray-600 ml-1">Password</label>
+                <div class="relative">
+                    <input :type="showPassword ? 'text' : 'password'" 
+                           x-model="authPassword" 
+                           required 
+                           class="w-full p-4 pr-12 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                    
+                    <button type="button" @click="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none">
+                        <!-- Глаз закрыт -->
+                        <svg x-show="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <!-- Глаз открыт -->
+                        <svg x-show="showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.05 10.05 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Блок вывода ошибки в нижней части формы -->
+            <template x-if="profileError">
+                <div class="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-2xl text-center" x-text="profileError"></div>
+            </template>
+            
+            <div class="pt-2">
+                <button type="submit" class="btn-blue-pill w-full py-4 text-base shadow-lg shadow-blue-100">Save Changes</button>
+            </div>
+        </form>
+
+        <div class="mt-4 pt-4 border-t border-gray-100 text-center">
+            <button @click="deleteProfile" class="w-full py-3 text-sm font-bold text-red-500 hover:bg-red-50 rounded-2xl transition-colors">
+                Delete Profile
+            </button>
+        </div>
+    </div>
+</div>
+    
+    
     <!-- HOME / HERO SECTION -->
     <header class="px-4 md:px-8 py-8 md:py-12">
         <div class="hero-bg-gradient max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 px-8 md:px-20 py-16 md:py-24 rounded-[2rem] shadow-xl overflow-hidden">
@@ -1456,8 +1577,11 @@ iframe {
                 showAuth: false,
                 authMode: 'login', 
                 isLoggedIn: false,
-                userName: '', 
-
+                userName: '',
+                showProfileModal: false, // Флаг для отображения модального окна профиля 
+				profileError: '', // Для хранения текста ошибки
+				showPassword: false, // <-- Добавьте сюда
+				authError: '',
                 shippingInfo: {
                     name: '',
                     address: '',
@@ -1553,15 +1677,16 @@ iframe {
                     } else {
                         // Login Logic
                         const user = users.find(u => u.email === this.authEmail && u.password === this.authPassword);
-                        if (user) {
-                            this.userName = user.name;
-                            this.shippingInfo = { ...user.shippingInfo };
-                            localStorage.setItem('reTools_session', JSON.stringify(user));
-                            this.isLoggedIn = true;
-                            this.showAuth = false;
-                        } else {
-                            alert('Invalid email or password');
-                        }
+						if (user) {
+							this.userName = user.name;
+							this.shippingInfo = { ...user.shippingInfo };
+							localStorage.setItem('reTools_session', JSON.stringify(user));
+							this.isLoggedIn = true;
+							this.showAuth = false;
+							this.authError = '';
+						} else {
+							this.authError = '⚠️ Неверный email или пароль';
+						}
                     }
                     // Reset fields
                     this.authEmail = '';
@@ -1655,7 +1780,96 @@ iframe {
                     
                     this.newReviewText = '';
                     this.newReviewRating = 0; 
-                }
+                },
+				saveProfile() {
+					this.profileError = ''; // Сбрасываем ошибку перед проверкой
+
+					// 1. Проверка корректности email
+					const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+					if (!emailRegex.test(this.authEmail)) {
+						this.profileError = '⚠️ Пожалуйста, введите корректный email';
+						return;
+					}
+
+					// 2. Проверка длины пароля (если введен)
+					if (this.authPassword && this.authPassword.length < 6) {
+						this.profileError = '⚠️ Новый пароль должен содержать не менее 6 символов';
+						return;
+					}
+
+					// 3. Проверка базы данных
+					const users = JSON.parse(localStorage.getItem('reTools_users') || '[]');
+					const currentSession = JSON.parse(localStorage.getItem('reTools_session') || '{}');
+					const targetEmail = currentSession.email;
+
+					if (this.authEmail !== targetEmail) {
+						const emailExists = users.some(u => u.email === this.authEmail);
+						if (emailExists) {
+							this.profileError = '⚠️ Этот email уже используется другим аккаунтом';
+							return;
+						}
+					}
+
+					// 4. Сохранение данных
+					const userIndex = users.findIndex(u => u.email === targetEmail);
+					const updatedUser = {
+						name: this.userName,
+						email: this.authEmail,
+						password: this.authPassword ? this.authPassword : currentSession.password,
+						shippingInfo: { ...this.shippingInfo }
+					};
+
+					if (userIndex !== -1) {
+						users[userIndex] = updatedUser;
+					} else {
+						users.push(updatedUser);
+					}
+
+					localStorage.setItem('reTools_users', JSON.stringify(users));
+					localStorage.setItem('reTools_session', JSON.stringify(updatedUser));
+
+					this.authPassword = '';
+					//alert('Профиль успешно обновлен!');
+					this.showProfileModal = false;
+				},
+				openProfile() {
+					const session = JSON.parse(localStorage.getItem('reTools_session') || '{}');
+					this.userName = session.name || '';
+					this.authEmail = session.email || '';
+					this.authPassword = session.password || ''; // Подгружаем текущий пароль
+					this.shippingInfo = session.shippingInfo ? { ...session.shippingInfo } : { address: '', city: '', zip: '' };
+					this.showProfileModal = true;
+					this.profileError = '';
+					this.showPassword = false;
+				},
+				// Метод удаления профиля
+				deleteProfile() {
+					if (confirm('Вы уверены, что хотите удалить свой профиль? Это действие необратимо.')) {
+						// 1. Получаем текущую сессию, чтобы узнать, кого именно удаляем
+						const currentSession = JSON.parse(localStorage.getItem('reTools_session') || '{}');
+						const targetEmail = currentSession.email;
+
+						// 2. Достаем всех пользователей и удаляем текущего из массива
+						let users = JSON.parse(localStorage.getItem('reTools_users') || '[]');
+						if (targetEmail) {
+							users = users.filter(u => u.email !== targetEmail);
+							localStorage.setItem('reTools_users', JSON.stringify(users));
+						}
+
+						// 3. Удаляем данные текущей сессии
+						localStorage.removeItem('reTools_session');
+
+						// 4. Сбрасываем состояние в приложении
+						this.isLoggedIn = false;
+						this.userName = '';
+						this.authEmail = '';
+						this.authPassword = '';
+						this.shippingInfo = { name: '', address: '', city: '', zip: '' };
+						this.showProfileModal = false;
+						
+						alert('Ваш профиль был полностью удален.');
+					}
+				}
             }))
         })
         
