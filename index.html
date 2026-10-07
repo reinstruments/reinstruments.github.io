@@ -414,21 +414,43 @@ iframe {
 
 
 	<!-- SIGN IN / SIGN UP MODAL -->
-    <div x-show="showAuth" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="showAuth = false; authError = ''; showPassword = false;"></div>
+    <div x-show="showAuth" x-effect="if (showAuth) refreshCaptcha()" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        
+        <!-- Клик по фону (закрытие) -->
+		<div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="showAuth = false; authError = ''; showPassword = false; refreshCaptcha()"></div>
+        
         <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl relative z-10 overflow-y-auto max-h-[90vh]"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 scale-90"
              x-transition:enter-end="opacity-100 scale-100">
             
+            <!--
 			<button @click="showAuth = false; authError = ''; showPassword = false;" class="absolute top-6 right-6 z-50 w-10 h-10 rounded-full custom-slider-btn backdrop-blur-sm shadow-md flex items-center justify-center transition-all">
 				<i class="fa-solid fa-xmark text-black"></i>
 			</button>            
+            -->
+            
+            <!-- Кнопка закрытия (крестик) -->
+			<button @click="showAuth = false; authError = ''; showPassword = false; refreshCaptcha()" class="absolute top-6 right-6 z-50 w-10 h-10 rounded-full custom-slider-btn backdrop-blur-sm shadow-md flex items-center justify-center transition-all">
+				<i class="fa-solid fa-xmark text-black"></i>
+			</button>
+            
             
             <h2 class="text-3xl font-bold text-gray-900 mb-2" x-text="authMode === 'login' ? 'Welcome Back' : 'Join ReTools'"></h2>
             <p class="text-gray-500 text-sm mb-8" x-text="authMode === 'login' ? 'Enter your details to access your account.' : 'Create an account to start your organized journey.'"></p>
 
-            <form @submit.prevent="handleAuth" class="space-y-4">
+            <!-- <form @submit.prevent="handleAuth" class="space-y-4"> -->
+				<form @submit.prevent="
+				if (parseInt(userCaptchaInput) !== (captchaNum1 + captchaNum2)) {
+					authError = 'Wrong captcha. Try again.';
+					isCaptchaValid = false;
+					refreshCaptcha();
+					return;
+				}
+				isCaptchaValid = true;
+				authError = '';
+				handleAuth();
+			" class="space-y-4">
                 <template x-if="authMode === 'signup'">
                     <div class="space-y-4">
 						<!-- Блок загрузки и предпросмотра аватарки для регистрации -->
@@ -492,6 +514,18 @@ iframe {
                         </button>
                     </div>
                 </div>
+                
+			<!-- БЛОК КАПЧИ (Математический пример) -->
+				<div class="space-y-1">
+					<label class="text-xs font-bold text-gray-600 ml-1">
+						Confirm you're not a robot: <span class="text-blue-600" x-text="captchaNum1 + ' + ' + captchaNum2 + ' = ?'"></span>
+					</label>
+					<input type="number" 
+						   x-model="userCaptchaInput" 
+						   placeholder="Введите ответ" 
+						   required 
+						   class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+				</div>                                               
                 
                 <!-- Блок вывода ошибки в нижней части модального окна -->
                 <template x-if="authError">
@@ -1559,79 +1593,80 @@ iframe {
         <p class="text-gray-400 text-xs tracking-wide">© ReTools GmbH. All rights reserved.</p>
     </div>
     
-    <!--
-    
-<div class="mt-10 p-6 bg-white rounded-lg shadow-md" 
-     x-data="{ 
-         allUsers: [],
-         loadUsers() {
-             const data = localStorage.getItem('reTools_users');
-             this.allUsers = data ? JSON.parse(data) : [];
-             if (!Array.isArray(this.allUsers)) this.allUsers = [];
-         }
-     }" 
-     x-init="
-         loadUsers();
-         setInterval(() => loadUsers(), 1000);
-     ">
-    
-    <h3 class="text-xl font-bold mb-4">Список зарегистрированных пользователей (<span x-text="allUsers.length"></span>)</h3>
-    
-    <template x-if="allUsers.length === 0">
-        <p class="text-gray-500">Пока нет зарегистрированных пользователей.</p>
-    </template>
+<div style="display: none;">
+		
+	<div class="mt-10 p-6 bg-white rounded-lg shadow-md" 
+		 x-data="{ 
+			 allUsers: [],
+			 loadUsers() {
+				 const data = localStorage.getItem('reTools_users');
+				 this.allUsers = data ? JSON.parse(data) : [];
+				 if (!Array.isArray(this.allUsers)) this.allUsers = [];
+			 }
+		 }" 
+		 x-init="
+			 loadUsers();
+			 setInterval(() => loadUsers(), 1000);
+		 ">
+		
+		<h3 class="text-xl font-bold mb-4">Список зарегистрированных пользователей (<span x-text="allUsers.length"></span>)</h3>
+		
+		<template x-if="allUsers.length === 0">
+			<p class="text-gray-500">Пока нет зарегистрированных пользователей.</p>
+		</template>
 
-    <template x-if="allUsers.length > 0">
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200 text-sm">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Аватар</th>
-                        <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Имя</th>
-                        <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                        <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Пароль</th>
-                        <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Адрес</th>
-                        <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Город</th>
-                        <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Индекс</th>
-                        <th class="px-4 py-3 text-center font-medium text-gray-500 uppercase tracking-wider">Действие</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <template x-for="(user, index) in allUsers" :key="index">
-                        <tr>
-                           
-                            <td class="px-4 py-3 whitespace-nowrap">
-                                <img :src="user.avatar || 'https://via.placeholder.com/40'" alt="Avatar" class="w-10 h-10 rounded-full object-cover">
-                            </td>
-                            
-                            <td class="px-4 py-3 whitespace-nowrap font-medium text-gray-900" x-text="user.name"></td>
-                            
-                            <td class="px-4 py-3 whitespace-nowrap text-gray-500" x-text="user.email"></td>
-                            
-                            <td class="px-4 py-3 whitespace-nowrap text-gray-500" x-text="user.password"></td>
-                            
-                            <td class="px-4 py-3 whitespace-nowrap text-gray-500" x-text="user.shippingInfo?.address || user.address || '—'"></td>
-                            
-                            <td class="px-4 py-3 whitespace-nowrap text-gray-500" x-text="user.shippingInfo?.city || user.city || '—'"></td>
-                            
-                            <td class="px-4 py-3 whitespace-nowrap text-gray-500" x-text="user.shippingInfo?.zip || user.zip || '—'"></td>
-                             
-                            <td class="px-4 py-3 whitespace-nowrap text-center font-medium">
-                                <button @click="
-                                    allUsers.splice(index, 1); 
-                                    localStorage.setItem('reTools_users', JSON.stringify(allUsers));
-                                " class="text-red-600 hover:text-red-900 font-bold text-lg px-2 py-1" title="Удалить пользователя">
-                                    ✕
-                                </button>
-                            </td>
-                        </tr>
-                    </template>
-                </tbody>
-            </table>
-        </div>
-    </template>
+		<template x-if="allUsers.length > 0">
+			<div class="overflow-x-auto">
+				<table class="min-w-full divide-y divide-gray-200 text-sm">
+					<thead class="bg-gray-50">
+						<tr>
+							<th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Аватар</th>
+							<th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Имя</th>
+							<th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Email</th>
+							<th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Пароль</th>
+							<th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Адрес</th>
+							<th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Город</th>
+							<th class="px-4 py-3 text-left font-medium text-gray-500 uppercase tracking-wider">Индекс</th>
+							<th class="px-4 py-3 text-center font-medium text-gray-500 uppercase tracking-wider">Действие</th>
+						</tr>
+					</thead>
+					<tbody class="bg-white divide-y divide-gray-200">
+						<template x-for="(user, index) in allUsers" :key="index">
+							<tr>
+							   
+								<td class="px-4 py-3 whitespace-nowrap">
+									<img :src="user.avatar || 'https://via.placeholder.com/40'" alt="Avatar" class="w-10 h-10 rounded-full object-cover">
+								</td>
+								
+								<td class="px-4 py-3 whitespace-nowrap font-medium text-gray-900" x-text="user.name"></td>
+								
+								<td class="px-4 py-3 whitespace-nowrap text-gray-500" x-text="user.email"></td>
+								
+								<td class="px-4 py-3 whitespace-nowrap text-gray-500" x-text="user.password"></td>
+								
+								<td class="px-4 py-3 whitespace-nowrap text-gray-500" x-text="user.shippingInfo?.address || user.address || '—'"></td>
+								
+								<td class="px-4 py-3 whitespace-nowrap text-gray-500" x-text="user.shippingInfo?.city || user.city || '—'"></td>
+								
+								<td class="px-4 py-3 whitespace-nowrap text-gray-500" x-text="user.shippingInfo?.zip || user.zip || '—'"></td>
+								 
+								<td class="px-4 py-3 whitespace-nowrap text-center font-medium">
+									<button @click="
+										allUsers.splice(index, 1); 
+										localStorage.setItem('reTools_users', JSON.stringify(allUsers));
+									" class="text-red-600 hover:text-red-900 font-bold text-lg px-2 py-1" title="Удалить пользователя">
+										✕
+									</button>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</div>
+		</template>
+	</div>
+     
 </div>
-   -->   
     
 </footer>
 
@@ -1668,7 +1703,11 @@ iframe {
 				profileError: '', // Для хранения текста ошибки
 				showPassword: false, // <-- Добавьте сюда
 				authError: '',
-				avatarBase64: '', // Здесь будет храниться строка Base64 (например, "data:image/png;base64,...")
+				avatarBase64: '', // "data:image/png;base64,..."
+				captchaNum1: Math.floor(Math.random() * 10) + 1,
+				captchaNum2: Math.floor(Math.random() * 10) + 1,
+				userCaptchaInput: '',
+				isCaptchaValid: true,
                 shippingInfo: {
                     name: '',
                     address: '',
@@ -1693,6 +1732,13 @@ iframe {
                     return this.products.filter(p => p.isVisible);
                 },
                 
+                // Функция для обновления капчи (вызывайте её при открытии модального окна или ошибке)
+				refreshCaptcha() {
+					this.captchaNum1 = Math.floor(Math.random() * 10) + 1;
+					this.captchaNum2 = Math.floor(Math.random() * 10) + 1;
+					this.userCaptchaInput = '';
+				},
+
                 init() {
                     const qrImg = document.getElementById('dynamicQR');
                     const currentURL = encodeURIComponent(window.location.href);
@@ -1757,13 +1803,14 @@ iframe {
 					const users = JSON.parse(localStorage.getItem('reTools_users') || '[]');
 					//console.log('Список всех пользователей в базе:', users);
 
-					if (this.authMode === 'signup') {
+					//signup mode
+					if (this.authMode === 'signup') { //signup mode
 						const emailExists = users.some(user => user.email.toLowerCase() === this.authEmail.toLowerCase());
 
-        if (emailExists) {
-            this.authError = 'Пользователь с таким email уже зарегистрирован!';
-            return; // Прерываем выполнение регистрации
-        }
+					if (emailExists) {
+						this.authError = '⚠️ This email already registered!';
+						return; // Прерываем выполнение регистрации
+					}
 						
 						
 						// Registration Logic
@@ -1781,6 +1828,8 @@ iframe {
 						localStorage.setItem('reTools_session', JSON.stringify(newUser));
 						this.isLoggedIn = true;
 						this.showAuth = false;
+					
+					//signin mode
 					} else {
 						// Login Logic
 						const user = users.find(u => u.email === this.authEmail && u.password === this.authPassword);
@@ -1794,7 +1843,8 @@ iframe {
 							this.showAuth = false;
 							this.authError = '';
 						} else {
-							this.authError = '⚠️ Неверный email или пароль';
+							this.authError = '⚠️ Wrong email or password';
+							this.refreshCaptcha();
 						}
 					}
 					// Reset fields
