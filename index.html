@@ -1602,37 +1602,53 @@ iframe {
 
 
     <!-- 7. Features of the Applied Raw Materials -->    
-    <section id="materials" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq0lquMR8IODMJzrBv2atCC_BlMVa1WR8cVL3WDhQu5WkzNELdOny6q78&s=10',
-        'https://lh3.googleusercontent.com/pw/AP1GczOhEpnhBdKg8A9_QeCbbqAA2S9UW6EfcPwT1YjKKZYdDAKoNyKkQ2HnKBr782zlpNL98QnNmssaqVmoWWuGulbjEyMpIVLQ33p25SHXNicl9UJi9esFD3j1x5QJ25wVONuQH16YRel3dHC8BvgAhpE0=w569-h1207-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczMdb2tIoN6ydzsbS5h7BRoBV2LkCCpaX663X-Hh31hUBOhzELLLYP1ZRcwawXGGQDfFM4IOnUrsog7pWWs_koSy4UcXyDqedgzfEdINCCZLBAEcep0d0ERoEiQkzhj9MSM6RkAZkBNZyeXAazOhwqmT=w500-h1000-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczOE31IKt6hJ7mMbbP-aQVe5PHIIaNubNg_fWJJ8IMv10tSi-450pfVkdxKNeP3BdOXprkpO7c-wkT3rLWJm0C1uOcRtvZgFhPIW2B5ejutVOWRO8gSiNYOk7GS_jl7mR02aTQ75dUQqYaZujx67l_Zc=w1146-h1106-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
-    ]}">
+	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, items: [
+			
+			{ type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq0lquMR8IODMJzrBv2atCC_BlMVa1WR8cVL3WDhQu5WkzNELdOny6q78&s=10' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczOhEpnhBdKg8A9_QeCbbqAA2S9UW6EfcPwT1YjKKZYdDAKoNyKkQ2HnKBr782zlpNL98QnNmssaqVmoWWuGulbjEyMpIVLQ33p25SHXNicl9UJi9esFD3j1x5QJ25wVONuQH16YRel3dHC8BvgAhpE0=w569-h1207-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMdb2tIoN6ydzsbS5h7BRoBV2LkCCpaX663X-Hh31hUBOhzELLLYP1ZRcwawXGGQDfFM4IOnUrsog7pWWs_koSy4UcXyDqedgzfEdINCCZLBAEcep0d0ERoEiQkzhj9MSM6RkAZkBNZyeXAazOhwqmT=w500-h1000-s-no?authuser=' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczOE31IKt6hJ7mMbbP-aQVe5PHIIaNubNg_fWJJ8IMv10tSi-450pfVkdxKNeP3BdOXprkpO7c-wkT3rLWJm0C1uOcRtvZgFhPIW2B5ejutVOWRO8gSiNYOk7GS_jl7mR02aTQ75dUQqYaZujx67l_Zc=w1146-h1106-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0' },
+			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
+		]}">    
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
-                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
-                
-                <!-- Кнопки переключения -->
-				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
-					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+				
+				<!-- Картинка -->
+				<template x-if="items[currentImg].type === 'image'">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+				</template>
+				
+				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<template x-if="items[currentImg].type === 'video'">
+					<div class="w-full h-full relative">
+						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
+						<div class="absolute inset-0 pointer-events-none"></div>
+					</div>
+				</template>
+
+				 
+				<!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
 					</button>
-					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
 					</button>
 				</div>
 
-                <!-- Индикаторы (точки) -->
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-                    <template x-for="(img, idx) in images" :key="idx">
-                        <button @click="currentImg = idx" 
-                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
-                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
-                        </button>
-                    </template>
-                </div>
-            </div>
+				<!-- Индикаторы (точки) -->
+				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+					<template x-for="(item, idx) in items" :key="idx">
+						<button @click="currentImg = idx" 
+								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+						</button>
+					</template>
+				</div>
+			</div>
                         
             <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Features of the Applied Raw Materials</h2>
@@ -1679,37 +1695,53 @@ iframe {
 
 
 	<!-- Printing Parameters -->
-    <section class="py-24 px-8 bg-white" x-data="{ currentImg: 0, images: [
-        'https://images.unsplash.com/photo-1597765654525-5cb60d312ef6?auto=format&fit=crop&q=80&w=1000',
-        'https://sigmafilament.com/wp-content/uploads/2026/06/pet-filament-pet-vs-petg-thermal-chart.webp',
-        'https://ultimaker.com/wp-content/uploads/2025/02/70-Ultimaker-Eriks-1.png',
-        'https://forward-am.com/wp-content/uploads/2021/07/forward-am-use-case-vola-ultimaker.jpg',
-        'https://i.redd.it/vmlqkleq2f4g1.jpg',
-    ]}">
+	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+			
+			{ type: 'image', url: 'https://images.unsplash.com/photo-1597765654525-5cb60d312ef6?auto=format&fit=crop&q=80&w=1000' },
+			{ type: 'image', url: 'https://sigmafilament.com/wp-content/uploads/2026/06/pet-filament-pet-vs-petg-thermal-chart.webp' },
+			{ type: 'image', url: 'https://ultimaker.com/wp-content/uploads/2025/02/70-Ultimaker-Eriks-1.png' },
+			{ type: 'image', url: 'https://forward-am.com/wp-content/uploads/2021/07/forward-am-use-case-vola-ultimaker.jpg' },
+			{ type: 'image', url: 'https://i.redd.it/vmlqkleq2f4g1.jpg' },
+			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
+		]}">    
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
-                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
-                
-                <!-- Кнопки переключения -->
-				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
-					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+				
+				<!-- Картинка -->
+				<template x-if="items[currentImg].type === 'image'">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+				</template>
+				
+				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<template x-if="items[currentImg].type === 'video'">
+					<div class="w-full h-full relative">
+						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
+						<div class="absolute inset-0 pointer-events-none"></div>
+					</div>
+				</template>
+
+				 
+				<!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
 					</button>
-					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
 					</button>
 				</div>
 
-                <!-- Индикаторы (точки) -->
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-                    <template x-for="(img, idx) in images" :key="idx">
-                        <button @click="currentImg = idx" 
-                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
-                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
-                        </button>
-                    </template>
-                </div>
-            </div>
+				<!-- Индикаторы (точки) -->
+				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+					<template x-for="(item, idx) in items" :key="idx">
+						<button @click="currentImg = idx" 
+								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+						</button>
+					</template>
+				</div>
+			</div>
             
             <div class="space-y-6 order-1 md:order-1 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Printing Parameters</h2>
@@ -1740,37 +1772,51 @@ iframe {
 
 
     <!-- Not every bottle can be recycled -->    
-    <section id="bottles" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
-        'https://lh3.googleusercontent.com/pw/AP1GczMdbxgV5TLoz6VHdpVzwxpF03RisIxOMjTvSRZ9ulw89Rz6rxIKrsefOkGPbbLasGam6hkUthEvLDSZ6EeuZF4DT9_3gtUOU93WYG5c-qsJX6-KZqxwYQAkv78nz6s_b2cpEFQ5iSFGvUME7DhmoyWl=w612-h612-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczOhEpnhBdKg8A9_QeCbbqAA2S9UW6EfcPwT1YjKKZYdDAKoNyKkQ2HnKBr782zlpNL98QnNmssaqVmoWWuGulbjEyMpIVLQ33p25SHXNicl9UJi9esFD3j1x5QJ25wVONuQH16YRel3dHC8BvgAhpE0=w569-h1207-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczMdb2tIoN6ydzsbS5h7BRoBV2LkCCpaX663X-Hh31hUBOhzELLLYP1ZRcwawXGGQDfFM4IOnUrsog7pWWs_koSy4UcXyDqedgzfEdINCCZLBAEcep0d0ERoEiQkzhj9MSM6RkAZkBNZyeXAazOhwqmT=w500-h1000-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczOE31IKt6hJ7mMbbP-aQVe5PHIIaNubNg_fWJJ8IMv10tSi-450pfVkdxKNeP3BdOXprkpO7c-wkT3rLWJm0C1uOcRtvZgFhPIW2B5ejutVOWRO8gSiNYOk7GS_jl7mR02aTQ75dUQqYaZujx67l_Zc=w1146-h1106-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
-    ]}">
+	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, items: [
+			
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMdbxgV5TLoz6VHdpVzwxpF03RisIxOMjTvSRZ9ulw89Rz6rxIKrsefOkGPbbLasGam6hkUthEvLDSZ6EeuZF4DT9_3gtUOU93WYG5c-qsJX6-KZqxwYQAkv78nz6s_b2cpEFQ5iSFGvUME7DhmoyWl=w612-h612-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczOhEpnhBdKg8A9_QeCbbqAA2S9UW6EfcPwT1YjKKZYdDAKoNyKkQ2HnKBr782zlpNL98QnNmssaqVmoWWuGulbjEyMpIVLQ33p25SHXNicl9UJi9esFD3j1x5QJ25wVONuQH16YRel3dHC8BvgAhpE0=w569-h1207-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMdb2tIoN6ydzsbS5h7BRoBV2LkCCpaX663X-Hh31hUBOhzELLLYP1ZRcwawXGGQDfFM4IOnUrsog7pWWs_koSy4UcXyDqedgzfEdINCCZLBAEcep0d0ERoEiQkzhj9MSM6RkAZkBNZyeXAazOhwqmT=w500-h1000-s-no?authuser=0' },
+			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
+		]}">  
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
-                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
-                
-                <!-- Кнопки переключения -->
-				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
-					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+			<div class="order-2 md:order-2 relative group aspect-[4/5] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+				
+				<!-- Картинка -->
+				<template x-if="items[currentImg].type === 'image'">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+				</template>
+				
+				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<template x-if="items[currentImg].type === 'video'">
+					<div class="w-full h-full relative">
+						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
+						<div class="absolute inset-0 pointer-events-none"></div>
+					</div>
+				</template>
+
+				 
+				<!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
 					</button>
-					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
 					</button>
 				</div>
 
-                <!-- Индикаторы (точки) -->
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-                    <template x-for="(img, idx) in images" :key="idx">
-                        <button @click="currentImg = idx" 
-                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
-                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
-                        </button>
-                    </template>
-                </div>
-            </div>
+				<!-- Индикаторы (точки) -->
+				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+					<template x-for="(item, idx) in items" :key="idx">
+						<button @click="currentImg = idx" 
+								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+						</button>
+					</template>
+				</div>
+			</div>
                         
             <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Not every bottle can be recycled</h2>
@@ -1799,37 +1845,55 @@ iframe {
 
 
 	<!-- Сферы применения станков по переработке PET тары (White) -->
-    <section class="py-24 px-8 bg-white" x-data="{ currentImg: 0, images: [
-        'https://www.raspberrypi.com/app/uploads/2025/08/Petmachine3.webp',
-        'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1100-h943-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczMUza5zOwyDDewxsqSBPGtAF5k5gr5wcpySktigAYj5pzMhk86tubvlW_DIYmAiuTFnldQvFaVRakSDpTVEc5vi4T5da8U1Ax7rjxwUeSJQK8RUsVPNSaVZpk4j8EgFZtjqvNn1Gqo5vaCtowV2KrJ0=w2757-h1001-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczNnaQcdxYmvovBnOlUc7td7HkBe0B2K-Gkgp1mJY4NFz8ow0A0CFN9VGWZKahhbUrXwF7Kxij4NVYNp4TnpbQaz8LoyJTAk_NgTlzkoMh4VaSDDd5hIk-CmpuQAqWwbpvUhZq-QYnAM8NRLzg8TqNOD=w1433-h733-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczPBgiV6GHKFfN9aHh9plAubV9hBIi9cgtsooJl_Yc4Ztce1znFFvEp4nY46-k5Pj678VkbQG6zTNwO0VVsaNL6IaZAiTZIinD9BchxUsM-D_y2o4G4d_wIlHvwLEvXTcnGOTh7Qwb6jNbjidavOpTpy=w720-h404-s-no?authuser=0',
-    ]}">
+	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+			
+			{ type: 'image', url: 'https://www.raspberrypi.com/app/uploads/2025/08/Petmachine3.webp' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1100-h943-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMUza5zOwyDDewxsqSBPGtAF5k5gr5wcpySktigAYj5pzMhk86tubvlW_DIYmAiuTFnldQvFaVRakSDpTVEc5vi4T5da8U1Ax7rjxwUeSJQK8RUsVPNSaVZpk4j8EgFZtjqvNn1Gqo5vaCtowV2KrJ0=w2757-h1001-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNnaQcdxYmvovBnOlUc7td7HkBe0B2K-Gkgp1mJY4NFz8ow0A0CFN9VGWZKahhbUrXwF7Kxij4NVYNp4TnpbQaz8LoyJTAk_NgTlzkoMh4VaSDDd5hIk-CmpuQAqWwbpvUhZq-QYnAM8NRLzg8TqNOD=w1433-h733-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPBgiV6GHKFfN9aHh9plAubV9hBIi9cgtsooJl_Yc4Ztce1znFFvEp4nY46-k5Pj678VkbQG6zTNwO0VVsaNL6IaZAiTZIinD9BchxUsM-D_y2o4G4d_wIlHvwLEvXTcnGOTh7Qwb6jNbjidavOpTpy=w720-h404-s-no?authuser=0' },
+			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
+		]}"> 
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
-                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
-                
-                <!-- Кнопки переключения -->
-				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
-					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+            
+			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+				
+				<!-- Картинка -->
+				<template x-if="items[currentImg].type === 'image'">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+				</template>
+				
+				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<template x-if="items[currentImg].type === 'video'">
+					<div class="w-full h-full relative">
+						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
+						<div class="absolute inset-0 pointer-events-none"></div>
+					</div>
+				</template>
+
+				 
+				<!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
 					</button>
-					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
 					</button>
 				</div>
 
-                <!-- Индикаторы (точки) -->
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-                    <template x-for="(img, idx) in images" :key="idx">
-                        <button @click="currentImg = idx" 
-                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
-                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
-                        </button>
-                    </template>
-                </div>
-            </div>
+				<!-- Индикаторы (точки) -->
+				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+					<template x-for="(item, idx) in items" :key="idx">
+						<button @click="currentImg = idx" 
+								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+						</button>
+					</template>
+				</div>
+			</div>
+            
             <div class="space-y-6 order-1 md:order-1 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Application Areas of PET Recycling Machines</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">There are quite a few scenarios for using pulltrusion machines, as they are very compact and economical (effectively operating a 12V heater at 160–180 °C and 1 stepper motor). Here are some of them:</p>
@@ -1856,77 +1920,144 @@ iframe {
     </section>
 
 
-    <!-- 10. Экономика пуллструзионной технологии (Gray) -->
-    <section class="py-24 px-8 bg-gray-50">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1">
-                <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1000" class="rounded-[3rem] shadow-2xl w-full object-cover -rotate-2" alt="Economy and cost savings">
- 
 
-                
-                
-<div class="max-w-md mx-auto my-8 px-4" x-data="{ currentStep: 'delivery' }">
-    <div class="flex rounded-full overflow-hidden border border-gray-200 bg-white shadow-sm text-xs font-medium">
-        
-        <!-- Basket -->
-        <div @click="currentStep = 'basket'" 
-             :class="currentStep === 'basket' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
-             style="clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
-            Basket
-        </div>
 
-        <!-- Select -->
-        <div @click="currentStep = 'select'" 
-             :class="currentStep === 'select' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
-             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-            Select
-        </div>
+	 <!-- Economics of Pulltrusion Technology -->
+	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, items: [
+			{ type: 'image', url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1000' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1100-h943-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMUza5zOwyDDewxsqSBPGtAF5k5gr5wcpySktigAYj5pzMhk86tubvlW_DIYmAiuTFnldQvFaVRakSDpTVEc5vi4T5da8U1Ax7rjxwUeSJQK8RUsVPNSaVZpk4j8EgFZtjqvNn1Gqo5vaCtowV2KrJ0=w2757-h1001-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNnaQcdxYmvovBnOlUc7td7HkBe0B2K-Gkgp1mJY4NFz8ow0A0CFN9VGWZKahhbUrXwF7Kxij4NVYNp4TnpbQaz8LoyJTAk_NgTlzkoMh4VaSDDd5hIk-CmpuQAqWwbpvUhZq-QYnAM8NRLzg8TqNOD=w1433-h733-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPBgiV6GHKFfN9aHh9plAubV9hBIi9cgtsooJl_Yc4Ztce1znFFvEp4nY46-k5Pj678VkbQG6zTNwO0VVsaNL6IaZAiTZIinD9BchxUsM-D_y2o4G4d_wIlHvwLEvXTcnGOTh7Qwb6jNbjidavOpTpy=w720-h404-s-no?authuser=0' },
+			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
+		]}"> 
+		<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+			
+			<!-- Левая колонка: Галерея + Панель шагов под ней -->
+			<div class="order-2 md:order-2 flex flex-col">
+				<!-- Контейнер галереи -->
+				<div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate">     
+					
+					<!-- Картинка -->
+					<template x-if="items[currentImg].type === 'image'">
+						<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					</template>
+					
+					<!-- Видео (Google Drive / iframe) -->
+					<template x-if="items[currentImg].type === 'video'">
+						<div class="w-full h-full relative">
+							<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0 -z-10" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<div class="absolute inset-0 bg-transparent"></div>
+						</div>
+					</template>
 
-        <!-- buy -->
-        <div @click="currentStep = 'buy'" 
-             :class="currentStep === 'buy' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
-             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-            Buy
-        </div>
+					<!-- Кнопки переключения -->
+					<div class="absolute inset-0 flex items-center justify-between px-4 z-50 pointer-events-none">
+						<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors bg-white/90 hover:bg-white text-gray-800 opacity-0 group-hover:opacity-100">
+							<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+						</button>
+						<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors bg-white/90 hover:bg-white text-gray-800 opacity-0 group-hover:opacity-100">
+							<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+						</button>
+					</div>
 
-        <!-- Delivery (Активный по умолчанию) -->
-        <div @click="currentStep = 'delivery'" 
-             :class="currentStep === 'delivery' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
-             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
-            Delivery
-        </div>
+					<!-- Индикаторы (точки) -->
+					<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+						<template x-for="(item, idx) in items" :key="idx">
+							<button @click="currentImg = idx" 
+									class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+									:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+							</button>
+						</template>
+					</div>    
+				</div>
 
-        <!-- Confirm -->
-        <div @click="currentStep = 'confirm'" 
-             :class="currentStep === 'confirm' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
-             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-            Confirm
-        </div>
+				<!-- Панель шагов (Basket, Select, Buy, Delivery, Confirm, Done) -->
+				<div class="max-w-md w-full mx-auto mt-10 px-4" x-data="{ currentStep: 'delivery' }">
+					<div class="flex rounded-full overflow-hidden border border-gray-200 bg-white shadow-sm text-xs font-medium">
+						
+						<!-- Basket -->
+						<div @click="currentStep = 'basket'" 
+							 :class="currentStep === 'basket' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
+							Basket
+						</div>
 
-        <!-- Done! -->
-        <div @click="currentStep = 'done'" 
-             :class="currentStep === 'done' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
-             style="clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -10px; z-index: 1;">
-            Done
-        </div>
+						<!-- Select -->
+						<div @click="currentStep = 'select'" 
+							 :class="currentStep === 'select' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+							Select
+						</div>
 
-    </div>
-</div>       
-                
-            </div>
-            <div class="order-1 md:order-2 space-y-6 text-left">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Economics of Pulltrusion Technology</h2>
-                <p class="text-gray-600 leading-relaxed text-lg">How much will a spool of filament obtained by drawing PET tape cost us? Let's calculate! One 5-liter water bottle yields 18–19 meters of plastic (c-type filament, 1.6–1.75 mm). A standard spool contains 300 meters of plastic. Thus, 1 spool requires 16 five-liter PET bottles. The average price of a 5-liter PET bottle on platforms like Avito is about 5 rubles. Total: 80 rubles for the raw materials needed to produce 1 spool of plastic. Electricity costs should also be taken into account, which are about 3 times less than 7.5 hours of 3D printer operation — exactly how long it takes to fill one spool with plastic.</p>
-            </div>
+						<!-- Buy -->
+						<div @click="currentStep = 'buy'" 
+							 :class="currentStep === 'buy' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+							Buy
+						</div>
 
-        </div>
-    </section>
+						<!-- Delivery (Активный по умолчанию) -->
+						<div @click="currentStep = 'delivery'" 
+							 :class="currentStep === 'delivery' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
+							Delivery
+						</div>
+
+						<!-- Confirm -->
+						<div @click="currentStep = 'confirm'" 
+							 :class="currentStep === 'confirm' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+							Confirm
+						</div>
+
+						<!-- Done! -->
+						<div @click="currentStep = 'done'" 
+							 :class="currentStep === 'done' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -10px; z-index: 1;">
+							Done
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+			<!-- Правая колонка: Текст -->
+			<div class="space-y-6 order-1 md:order-2 text-left">
+				<h2 class="text-4xl font-bold text-gray-900 mb-4">Economics of Pulltrusion Technology</h2>
+				<p class="text-gray-600 leading-relaxed text-lg">How much will a spool of filament obtained by drawing PET tape cost us? Let's calculate! One 5-liter water bottle yields 18–19 meters of plastic (c-type filament, 1.6–1.75 mm). A standard spool contains 300 meters of plastic. Thus, 1 spool requires 16 five-liter PET bottles. The average price of a 5-liter PET bottle on platforms like Avito is about 5 rubles. Total: 80 rubles for the raw materials needed to produce 1 spool of plastic. Electricity costs should also be taken into account, which are about 3 times less than 7.5 hours of 3D printer operation — exactly how long it takes to fill one spool with plastic.</p>
+				<div class="space-y-3 pt-2">
+					<div class="flex items-center gap-3">
+						<span class="text-2xl">💡</span>
+						<p class="font-medium text-gray-500">Printing where access to purchased plastic is difficult, while PET bottles are available almost everywhere!</p>
+					</div>
+					<div class="flex items-center gap-3">
+						<span class="text-2xl">💡</span>
+						<p class="font-medium text-gray-500">Saving your time, money, and energy spent on ordering, waiting, and delivering plastic to your printing location. The machine always stands in the lab and produces the required amount of plastic for work</p>
+					</div>
+					<div class="flex items-center gap-3">
+						<span class="text-2xl">💡</span>
+						<p class="font-medium text-gray-500">Using plastic obtained from PET containers as draft material during 3D model design iterations (saves $$)</p>
+					</div>
+					<div class="flex items-center gap-3">
+						<span class="text-2xl">💡</span>
+						<p class="font-medium text-gray-500">Promoting a culture of plastic consumption.</p>
+					</div>                                                                       
+				</div>                 
+			</div>
+		</div>
+	</section>
+
+
+
+	
+
 
 
 
@@ -2195,53 +2326,41 @@ iframe {
      
 </div>
 
-<!-- Horizontal Scroll Progress Tracker -->
-<div x-data="{ 
-        progress: 0,
-        updateProgress() {
-            let winScroll = window.scrollY || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            this.progress = height > 0 ? (winScroll / height) * 100 : 0;
-        }
-    }" 
-    @scroll.window="updateProgress()"
-    @resize.window="updateProgress()"
-    x-init="updateProgress()"
-    class="fixed bottom-0 left-0 w-full h-2 bg-gray-200/50 z-[99999] pointer-events-none">
-    
-    <!-- Заполняемая шкала прогресса (красная для заметности) -->
-    <div class="h-full bg-red-500 transition-all duration-75" 
-         :style="`width: ${progress}%`">
-    </div>
+
+
+
+
+<div style="display: none;">
+	<!-- Статичный шаговый индикатор в конце страницы -->
+	<div class="max-w-md mx-auto my-8 px-4">
+		<div class="flex rounded-full overflow-hidden border border-gray-200 bg-white shadow-sm text-xs font-medium">
+			
+
+			<div class="flex-1 py-3 px-2 text-center text-gray-400 bg-white flex items-center justify-center">
+				Basket
+			</div>
+
+
+			<div class="flex-1 py-3 px-4 text-center text-white bg-[#00b4a6] flex items-center justify-center font-bold relative shadow-inner" 
+				 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -8px; margin-right: -8px; z-index: 10;">
+				Delivery
+			</div>
+
+			
+			<div class="flex-1 py-3 px-2 text-center text-gray-400 bg-white flex items-center justify-center">
+				Confirm
+			</div>
+
+		   
+			<div class="flex-1 py-3 px-2 text-center text-gray-400 bg-white flex items-center justify-center">
+				Done!
+			</div>
+
+		</div>
+	</div>
 </div>
 
-<!-- Статичный шаговый индикатор в конце страницы -->
-<div class="max-w-md mx-auto my-8 px-4">
-    <div class="flex rounded-full overflow-hidden border border-gray-200 bg-white shadow-sm text-xs font-medium">
-        
 
-        <div class="flex-1 py-3 px-2 text-center text-gray-400 bg-white flex items-center justify-center">
-            Basket
-        </div>
-
-
-        <div class="flex-1 py-3 px-4 text-center text-white bg-[#00b4a6] flex items-center justify-center font-bold relative shadow-inner" 
-             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -8px; margin-right: -8px; z-index: 10;">
-            Delivery
-        </div>
-
-        
-        <div class="flex-1 py-3 px-2 text-center text-gray-400 bg-white flex items-center justify-center">
-            Confirm
-        </div>
-
-       
-        <div class="flex-1 py-3 px-2 text-center text-gray-400 bg-white flex items-center justify-center">
-            Done!
-        </div>
-
-    </div>
-</div>
     
 </footer>
 
