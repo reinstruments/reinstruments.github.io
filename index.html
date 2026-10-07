@@ -35,7 +35,7 @@
         .logo-container {
           display: flex;
           align-items: center;
-          gap: 1px;
+          gap: 2px;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
@@ -310,13 +310,82 @@ iframe {
           </div>
           <span class="logo-label">Tools</span>
         </div>
-
+        
+	<!-- NAVIGATION -->        
+<!--
         <div class="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-600">
             <a href="#" class="hover:text-blue-600">Home</a>
             <a href="#shop" class="hover:text-blue-600">Shop</a>
             <a href="#about" class="hover:text-blue-600">About</a>
             <a href="#contact" class="hover:text-blue-600">Contact</a>
         </div>
+-->
+
+		<!-- NAVIGATION -->        
+<!-- 
+		<div class="hidden lg:flex items-center gap-8 text-sm font-medium" x-data="{ activeSection: 'home' }">
+            <a href="#" 
+               @click="activeSection = 'home'" 
+               :class="activeSection === 'home' ? 'text-blue-600 font-bold' : 'text-gray-600 hover:text-blue-600'" 
+               class="transition-colors">Home</a>
+               
+            <a href="#shop" 
+               @click="activeSection = 'shop'" 
+               :class="activeSection === 'shop' ? 'text-blue-600 font-bold' : 'text-gray-600 hover:text-blue-600'" 
+               class="transition-colors">Shop</a>
+               
+            <a href="#about" 
+               @click="activeSection = 'about'" 
+               :class="activeSection === 'about' ? 'text-blue-600 font-bold' : 'text-gray-600 hover:text-blue-600'" 
+               class="transition-colors">About</a>
+               
+            <a href="#contact" 
+               @click="activeSection = 'contact'" 
+               :class="activeSection === 'contact' ? 'text-blue-600 font-bold' : 'text-gray-600 hover:text-blue-600'" 
+               class="transition-colors">Contact</a>
+        </div>
+-->
+
+		<!-- NAVIGATION -->
+		<div class="hidden lg:flex items-center gap-8 text-sm font-medium" x-data="{ activeSection: 'home' }">
+			
+		   
+			<a href="#" 
+			   @click="activeSection = 'home'" 
+			   class="relative px-6 py-2 text-sm transition-colors rounded-l-full">
+				<div x-show="activeSection === 'home'" class="absolute inset-0 bg-[#007AFF] -skew-x-[20deg]"></div>
+				<span class="relative z-10 font-medium" :class="activeSection === 'home' ? 'text-white font-semibold' : 'text-gray-500 hover:text-gray-800'">Home</span>
+			</a>
+
+			
+			<a href="#shop" 
+			   @click="activeSection = 'shop'" 
+			   class="relative px-6 py-2 text-sm transition-colors">
+				<div x-show="activeSection === 'shop'" class="absolute inset-0 bg-[#007AFF] -skew-x-[20deg]"></div>
+				<span class="relative z-10 font-medium" :class="activeSection === 'shop' ? 'text-white font-semibold' : 'text-gray-500 hover:text-gray-800'">Shop</span>
+			</a>
+
+		  
+			<a href="#about" 
+			   @click="activeSection = 'about'" 
+			   class="relative px-6 py-2 text-sm transition-colors">
+				<div x-show="activeSection === 'about'" class="absolute inset-0 bg-[#007AFF] -skew-x-[20deg]"></div>
+				<span class="relative z-10 font-medium" :class="activeSection === 'about' ? 'text-white font-semibold' : 'text-gray-500 hover:text-gray-800'">About</span>
+			</a>
+
+			
+			<a href="#contact" 
+			   @click="activeSection = 'contact'" 
+			   class="relative px-6 py-2 text-sm transition-colors rounded-r-full">
+				<div x-show="activeSection === 'contact'" class="absolute inset-0 bg-[#007AFF] -skew-x-[20deg]"></div>
+				<span class="relative z-10 font-medium" :class="activeSection === 'contact' ? 'text-white font-semibold' : 'text-gray-500 hover:text-gray-800'">Contact</span>
+			</a>
+
+		</div>
+
+
+
+
 
         <div class="flex items-center gap-4">
             <!-- Кнопка темы -->
@@ -388,18 +457,18 @@ iframe {
 				<button @click="showAuth = true; authMode = 'login'" class="text-sm font-bold text-gray-600 hover:text-blue-600 px-2">Sign In</button>
 			</template>
 
-<template x-if="isLoggedIn">
-    <div class="flex items-center gap-3 pl-2 border-l border-gray-100">
-        <!-- Кликабельная аватарка или инициалы -->
-        <div @click="openProfile()" class="w-8 h-8 rounded-full overflow-hidden bg-blue-100 text-blue-600 flex items-center justify-center text-[10px] font-bold cursor-pointer hover:opacity-80 transition-opacity relative" title="Редактировать профиль">
-            <!-- Картинка аватара -->
-            <img x-show="avatarBase64" :src="avatarBase64" class="w-full h-full object-cover absolute inset-0">
-            <!-- Инициалы (показываются, если avatarBase64 нет) -->
-            <span x-show="!avatarBase64" x-text="userName ? userName.split(' ').map(n => n[0]).join('') : '?'"></span>
-        </div>
-        <button @click="handleLogout" class="text-[10px] uppercase font-bold text-gray-400 hover:text-red-500">Exit</button>
-    </div>
-</template>
+			<template x-if="isLoggedIn">
+				<div class="flex items-center gap-3 pl-2 border-l border-gray-100">
+					<!-- Кликабельная аватарка или инициалы -->
+					<div @click="openProfile()" class="w-8 h-8 rounded-full overflow-hidden bg-blue-100 text-blue-600 flex items-center justify-center text-[10px] font-bold cursor-pointer hover:opacity-80 transition-opacity relative" title="Редактировать профиль">
+						<!-- Картинка аватара -->
+						<img x-show="avatarBase64" :src="avatarBase64" class="w-full h-full object-cover absolute inset-0">
+						<!-- Инициалы (показываются, если avatarBase64 нет) -->
+						<span x-show="!avatarBase64" x-text="userName ? userName.split(' ').map(n => n[0]).join('') : '?'"></span>
+					</div>
+					<button @click="handleLogout" class="text-[10px] uppercase font-bold text-gray-400 hover:text-red-500">Exit</button>
+				</div>
+			</template>
 
             <!-- Корзина -->
             <div class="relative cursor-pointer" @click="showCart = true; view = 'bag'">
@@ -947,26 +1016,43 @@ iframe {
     </section>
 
     <!-- ABOUT SECTION -->
-    <section id="about" class="py-24 px-8 bg-gray-50">
+    <section id="about" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
+        'https://www.aalto.fi/sites/default/files/styles/1_91_1200w_630h_n/public/2025-08/3d.jpg',
+        'https://lh3.googleusercontent.com/pw/AP1GczM9VtXEruPrVorVIhTLttS_Ir3V1X1yuZRzg7z5R0xABLe2QieKuyDhjkq-z5gG0qARWq8OJ-wHZs9h3F1AOsXz13l2-upEKKZdoybzjvh0uUJIwkhuAz9EjtKJP9UGlQniqAhOZW7fsilhawAzVgdJ=w727-h829-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczNuwzcSXibV3E3mqNIyZqCusUQ2C2byDkeiLwXnKWwv5TQEuCCgFWIExvhabRYYpt9dOEBpyUl5jkg0dLkVQW9sbNVaHRPrbh-SS5juMpXEg4lFmjNtqo6jFjLI_2InGAFUrOAGL7r2VuAdw70EIeij=w719-h1000-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczOE31IKt6hJ7mMbbP-aQVe5PHIIaNubNg_fWJJ8IMv10tSi-450pfVkdxKNeP3BdOXprkpO7c-wkT3rLWJm0C1uOcRtvZgFhPIW2B5ejutVOWRO8gSiNYOk7GS_jl7mR02aTQ75dUQqYaZujx67l_Zc=w1146-h1106-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
+    ]}">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1">
-				 <!--
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1000" class="rounded-[3rem] shadow-2xl transform -rotate-2" alt="Students studying">
-				-->
-				
-				<!--
-				<img src="https://msblogs.thesourcemediaassets.com/2013/06/7506.3D_2D00_Printing_2D00_1_5F00_41E05937.jpg" class="rounded-[3rem] shadow-2xl transform -rotate-2" alt="Students studying">
-				-->
-				
-				<img src="https://www.aalto.fi/sites/default/files/styles/1_91_1200w_630h_n/public/2025-08/3d.jpg" class="rounded-[3rem] shadow-2xl transform -rotate-2" alt="Students studying">
+            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+                
+                <!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
+					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
 
-            
-            
+                <!-- Индикаторы (точки) -->
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                    <template x-for="(img, idx) in images" :key="idx">
+                        <button @click="currentImg = idx" 
+                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
+                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+                        </button>
+                    </template>
+                </div>
             </div>
-            <div class="space-y-6 order-1 md:order-2 text-left">
+                        
+            <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">About ReTools</h2>
                 <p class="text-gray-600 leading-relaxed">ReTools was built with one goal in mind — to make 3D Printing more cheaper.</p>
                 <p class="text-gray-600 leading-relaxed">We understand how challenging it can be to find complete and budget-friendly 3D printing supplies. That’s why we created a platform where everything you need is available in one place.</p>
+				
                 <div class="space-y-3 pt-4">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">🎯</span>
@@ -977,12 +1063,17 @@ iframe {
                         <p class="font-bold text-gray-800">Our Promise: <span class="font-medium text-gray-600">Affordable, organized, and dependable service</span></p>
                     </div>
                 </div>
+
             </div>
+
         </div>
     </section>
 
+
+
+
     <!-- 1. Экструдер для получения филамента из PET тары (Gray) -->
-    <section class="py-24 px-8 bg-white">
+    <section id="extruder" class="py-24 px-8 bg-white">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div class="space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">PET Bottle Filament Extruder</h2>
@@ -1006,16 +1097,46 @@ iframe {
     </section>
 
 
-    <!-- 2. Принцип работы -->
-    <section class="py-24 px-8 bg-gray-50">
+
+
+    <!-- 2. Operating Principle -->
+    <section id="principle" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
+        'https://habrastorage.org/r/w1560/getpro/habr/upload_files/eba/1bf/ac2/eba1bfac2ec1291f7db7ca29b9263666.png',
+        'https://lh3.googleusercontent.com/pw/AP1GczM9VtXEruPrVorVIhTLttS_Ir3V1X1yuZRzg7z5R0xABLe2QieKuyDhjkq-z5gG0qARWq8OJ-wHZs9h3F1AOsXz13l2-upEKKZdoybzjvh0uUJIwkhuAz9EjtKJP9UGlQniqAhOZW7fsilhawAzVgdJ=w727-h829-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczNuwzcSXibV3E3mqNIyZqCusUQ2C2byDkeiLwXnKWwv5TQEuCCgFWIExvhabRYYpt9dOEBpyUl5jkg0dLkVQW9sbNVaHRPrbh-SS5juMpXEg4lFmjNtqo6jFjLI_2InGAFUrOAGL7r2VuAdw70EIeij=w719-h1000-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczOE31IKt6hJ7mMbbP-aQVe5PHIIaNubNg_fWJJ8IMv10tSi-450pfVkdxKNeP3BdOXprkpO7c-wkT3rLWJm0C1uOcRtvZgFhPIW2B5ejutVOWRO8gSiNYOk7GS_jl7mR02aTQ75dUQqYaZujx67l_Zc=w1146-h1106-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
+    ]}">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1">
-                <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/eba/1bf/ac2/eba1bfac2ec1291f7db7ca29b9263666.png" class="rounded-[3rem] shadow-2xl w-full object-cover transform -rotate-2" alt="Machine">
+            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+                
+                <!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
+					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
+
+                <!-- Индикаторы (точки) -->
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                    <template x-for="(img, idx) in images" :key="idx">
+                        <button @click="currentImg = idx" 
+                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
+                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+                        </button>
+                    </template>
+                </div>
             </div>
-            <div class="space-y-6 order-1 md:order-2 text-left">
+                        
+            <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Operating Principle</h2>
-                <p class="text-gray-600 leading-relaxed">The extruder operates on the technology of direct transformation of PET bottles into a tape, and then into a filament suitable for 3D printing. This technology is called "pulltrusion", and consists of the fact that the PET bottle does not need to be crushed into crumbs used as raw material, but is simply cut into a tape, heated to 180 degrees, and pulled through a hotend-former using a winch. At such a low temperature, the plastic does not emit an odor, unlike the extrusion technology, which requires melting the material to a fluid state with all ensuing consequences. I wouldn't even call this process extrusion in full, rather — PET conditioning — preparing ready-made plastic for 3D printing.</p>
+                <p class="text-gray-600 leading-relaxed">The extruder operates on the technology of direct transformation of PET bottles into a tape, and then into a filament suitable for 3D printing.This technology is called "pulltrusion", and consists of the fact that the PET bottle does not need to be crushed into crumbs used as raw material, but is simply cut into a tape, heated to 180 degrees, and pulled through a hotend-former using a winch. At such a low temperature, the plastic does not emit an odor, unlike the extrusion technology, which requires melting the material to a fluid state with all ensuing consequences. I wouldn't even call this process extrusion in full, rather — PET conditioning — preparing ready-made plastic for 3D printing.</p>
                 <p class="text-gray-600 leading-relaxed">Unlike industrial plants for plastic production, pulltrusion technology does not require expensive equipment (plastic grinder, pellet screw extruder, etc.) and consumes much less electricity. With this extruder, for example, from a single five-liter bottle you can get 16-19 meters of PET filament. The machine can be installed right on the 3D printer (or nearby) and print directly from the machine's feed spool. The machine operates from a 220V network, and there is also a 12V 4A version for work in, so to speak, "field conditions".</p>
+				
                 <div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">⚡</span>
@@ -1025,18 +1146,52 @@ iframe {
                         <span class="text-2xl">🔋</span>
                         <p class="font-bold text-gray-800">Mobility: <span class="font-medium text-gray-600">DC 12V 4A battery or power supply operable</span></p>
                     </div>
-                </div>            
+                </div>
+
             </div>
+
         </div>
     </section>
 
-    <!-- 3. Преобразование тары в ленту (Gray) -->
-    <section class="py-24 px-8 bg-white">
+
+
+
+	<!-- 3. Transformation of Bottle into Tape -->
+    <section id="transformation" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, images: [
+        'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2',
+        'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1100-h943-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczMUza5zOwyDDewxsqSBPGtAF5k5gr5wcpySktigAYj5pzMhk86tubvlW_DIYmAiuTFnldQvFaVRakSDpTVEc5vi4T5da8U1Ax7rjxwUeSJQK8RUsVPNSaVZpk4j8EgFZtjqvNn1Gqo5vaCtowV2KrJ0=w2757-h1001-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczNnaQcdxYmvovBnOlUc7td7HkBe0B2K-Gkgp1mJY4NFz8ow0A0CFN9VGWZKahhbUrXwF7Kxij4NVYNp4TnpbQaz8LoyJTAk_NgTlzkoMh4VaSDDd5hIk-CmpuQAqWwbpvUhZq-QYnAM8NRLzg8TqNOD=w1433-h733-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczPBgiV6GHKFfN9aHh9plAubV9hBIi9cgtsooJl_Yc4Ztce1znFFvEp4nY46-k5Pj678VkbQG6zTNwO0VVsaNL6IaZAiTZIinD9BchxUsM-D_y2o4G4d_wIlHvwLEvXTcnGOTh7Qwb6jNbjidavOpTpy=w720-h404-s-no?authuser=0',
+    ]}">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="space-y-6 text-left">
+            <div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+                
+                <!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
+					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
+
+                <!-- Индикаторы (точки) -->
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                    <template x-for="(img, idx) in images" :key="idx">
+                        <button @click="currentImg = idx" 
+                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
+                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+                        </button>
+                    </template>
+                </div>
+            </div>
+            <div class="space-y-6 order-1 md:order-1 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Transformation of Bottle into Tape</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">Carried out using a bearing-based bottle cutter. At this stage, you can adjust the angle of the bottle (according to its diameter) and the width of the resulting tape using a changable preadjusted tape width guider.</p>
-                <div class="space-y-3 pt-2">
+               <div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">📏</span>
                         <p class="font-bold text-gray-800">Ribbon width: <span class="font-medium text-gray-600">2-8 mm</span></p>
@@ -1049,18 +1204,17 @@ iframe {
                         <span class="text-2xl">💡</span>
                         <p class="font-bold text-gray-800">Hint: <span class="font-medium text-gray-600">you can order tape width guider in our store or print it and assemble by your own</span></p>
                     </div>                    
-                </div>                
-            </div>
-            <div>
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2" class="rounded-[3rem] shadow-2xl w-full object-cover transform rotate-2" alt="Bottle cutting into tape">
+                </div>                 
             </div>
         </div>
     </section>
 
 
 
+
+
     <!-- Pulltrusion (PET conditioning) -->
-    <section id="materials" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
+    <section id="pulltrusion" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
         'https://habrastorage.org/r/w1560/getpro/habr/upload_files/6cd/044/2a8/6cd0442a80defec8eee9bff39793a839.jpg',
         'https://lh3.googleusercontent.com/pw/AP1GczM9VtXEruPrVorVIhTLttS_Ir3V1X1yuZRzg7z5R0xABLe2QieKuyDhjkq-z5gG0qARWq8OJ-wHZs9h3F1AOsXz13l2-upEKKZdoybzjvh0uUJIwkhuAz9EjtKJP9UGlQniqAhOZW7fsilhawAzVgdJ=w727-h829-s-no?authuser=0',
         'https://lh3.googleusercontent.com/pw/AP1GczNuwzcSXibV3E3mqNIyZqCusUQ2C2byDkeiLwXnKWwv5TQEuCCgFWIExvhabRYYpt9dOEBpyUl5jkg0dLkVQW9sbNVaHRPrbh-SS5juMpXEg4lFmjNtqo6jFjLI_2InGAFUrOAGL7r2VuAdw70EIeij=w719-h1000-s-no?authuser=0',
@@ -1116,8 +1270,9 @@ iframe {
 
 
 
+
 	<!-- 5. Сварка филамента -->
-    <section class="py-24 px-8 bg-white">
+    <section id="welding"  class="py-24 px-8 bg-white">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div class="space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Filament Welding</h2>
@@ -1132,7 +1287,7 @@ iframe {
                 </div>            
             </div>
             <div style="isolation: isolate;" class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black rotate-2">
-                 <!-- <iframe class="w-full h-full" src="https://www.youtube.com/embed/GzDiOcrPyL4" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  -->
+                <!-- <iframe class="w-full h-full" src="https://www.youtube.com/embed/GzDiOcrPyL4" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  -->
                 <!--  <iframe class="w-full h-full" src="https://embedd.srv.habr.com/iframe/638708d1248bff9a8b016dff" title="Filament welding 1" frameborder="0" allowfullscreen></iframe> -->
                 <iframe class="w-full h-full" src="https://www.youtube.com/embed/Jl8NKu6hZWU" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
@@ -1213,7 +1368,9 @@ iframe {
     </section>
 
 
-<!-- ADDITIONAL VIDEO & TEMPERATURE SECTION -->
+
+
+	<!-- ADDITIONAL VIDEO & TEMPERATURE SECTION -->
     <section class="py-24 px-8 bg-white">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div class="space-y-6 text-left">
@@ -1300,25 +1457,51 @@ iframe {
             </div>
 
         </div>
-    </section>    
-    
+    </section>
 
 
 
-    <!-- 8. Параметры печати (Gray) -->
-    <section class="py-24 px-8 bg-white">
+
+
+
+
+	<!-- Printing Parameters -->
+    <section class="py-24 px-8 bg-white" x-data="{ currentImg: 0, images: [
+        'https://images.unsplash.com/photo-1597765654525-5cb60d312ef6?auto=format&fit=crop&q=80&w=1000',
+        'https://sigmafilament.com/wp-content/uploads/2026/06/pet-filament-pet-vs-petg-thermal-chart.webp',
+        'https://ultimaker.com/wp-content/uploads/2025/02/70-Ultimaker-Eriks-1.png',
+        'https://forward-am.com/wp-content/uploads/2021/07/forward-am-use-case-vola-ultimaker.jpg',
+        'https://i.redd.it/vmlqkleq2f4g1.jpg',
+    ]}">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="space-y-6 text-left">
+            <div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+                
+                <!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
+					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
+
+                <!-- Индикаторы (точки) -->
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                    <template x-for="(img, idx) in images" :key="idx">
+                        <button @click="currentImg = idx" 
+                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
+                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+                        </button>
+                    </template>
+                </div>
+            </div>
+            
+            <div class="space-y-6 order-1 md:order-1 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Printing Parameters</h2>
-                <!--
-                <p class="text-gray-600 leading-relaxed text-lg font-semibold">In short:</p>              
-                <ul class="list-disc list-inside text-gray-600 leading-relaxed mb-4 space-y-1">
-                    <li><strong>Nozzle:</strong> 275–285 °C</li>
-                    <li><strong>Bed:</strong> 85 °C</li>
-                    <li><strong>Extrusion (Flow):</strong> 130–150%</li>
-                </ul>
-                 -->
                 <p class="text-gray-600 leading-relaxed text-lg">Printing with this filament is carried out at nozzle temperatures of 270–280°C and a bed temperature of 85°C — it is necessary to fine-tune the nozzle temperature based on the ease of pushing the filament through the extruder. A delicate part cooling fan is required during printing; otherwise, if cooling is insufficient, the plastic cools slowly and crystallizes. On larger models, I set the cooling fan within the 20–30% range. Several 3D printers were tested: a FlyingBear Ghost 5 Direct (teflon tube throat) and a Uni printer with a Titan Aero extruder (all metal throat, brass cube). No difference has been noticed so far. I use over-extrusion to compensate for the internal cavity within the filament (130–150%), as the filament is formed in the shape of a tube. An example of printing with this plastic is the machine itself.</p>
+                
                 <div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">✅</span>
@@ -1332,22 +1515,54 @@ iframe {
                         <span class="text-2xl">✅</span>
                         <p class="font-bold text-gray-800">Extrusion (Flow): <span class="font-medium text-gray-600">130–150%</span></p>
                     </div>                    
-                </div>            
+                </div>
+                
+                               
             </div>
-            <div>
-                <img src="https://images.unsplash.com/photo-1597765654525-5cb60d312ef6?auto=format&fit=crop&q=80&w=1000" class="rounded-[3rem] shadow-2xl w-full object-cover rotate-2" alt="3D printing process">
-            </div>
+            
         </div>
     </section>
 
-    <section class="py-24 px-8 bg-gray-50">
+
+
+
+    <!-- Not every bottle can be recycled -->    
+    <section id="bottles" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
+        'https://lh3.googleusercontent.com/pw/AP1GczMdbxgV5TLoz6VHdpVzwxpF03RisIxOMjTvSRZ9ulw89Rz6rxIKrsefOkGPbbLasGam6hkUthEvLDSZ6EeuZF4DT9_3gtUOU93WYG5c-qsJX6-KZqxwYQAkv78nz6s_b2cpEFQ5iSFGvUME7DhmoyWl=w612-h612-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczOhEpnhBdKg8A9_QeCbbqAA2S9UW6EfcPwT1YjKKZYdDAKoNyKkQ2HnKBr782zlpNL98QnNmssaqVmoWWuGulbjEyMpIVLQ33p25SHXNicl9UJi9esFD3j1x5QJ25wVONuQH16YRel3dHC8BvgAhpE0=w569-h1207-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczMdb2tIoN6ydzsbS5h7BRoBV2LkCCpaX663X-Hh31hUBOhzELLLYP1ZRcwawXGGQDfFM4IOnUrsog7pWWs_koSy4UcXyDqedgzfEdINCCZLBAEcep0d0ERoEiQkzhj9MSM6RkAZkBNZyeXAazOhwqmT=w500-h1000-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczOE31IKt6hJ7mMbbP-aQVe5PHIIaNubNg_fWJJ8IMv10tSi-450pfVkdxKNeP3BdOXprkpO7c-wkT3rLWJm0C1uOcRtvZgFhPIW2B5ejutVOWRO8gSiNYOk7GS_jl7mR02aTQ75dUQqYaZujx67l_Zc=w1146-h1106-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
+    ]}">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1">
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczMdbxgV5TLoz6VHdpVzwxpF03RisIxOMjTvSRZ9ulw89Rz6rxIKrsefOkGPbbLasGam6hkUthEvLDSZ6EeuZF4DT9_3gtUOU93WYG5c-qsJX6-KZqxwYQAkv78nz6s_b2cpEFQ5iSFGvUME7DhmoyWl=w612-h612-s-no?authuser=0" class="rounded-[3rem] shadow-2xl w-full object-cover transform -rotate-2" alt="Bottle cutting into tape">
-            </div>			
+            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+                
+                <!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
+					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
+
+                <!-- Индикаторы (точки) -->
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                    <template x-for="(img, idx) in images" :key="idx">
+                        <button @click="currentImg = idx" 
+                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
+                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+                        </button>
+                    </template>
+                </div>
+            </div>
+                        
             <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Not every bottle can be recycled</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">Not every bottle can be recycled. For example, 5L bottles don't fit into the recycling machine. During our experiments with various types of PET packaging, we discovered that containers with overly thick walls, non-standard geometry, or massive volumes exceed the physical limitations of standard intake slots and cutting mechanisms. Commercial recycling hardware relies heavily on automated recognition databases, meaning unbranded containers, custom-shaped bottles, or foreign imports featuring unfamiliar barcodes are frequently rejected by standard sorting systems. Additionally, containers with complex chemical coatings, heavy texturing, or stubborn glue residues require additional preparation steps. Careful selection of your raw plastic source is essential to ensure a smooth cutting process, consistent ribbon width, and overall high-quality filament production for your 3D printing needs.</p>
+                
                 <div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">❌</span>
@@ -1361,14 +1576,16 @@ iframe {
                         <span class="text-2xl">❌</span>
                         <p class="font-bold text-gray-800">Botthe from other countries: <span class="font-medium text-gray-600">Recycle maschine often accepts only local bottles</span></p>
                     </div>                    
-                </div>                
+                </div>
+                
             </div>
-
         </div>
     </section>
 
 
-<!-- 9. Сферы применения станков по переработке PET тары (White) -->
+
+
+	<!-- Сферы применения станков по переработке PET тары (White) -->
     <section class="py-24 px-8 bg-white" x-data="{ currentImg: 0, images: [
         'https://www.raspberrypi.com/app/uploads/2025/08/Petmachine3.webp',
         'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1100-h943-s-no?authuser=0',
@@ -1377,7 +1594,7 @@ iframe {
         'https://lh3.googleusercontent.com/pw/AP1GczPBgiV6GHKFfN9aHh9plAubV9hBIi9cgtsooJl_Yc4Ztce1znFFvEp4nY46-k5Pj678VkbQG6zTNwO0VVsaNL6IaZAiTZIinD9BchxUsM-D_y2o4G4d_wIlHvwLEvXTcnGOTh7Qwb6jNbjidavOpTpy=w720-h404-s-no?authuser=0',
     ]}">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-2">
+            <div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
                 <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
                 
                 <!-- Кнопки переключения -->
@@ -1431,6 +1648,64 @@ iframe {
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div class="order-2 md:order-1">
                 <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1000" class="rounded-[3rem] shadow-2xl w-full object-cover -rotate-2" alt="Economy and cost savings">
+ 
+
+                
+                
+<div class="max-w-md mx-auto my-8 px-4" x-data="{ currentStep: 'delivery' }">
+    <div class="flex rounded-full overflow-hidden border border-gray-200 bg-white shadow-sm text-xs font-medium">
+        
+        <!-- Basket -->
+        <div @click="currentStep = 'basket'" 
+             :class="currentStep === 'basket' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+             style="clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
+            Basket
+        </div>
+
+        <!-- Select -->
+        <div @click="currentStep = 'select'" 
+             :class="currentStep === 'select' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+            Select
+        </div>
+
+        <!-- buy -->
+        <div @click="currentStep = 'buy'" 
+             :class="currentStep === 'buy' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+            Buy
+        </div>
+
+        <!-- Delivery (Активный по умолчанию) -->
+        <div @click="currentStep = 'delivery'" 
+             :class="currentStep === 'delivery' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
+            Delivery
+        </div>
+
+        <!-- Confirm -->
+        <div @click="currentStep = 'confirm'" 
+             :class="currentStep === 'confirm' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+            Confirm
+        </div>
+
+        <!-- Done! -->
+        <div @click="currentStep = 'done'" 
+             :class="currentStep === 'done' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+             style="clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -10px; z-index: 1;">
+            Done
+        </div>
+
+    </div>
+</div>       
+                
             </div>
             <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Economics of Pulltrusion Technology</h2>
@@ -1631,7 +1906,7 @@ iframe {
     <div class="mt-20 pt-8 border-t border-gray-50 text-center">
         <p class="text-gray-400 text-xs tracking-wide">© ReTools GmbH. All rights reserved.</p>
     </div>
-    
+     
 <div style="display: none;">
 		
 	<div class="mt-10 p-6 bg-white rounded-lg shadow-md" 
@@ -1705,6 +1980,54 @@ iframe {
 		</template>
 	</div>
      
+</div>
+
+<!-- Horizontal Scroll Progress Tracker -->
+<div x-data="{ 
+        progress: 0,
+        updateProgress() {
+            let winScroll = window.scrollY || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            this.progress = height > 0 ? (winScroll / height) * 100 : 0;
+        }
+    }" 
+    @scroll.window="updateProgress()"
+    @resize.window="updateProgress()"
+    x-init="updateProgress()"
+    class="fixed bottom-0 left-0 w-full h-2 bg-gray-200/50 z-[99999] pointer-events-none">
+    
+    <!-- Заполняемая шкала прогресса (красная для заметности) -->
+    <div class="h-full bg-red-500 transition-all duration-75" 
+         :style="`width: ${progress}%`">
+    </div>
+</div>
+
+<!-- Статичный шаговый индикатор в конце страницы -->
+<div class="max-w-md mx-auto my-8 px-4">
+    <div class="flex rounded-full overflow-hidden border border-gray-200 bg-white shadow-sm text-xs font-medium">
+        
+
+        <div class="flex-1 py-3 px-2 text-center text-gray-400 bg-white flex items-center justify-center">
+            Basket
+        </div>
+
+
+        <div class="flex-1 py-3 px-4 text-center text-white bg-[#00b4a6] flex items-center justify-center font-bold relative shadow-inner" 
+             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -8px; margin-right: -8px; z-index: 10;">
+            Delivery
+        </div>
+
+        
+        <div class="flex-1 py-3 px-2 text-center text-gray-400 bg-white flex items-center justify-center">
+            Confirm
+        </div>
+
+       
+        <div class="flex-1 py-3 px-2 text-center text-gray-400 bg-white flex items-center justify-center">
+            Done!
+        </div>
+
+    </div>
 </div>
     
 </footer>
