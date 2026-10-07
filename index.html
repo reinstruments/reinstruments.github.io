@@ -1057,17 +1057,47 @@ iframe {
         </div>
     </section>
 
-    <!-- НОВАЯ СЕКЦИЯ 2: Пуллструзия и подготовка ленты (Серая секция) -->
-    <section id="conditioning" class="py-24 px-8 bg-gray-50">
+
+
+    <!-- Pulltrusion (PET conditioning) -->
+    <section id="materials" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
+        'https://habrastorage.org/r/w1560/getpro/habr/upload_files/6cd/044/2a8/6cd0442a80defec8eee9bff39793a839.jpg',
+        'https://lh3.googleusercontent.com/pw/AP1GczM9VtXEruPrVorVIhTLttS_Ir3V1X1yuZRzg7z5R0xABLe2QieKuyDhjkq-z5gG0qARWq8OJ-wHZs9h3F1AOsXz13l2-upEKKZdoybzjvh0uUJIwkhuAz9EjtKJP9UGlQniqAhOZW7fsilhawAzVgdJ=w727-h829-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczNuwzcSXibV3E3mqNIyZqCusUQ2C2byDkeiLwXnKWwv5TQEuCCgFWIExvhabRYYpt9dOEBpyUl5jkg0dLkVQW9sbNVaHRPrbh-SS5juMpXEg4lFmjNtqo6jFjLI_2InGAFUrOAGL7r2VuAdw70EIeij=w719-h1000-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczOE31IKt6hJ7mMbbP-aQVe5PHIIaNubNg_fWJJ8IMv10tSi-450pfVkdxKNeP3BdOXprkpO7c-wkT3rLWJm0C1uOcRtvZgFhPIW2B5ejutVOWRO8gSiNYOk7GS_jl7mR02aTQ75dUQqYaZujx67l_Zc=w1146-h1106-s-no?authuser=0',
+        'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
+    ]}">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1">
-                <img src="https://habrastorage.org/r/w1560/getpro/habr/upload_files/6cd/044/2a8/6cd0442a80defec8eee9bff39793a839.jpg" class="rounded-[3rem] shadow-2xl transform -rotate-2 object-cover" alt="Пуллструзия и формовка филамента">
+            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+                
+                <!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
+					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
+
+                <!-- Индикаторы (точки) -->
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                    <template x-for="(img, idx) in images" :key="idx">
+                        <button @click="currentImg = idx" 
+                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
+                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+                        </button>
+                    </template>
+                </div>
             </div>
-            <div class="space-y-6 order-1 md:order-2 text-left">
+                        
+            <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Pulltrusion (PET conditioning)</h2>
                 <p class="text-gray-600 leading-relaxed">Next, the tape enters the inlet funnel of the hotend-former, where heating and twisting of the tape into a tube takes place. The hotend-former is made from a prepared standard 3D printer nozzle (brass, stainless steel), a standard unmodified heat block, and a standard ceramic heating element. By the way, the width of the tape affects the filling percentage of the tube.</p>
-                <p class="text-gray-600 leading-relaxed"> At the same time, the shape of the tube is more reminiscent of the letter "C" (c-type filament). The existing cavity in the filament is compensated by over-extrusion during 3D printing (I set from 130 to 150 percent in the slicer). The resulting filament is wound onto a spool using a reduction gearbox on a stepper motor.</p>
-                <div class="space-y-3 pt-2">
+                <p class="text-gray-600 leading-relaxed">At the same time, the shape of the tube is more reminiscent of the letter "C" (c-type filament). The existing cavity in the filament is compensated by over-extrusion during 3D printing (I set from 130 to 150 percent in the slicer). The resulting filament is wound onto a spool using a reduction gearbox on a stepper motor.</p>
+				
+				<div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">📏</span>
                         <p class="font-bold text-gray-800">Ribbon width adjust: <span class="font-medium text-gray-600">6-7 mm</span></p>
@@ -1077,9 +1107,13 @@ iframe {
                         <p class="font-bold text-gray-800">Recommended extrusion flow in Slicer: <span class="font-medium text-gray-600">130% - 150%</span></p>
                     </div>
                 </div>
+
             </div>
+
         </div>
     </section>
+
+
 
 
 	<!-- 5. Сварка филамента -->
@@ -1106,7 +1140,7 @@ iframe {
     </section>
 
 
-    <!-- Исходное сырье и цвета -->
+    <!-- Raw Materials and Colors -->
     <section id="materials" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
         'https://habrastorage.org/r/w1560/getpro/habr/upload_files/074/242/6f5/0742426f541712158bc36a0fcd56bf1e.png',
         'https://lh3.googleusercontent.com/pw/AP1GczM9VtXEruPrVorVIhTLttS_Ir3V1X1yuZRzg7z5R0xABLe2QieKuyDhjkq-z5gG0qARWq8OJ-wHZs9h3F1AOsXz13l2-upEKKZdoybzjvh0uUJIwkhuAz9EjtKJP9UGlQniqAhOZW7fsilhawAzVgdJ=w727-h829-s-no?authuser=0',
@@ -1115,7 +1149,7 @@ iframe {
         'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
     ]}">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-2">
+            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
                 <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
                 
                 <!-- Кнопки переключения -->
@@ -1194,7 +1228,10 @@ iframe {
         </div>
     </section>
 
-    <!-- 7. Особенности применяемого сырья (White) -->    
+
+
+
+    <!-- 7. Features of the Applied Raw Materials -->    
     <section id="materials" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq0lquMR8IODMJzrBv2atCC_BlMVa1WR8cVL3WDhQu5WkzNELdOny6q78&s=10',
         'https://lh3.googleusercontent.com/pw/AP1GczOhEpnhBdKg8A9_QeCbbqAA2S9UW6EfcPwT1YjKKZYdDAKoNyKkQ2HnKBr782zlpNL98QnNmssaqVmoWWuGulbjEyMpIVLQ33p25SHXNicl9UJi9esFD3j1x5QJ25wVONuQH16YRel3dHC8BvgAhpE0=w569-h1207-s-no?authuser=0',
@@ -1203,7 +1240,7 @@ iframe {
         'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
     ]}">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-2">
+            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
                 <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
                 
                 <!-- Кнопки переключения -->
@@ -1265,6 +1302,8 @@ iframe {
         </div>
     </section>    
     
+
+
 
     <!-- 8. Параметры печати (Gray) -->
     <section class="py-24 px-8 bg-white">
