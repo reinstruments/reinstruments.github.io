@@ -155,7 +155,7 @@
 			color: #1f2937; /* темная иконка */
 		}
 		.custom-slider-btn:hover {
-			background-color: rgba(255, 0, 0, 0.7);
+			background-color: rgba(0, 122, 255, 0.7);
 		}
 
 		/* Темная тема (если класс .dark переключается на корневом элементе html или body) */
@@ -164,7 +164,7 @@
 			color: #1f2937; /* темная иконка */
 		}
 		.dark .custom-slider-btn:hover {
-			background-color: rgba(255, 0, 0, 0.7);
+			background-color: rgba(0, 122, 255, 0.7);
 		}
 
 
@@ -1017,37 +1017,53 @@ iframe {
 
 
 
+
+
     <!-- ABOUT SECTION -->
-    <section id="about" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
-        'https://www.aalto.fi/sites/default/files/styles/1_91_1200w_630h_n/public/2025-08/3d.jpg',
-        'https://lh3.googleusercontent.com/pw/AP1GczM9VtXEruPrVorVIhTLttS_Ir3V1X1yuZRzg7z5R0xABLe2QieKuyDhjkq-z5gG0qARWq8OJ-wHZs9h3F1AOsXz13l2-upEKKZdoybzjvh0uUJIwkhuAz9EjtKJP9UGlQniqAhOZW7fsilhawAzVgdJ=w727-h829-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczNuwzcSXibV3E3mqNIyZqCusUQ2C2byDkeiLwXnKWwv5TQEuCCgFWIExvhabRYYpt9dOEBpyUl5jkg0dLkVQW9sbNVaHRPrbh-SS5juMpXEg4lFmjNtqo6jFjLI_2InGAFUrOAGL7r2VuAdw70EIeij=w719-h1000-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczOE31IKt6hJ7mMbbP-aQVe5PHIIaNubNg_fWJJ8IMv10tSi-450pfVkdxKNeP3BdOXprkpO7c-wkT3rLWJm0C1uOcRtvZgFhPIW2B5ejutVOWRO8gSiNYOk7GS_jl7mR02aTQ75dUQqYaZujx67l_Zc=w1146-h1106-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
-    ]}">
+	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+			{ type: 'image', url: 'https://www.aalto.fi/sites/default/files/styles/1_91_1200w_630h_n/public/2025-08/3d.jpg' },
+			{ type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcA48fPsF_tV_-tci1lSpLozdBFFPvu3_JAVSTwDNy1QCdpbdwQujMg3TA&s=10' },
+			{ type: 'image', url: 'https://i.redd.it/xsy2l9gmj2pe1.jpeg' },
+			{ type: 'image', url: 'https://cdn.shopify.com/s/files/1/0102/5523/7175/files/3D_Printers_Office_1500w.webp?v=17701457770' },
+			{ type: 'image', url: 'https://images.squarespace-cdn.com/content/v1/5c597f4934c4e2e36920ca80/1779265817734-15ANWMBLW119HVIFFXJ9/ChatGPT+Image+May+20%2C+2026%2C+01_39_22+PM.webp?format=1500w' },
+			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
+		]}">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
             <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
-                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
-                
-                <!-- Кнопки переключения -->
-				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
-					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+				
+				<!-- Картинка -->
+				<template x-if="items[currentImg].type === 'image'">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+				</template>
+				
+				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<template x-if="items[currentImg].type === 'video'">
+					<div class="w-full h-full relative">
+						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
+						<div class="absolute inset-0 pointer-events-none"></div>
+					</div>
+				</template>
+				 
+				<!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
 					</button>
-					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
 					</button>
 				</div>
 
-                <!-- Индикаторы (точки) -->
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-                    <template x-for="(img, idx) in images" :key="idx">
-                        <button @click="currentImg = idx" 
-                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
-                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
-                        </button>
-                    </template>
-                </div>
+				<!-- Индикаторы (точки) -->
+				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+					<template x-for="(item, idx) in items" :key="idx">
+						<button @click="currentImg = idx" 
+								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+						</button>
+					</template>
+				</div>
             </div>
                         
             <div class="order-1 md:order-2 space-y-6 text-left">
@@ -1104,9 +1120,8 @@ iframe {
 					</div>
 				</template>
 
-
 				 
-				<!-- Кнопки переключения (z-index повышен до 30) -->
+				<!-- Кнопки переключения -->
 				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
 					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
@@ -1116,7 +1131,7 @@ iframe {
 					</button>
 				</div>
 
-				<!-- Индикаторы (точки) (z-index повышен до 30) -->
+				<!-- Индикаторы (точки) -->
 				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
 					<template x-for="(item, idx) in items" :key="idx">
 						<button @click="currentImg = idx" 
@@ -1147,38 +1162,51 @@ iframe {
 
 
 
-    <!-- Operating Principle -->
-    <section id="principle" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
-        'https://habrastorage.org/r/w1560/getpro/habr/upload_files/eba/1bf/ac2/eba1bfac2ec1291f7db7ca29b9263666.png',
-        'https://lh3.googleusercontent.com/pw/AP1GczM9VtXEruPrVorVIhTLttS_Ir3V1X1yuZRzg7z5R0xABLe2QieKuyDhjkq-z5gG0qARWq8OJ-wHZs9h3F1AOsXz13l2-upEKKZdoybzjvh0uUJIwkhuAz9EjtKJP9UGlQniqAhOZW7fsilhawAzVgdJ=w727-h829-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczNuwzcSXibV3E3mqNIyZqCusUQ2C2byDkeiLwXnKWwv5TQEuCCgFWIExvhabRYYpt9dOEBpyUl5jkg0dLkVQW9sbNVaHRPrbh-SS5juMpXEg4lFmjNtqo6jFjLI_2InGAFUrOAGL7r2VuAdw70EIeij=w719-h1000-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczOE31IKt6hJ7mMbbP-aQVe5PHIIaNubNg_fWJJ8IMv10tSi-450pfVkdxKNeP3BdOXprkpO7c-wkT3rLWJm0C1uOcRtvZgFhPIW2B5ejutVOWRO8gSiNYOk7GS_jl7mR02aTQ75dUQqYaZujx67l_Zc=w1146-h1106-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
-    ]}">
+    <!-- Operating Principle --> 
+	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+			
+			{ type: 'image', url: 'https://habrastorage.org/r/w1560/getpro/habr/upload_files/eba/1bf/ac2/eba1bfac2ec1291f7db7ca29b9263666.png' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1100-h943-s-no?authuser=0' },
+			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
+		]}">    
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
-                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
-                
-                <!-- Кнопки переключения -->
-				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
-					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+				
+				<!-- Картинка -->
+				<template x-if="items[currentImg].type === 'image'">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+				</template>
+				
+				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<template x-if="items[currentImg].type === 'video'">
+					<div class="w-full h-full relative">
+						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
+						<div class="absolute inset-0 pointer-events-none"></div>
+					</div>
+				</template>
+
+				 
+				<!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
 					</button>
-					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
 					</button>
 				</div>
 
-                <!-- Индикаторы (точки) -->
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-                    <template x-for="(img, idx) in images" :key="idx">
-                        <button @click="currentImg = idx" 
-                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
-                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
-                        </button>
-                    </template>
-                </div>
-            </div>
+				<!-- Индикаторы (точки) -->
+				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+					<template x-for="(item, idx) in items" :key="idx">
+						<button @click="currentImg = idx" 
+								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+						</button>
+					</template>
+				</div>
+			</div>
                         
             <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Operating Principle</h2>
@@ -1205,37 +1233,53 @@ iframe {
 
 
 	<!-- 3. Transformation of Bottle into Tape -->
-    <section id="transformation" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, images: [
-        'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2',
-        'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1100-h943-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczMUza5zOwyDDewxsqSBPGtAF5k5gr5wcpySktigAYj5pzMhk86tubvlW_DIYmAiuTFnldQvFaVRakSDpTVEc5vi4T5da8U1Ax7rjxwUeSJQK8RUsVPNSaVZpk4j8EgFZtjqvNn1Gqo5vaCtowV2KrJ0=w2757-h1001-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczNnaQcdxYmvovBnOlUc7td7HkBe0B2K-Gkgp1mJY4NFz8ow0A0CFN9VGWZKahhbUrXwF7Kxij4NVYNp4TnpbQaz8LoyJTAk_NgTlzkoMh4VaSDDd5hIk-CmpuQAqWwbpvUhZq-QYnAM8NRLzg8TqNOD=w1433-h733-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczPBgiV6GHKFfN9aHh9plAubV9hBIi9cgtsooJl_Yc4Ztce1znFFvEp4nY46-k5Pj678VkbQG6zTNwO0VVsaNL6IaZAiTZIinD9BchxUsM-D_y2o4G4d_wIlHvwLEvXTcnGOTh7Qwb6jNbjidavOpTpy=w720-h404-s-no?authuser=0',
-    ]}">
+	<section id="transformation" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+			
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPjigC4jgGFPsTdpQ118rUxwq5FSCIBI54QrlWX-O1_iPoJ4KC45xRYPazv-FvDfKdVVAmEQ-IRYlRgBNCphWXxdx2KpwZnqegBRNH1D5F-B0VI3MfrR-RKZsAQ3GrYQXNCe1gsvLuWq7a21GBKAsY=w1440-h1080-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPqYt3xUKJfGBQMJBL2nfMFxXtUXvwAUc45XQFb_Z1WKmp5ph6BTFMlj3NAuhtubvfqA1CpLWkgDpWLOfy-z5_6n1mc2gf2KLh0M-DnWv2jdv0QGiV8_aimnnrqUH6uPPUP87uAO4OgqTUx3g7yb9g=w1440-h1080-s-no?authuser=0' },			
+			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
+		]}"> 
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
-                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
-                
-                <!-- Кнопки переключения -->
-				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
-					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+			
+			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+				
+				<!-- Картинка -->
+				<template x-if="items[currentImg].type === 'image'">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+				</template>
+				
+				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<template x-if="items[currentImg].type === 'video'">
+					<div class="w-full h-full relative">
+						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
+						<div class="absolute inset-0 pointer-events-none"></div>
+					</div>
+				</template>
+
+				 
+				<!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
 					</button>
-					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
 					</button>
 				</div>
 
-                <!-- Индикаторы (точки) -->
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-                    <template x-for="(img, idx) in images" :key="idx">
-                        <button @click="currentImg = idx" 
-                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
-                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
-                        </button>
-                    </template>
-                </div>
-            </div>
+				<!-- Индикаторы (точки) -->
+				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+					<template x-for="(item, idx) in items" :key="idx">
+						<button @click="currentImg = idx" 
+								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+						</button>
+					</template>
+				</div>
+			</div>
+			
             <div class="space-y-6 order-1 md:order-1 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Transformation of Bottle into Tape</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">Carried out using a bearing-based bottle cutter. At this stage, you can adjust the angle of the bottle (according to its diameter) and the width of the resulting tape using a changable preadjusted tape width guider.</p>
@@ -1261,38 +1305,51 @@ iframe {
 
 
 
-    <!-- Pulltrusion (PET conditioning) -->
-    <section id="pulltrusion" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, images: [
-        'https://habrastorage.org/r/w1560/getpro/habr/upload_files/6cd/044/2a8/6cd0442a80defec8eee9bff39793a839.jpg',
-        'https://lh3.googleusercontent.com/pw/AP1GczO6ba16GR0kK26U7LtX-ywIY5oH3K9-YS18eMe6NVMDQVFkkXKn5YhHSzn7h3zevGYJZMPhYB7LRhY1sZYd9y2pLM0GAtxl9M_7wI0J2R2urD9vJA4puaKCnBXBLSLeMjIKoM8R626Vk5oUlttvPkhB=w1151-h1067-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczNuwzcSXibV3E3mqNIyZqCusUQ2C2byDkeiLwXnKWwv5TQEuCCgFWIExvhabRYYpt9dOEBpyUl5jkg0dLkVQW9sbNVaHRPrbh-SS5juMpXEg4lFmjNtqo6jFjLI_2InGAFUrOAGL7r2VuAdw70EIeij=w719-h1000-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczOE31IKt6hJ7mMbbP-aQVe5PHIIaNubNg_fWJJ8IMv10tSi-450pfVkdxKNeP3BdOXprkpO7c-wkT3rLWJm0C1uOcRtvZgFhPIW2B5ejutVOWRO8gSiNYOk7GS_jl7mR02aTQ75dUQqYaZujx67l_Zc=w1146-h1106-s-no?authuser=0',
-        'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0',
-    ]}">
+    <!-- Pulltrusion (PET conditioning) -->    
+	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+			
+			{ type: 'image', url: 'https://habrastorage.org/r/w1560/getpro/habr/upload_files/6cd/044/2a8/6cd0442a80defec8eee9bff39793a839.jpg' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczO6ba16GR0kK26U7LtX-ywIY5oH3K9-YS18eMe6NVMDQVFkkXKn5YhHSzn7h3zevGYJZMPhYB7LRhY1sZYd9y2pLM0GAtxl9M_7wI0J2R2urD9vJA4puaKCnBXBLSLeMjIKoM8R626Vk5oUlttvPkhB=w1151-h1067-s-no?authuser=0' },
+			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
+		]}">    
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
-                <img :src="images[currentImg]" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
-                
-                <!-- Кнопки переключения -->
-				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-25">
-					<button @click="currentImg = (currentImg - 1 + images.length) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+				
+				<!-- Картинка -->
+				<template x-if="items[currentImg].type === 'image'">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+				</template>
+				
+				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<template x-if="items[currentImg].type === 'video'">
+					<div class="w-full h-full relative">
+						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
+						<div class="absolute inset-0 pointer-events-none"></div>
+					</div>
+				</template>
+
+				 
+				<!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
 					</button>
-					<button @click="currentImg = (currentImg + 1) % images.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
 						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
 					</button>
 				</div>
 
-                <!-- Индикаторы (точки) -->
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-                    <template x-for="(img, idx) in images" :key="idx">
-                        <button @click="currentImg = idx" 
-                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer"
-                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
-                        </button>
-                    </template>
-                </div>
-            </div>
+				<!-- Индикаторы (точки) -->
+				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+					<template x-for="(item, idx) in items" :key="idx">
+						<button @click="currentImg = idx" 
+								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+						</button>
+					</template>
+				</div>
+			</div>
                         
             <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Pulltrusion (PET conditioning)</h2>
@@ -1319,28 +1376,72 @@ iframe {
 
 
 
-	<!-- 5. Сварка филамента -->
-    <section id="welding"  class="py-24 px-8 bg-white">
+
+	<!-- Filament Welding -->
+	<section id="welding" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+			{ type: 'video', url: 'https://www.youtube.com/embed/Jl8NKu6hZWU' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPjigC4jgGFPsTdpQ118rUxwq5FSCIBI54QrlWX-O1_iPoJ4KC45xRYPazv-FvDfKdVVAmEQ-IRYlRgBNCphWXxdx2KpwZnqegBRNH1D5F-B0VI3MfrR-RKZsAQ3GrYQXNCe1gsvLuWq7a21GBKAsY=w1440-h1080-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPqYt3xUKJfGBQMJBL2nfMFxXtUXvwAUc45XQFb_Z1WKmp5ph6BTFMlj3NAuhtubvfqA1CpLWkgDpWLOfy-z5_6n1mc2gf2KLh0M-DnWv2jdv0QGiV8_aimnnrqUH6uPPUP87uAO4OgqTUx3g7yb9g=w1440-h1080-s-no?authuser=0' },			
+			
+		]}"> 
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="space-y-6 text-left">
+			
+			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+				
+				<!-- Картинка -->
+				<template x-if="items[currentImg].type === 'image'">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+				</template>
+				
+				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<template x-if="items[currentImg].type === 'video'">
+					<div class="w-full h-full relative">
+						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
+						<div class="absolute inset-0 pointer-events-none"></div>
+					</div>
+				</template>
+
+				 
+				<!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
+
+				<!-- Индикаторы (точки) -->
+				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+					<template x-for="(item, idx) in items" :key="idx">
+						<button @click="currentImg = idx" 
+								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+						</button>
+					</template>
+				</div>
+			</div>
+			
+            <div class="space-y-6 order-1 md:order-1 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Filament Welding</h2>
-                <p class="text-gray-600 leading-relaxed">The machine is equipped with a filament welding device. The filament welder consists of two clothespins with aluminum sponges. To heat the filament in the welder, a NiCr wire coil with a cross-section of 0.2 mm is used, with a total thread length of 200 mm, operating from a built-in 12V power supply. The ends of the filament are installed in the clothespins, when the button is pressed, 12V is supplied to the coil, the ends of the filament are heated by the coil, melted, connected together, and formed by one of the clothespins (any) by pushing the welded pair inside the clothespin. The weld seam is cooled by aluminum sponges. Thus, you can weld and accumulate filament on different spools, sorting threads by colors.</p>
-                 <!-- <p class="text-gray-600 leading-relaxed">This video demonstrates the procedure for working with the machine — from bottle preparation to filament welding.</p> -->
+                <p class="text-gray-600 leading-relaxed text-lg">The machine is equipped with a filament welding device. The filament welder consists of two clothespins with aluminum sponges. To heat the filament in the welder, a NiCr wire coil with a cross-section of 0.2 mm is used, with a total thread length of 200 mm, operating from a built-in 12V power supply. The ends of the filament are installed in the clothespins, when the button is pressed, 12V is supplied to the coil, the ends of the filament are heated by the coil, melted, connected together, and formed by one of the clothespins (any) by pushing the welded pair inside the clothespin. The weld seam is cooled by aluminum sponges. Thus, you can weld and accumulate filament on different spools, sorting threads by colors.</p>
                 <div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">🎥</span>
                         <!-- <p class="font-bold text-gray-800">Hint: <span class="font-medium text-gray-600">Find more videos and tutorials on our YouTube channel</span></p>-->
                         <p class="font-bold text-gray-800">Video tutorial: <span class="font-medium text-gray-600">Filament welding process</span></p>
                     </div>                    
-                </div>            
-            </div>
-            <div style="isolation: isolate;" class="relative w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black rotate-2">
-                <!-- <iframe class="w-full h-full" src="https://www.youtube.com/embed/GzDiOcrPyL4" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  -->
-                <!--  <iframe class="w-full h-full" src="https://embedd.srv.habr.com/iframe/638708d1248bff9a8b016dff" title="Filament welding 1" frameborder="0" allowfullscreen></iframe> -->
-                <iframe class="w-full h-full" src="https://www.youtube.com/embed/Jl8NKu6hZWU" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>                 
             </div>
         </div>
     </section>
+
+
+
+
 
 
     <!-- Raw Materials and Colors -->
@@ -1418,20 +1519,71 @@ iframe {
 
 
 
-	<!-- ADDITIONAL VIDEO & TEMPERATURE SECTION -->
-    <section class="py-24 px-8 bg-white">
+
+
+	<!-- Machine Operation Timelapse -->
+	<section id="welding" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+			{ type: 'video', url: 'https://www.youtube.com/embed/I6aGNNQ39JI' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPjigC4jgGFPsTdpQ118rUxwq5FSCIBI54QrlWX-O1_iPoJ4KC45xRYPazv-FvDfKdVVAmEQ-IRYlRgBNCphWXxdx2KpwZnqegBRNH1D5F-B0VI3MfrR-RKZsAQ3GrYQXNCe1gsvLuWq7a21GBKAsY=w1440-h1080-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPqYt3xUKJfGBQMJBL2nfMFxXtUXvwAUc45XQFb_Z1WKmp5ph6BTFMlj3NAuhtubvfqA1CpLWkgDpWLOfy-z5_6n1mc2gf2KLh0M-DnWv2jdv0QGiV8_aimnnrqUH6uPPUP87uAO4OgqTUx3g7yb9g=w1440-h1080-s-no?authuser=0' },			
+			
+		]}"> 
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            <div class="space-y-6 text-left">
+			
+			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+				
+				<!-- Картинка -->
+				<template x-if="items[currentImg].type === 'image'">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+				</template>
+				
+				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<template x-if="items[currentImg].type === 'video'">
+					<div class="w-full h-full relative">
+						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
+						<div class="absolute inset-0 pointer-events-none"></div>
+					</div>
+				</template>
+
+				 
+				<!-- Кнопки переключения -->
+				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
+					</button>
+					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
+					</button>
+				</div>
+
+				<!-- Индикаторы (точки) -->
+				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+					<template x-for="(item, idx) in items" :key="idx">
+						<button @click="currentImg = idx" 
+								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+						</button>
+					</template>
+				</div>
+			</div>
+			
+            <div class="space-y-6 order-1 md:order-1 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Machine Operation Timelapse</h2>
-                <p class="text-gray-600 leading-relaxed text-lg mb-4">This video features a timelapse of the machine in action, a demonstration of plastic types, and the operation of the ReTool manual welder (more on that later).</p>
+                <p class="text-gray-600 leading-relaxed text-lg">This video features a timelapse of the machine in action, a demonstration of plastic types, and the operation of the ReTool manual welder (more on that later).</p>
                 <p class="text-gray-600 leading-relaxed text-lg">The machine operates in a temperature range of 175 °C, and theoretically allows cutting anything that has the shape of a ribbon or a thin-walled cylinder (bottles, cups, pre-prepared tape).</p>
-            </div>
-            <div style="isolation: isolate;" class="w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black rotate-2">
-                <!-- <iframe class="w-full h-full" src="https://embedd.srv.habr.com/iframe/6311e6ef9fd9c5cec245adc1" title="Machine timelapse and ReTool welder" frameborder="0" allowfullscreen></iframe>-->
-                <iframe class="w-full h-full" src="https://www.youtube.com/embed/I6aGNNQ39JI" title="Extruder video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <div class="space-y-3 pt-2">
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl">🎥</span>
+                        <!-- <p class="font-bold text-gray-800">Hint: <span class="font-medium text-gray-600">Find more videos and tutorials on our YouTube channel</span></p>-->
+                        <p class="font-bold text-gray-800">Video tutorial: <span class="font-medium text-gray-600">Machine Operation Timelapse</span></p>
+                    </div>                    
+                </div>                 
             </div>
         </div>
     </section>
+
 
 
 
