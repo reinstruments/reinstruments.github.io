@@ -768,7 +768,83 @@ iframe {
         </div>
     </div>
 
-    
+
+
+
+
+
+
+<!-- GLOBAL MEDIA GALLERY MODAL -->
+<div x-show="modalGalleryOpen" x-cloak class="fixed inset-0 z-[120] flex items-center justify-center p-4">
+    <!-- Фоновое затемнение -->
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-md" @click="modalGalleryOpen = false"></div>
+
+    <!-- Контейнер модального окна -->
+    <div class="relative z-10 max-w-7xl w-full max-h-[90vh] flex flex-col items-center justify-center"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100">
+         
+        <!-- Кнопка закрытия (крестик) -->
+        <button @click="modalGalleryOpen = false" class="absolute -top-12 right-0 z-50 w-10 h-10 rounded-full custom-slider-btn flex items-center justify-center transition-all cursor-pointer">
+            <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+
+        <!-- Главный контейнер (картинка/видео + стрелки + точки НА НИХ) -->
+        <div class="relative w-full flex items-center justify-center overflow-hidden rounded-2xl bg-black/50 group">
+            
+            <template x-if="modalMedia.length > 0">
+                <div class="w-full flex items-center justify-center">
+                    
+					<!-- Если это картинка -->
+                    <template x-if="modalMedia[modalCurrentIndex].type === 'image'">
+                        <img :src="modalMedia[modalCurrentIndex].url" class="w-full max-h-[88vh] object-cover rounded-2xl shadow-2xl">
+                    </template>
+
+                    <!-- Если это видео (iframe) -->
+                    <template x-if="modalMedia[modalCurrentIndex].type === 'video'">
+                        <iframe :src="modalMedia[modalCurrentIndex].url" class="w-full aspect-video max-h-[100vh] border-0 rounded-2xl shadow-2xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </template>
+
+                </div>
+            </template>
+
+            <!-- Стрелки переключения (появляются при наведении) -->
+            <div class="absolute inset-0 flex items-center justify-between px-4 pointer-events-none z-50" x-show="modalMedia.length > 1">
+                <button @click.stop="modalPrev()" class="pointer-events-auto w-12 h-12 rounded-full custom-slider-btn shadow-lg flex items-center justify-center transition-all cursor-pointer">
+                    <i class="fa-solid fa-chevron-left text-lg"></i>
+                </button>
+                <button @click.stop="modalNext()" class="pointer-events-auto w-12 h-12 rounded-full custom-slider-btn shadow-lg flex items-center justify-center transition-all cursor-pointer">
+                    <i class="fa-solid fa-chevron-right text-lg"></i>
+                </button>
+            </div>
+
+			<!-- Индикаторы (точки) ПОВЕРХ медиа снизу -->
+            <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50" x-show="modalMedia.length > 1">
+                <template x-for="(item, idx) in modalMedia" :key="idx">
+                    <button @click="modalCurrentIndex = idx" 
+                            class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow-[0_0_6px_rgba(0,0,0,0.9)] border border-white/20"
+                            :class="modalCurrentIndex === idx ? 'bg-blue-500 w-6 shadow-[0_0_8px_rgba(59,130,246,0.8)]' : 'bg-white/70 hover:bg-white'">
+                    </button>
+                </template>
+            </div>
+
+        </div>
+        
+        <!-- Индикатор текущего слайда (например: 2 / 5) -->
+        <div class="mt-4 text-white/80 text-sm font-medium" x-show="modalMedia.length > 1">
+            <span x-text="modalCurrentIndex + 1"></span> / <span x-text="modalMedia.length"></span>
+        </div>
+        
+    </div>
+</div>
+
+
+
+
+
+
+
 <!-- PROFILE EDIT MODAL -->
 <div x-show="showProfileModal" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="showProfileModal = false; profileError = ''; showPassword = false;"></div>
@@ -1034,7 +1110,7 @@ iframe {
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1098,18 +1174,18 @@ iframe {
 	<!-- PET Bottle Filament Extruder -->
 	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
 			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1100-h943-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1440-h1080-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1392-h1200-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMUza5zOwyDDewxsqSBPGtAF5k5gr5wcpySktigAYj5pzMhk86tubvlW_DIYmAiuTFnldQvFaVRakSDpTVEc5vi4T5da8U1Ax7rjxwUeSJQK8RUsVPNSaVZpk4j8EgFZtjqvNn1Gqo5vaCtowV2KrJ0=w2757-h1001-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNnaQcdxYmvovBnOlUc7td7HkBe0B2K-Gkgp1mJY4NFz8ow0A0CFN9VGWZKahhbUrXwF7Kxij4NVYNp4TnpbQaz8LoyJTAk_NgTlzkoMh4VaSDDd5hIk-CmpuQAqWwbpvUhZq-QYnAM8NRLzg8TqNOD=w1433-h733-s-no?authuser=0' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPBgiV6GHKFfN9aHh9plAubV9hBIi9cgtsooJl_Yc4Ztce1znFFvEp4nY46-k5Pj678VkbQG6zTNwO0VVsaNL6IaZAiTZIinD9BchxUsM-D_y2o4G4d_wIlHvwLEvXTcnGOTh7Qwb6jNbjidavOpTpy=w720-h404-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPBgiV6GHKFfN9aHh9plAubV9hBIi9cgtsooJl_Yc4Ztce1znFFvEp4nY46-k5Pj678VkbQG6zTNwO0VVsaNL6IaZAiTZIinD9BchxUsM-D_y2o4G4d_wIlHvwLEvXTcnGOTh7Qwb6jNbjidavOpTpy=w1924-h1080-s-no?authuser=0' },
 		]}">
 		<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1167,7 +1243,7 @@ iframe {
 	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, items: [
 			
 			{ type: 'image', url: 'https://habrastorage.org/r/w1560/getpro/habr/upload_files/eba/1bf/ac2/eba1bfac2ec1291f7db7ca29b9263666.png' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1100-h943-s-no?authuser=0' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1392-h1200-s-no?authuser=0' },
 			{ type: 'video', url: 'https://www.youtube.com/embed/GzDiOcrPyL4' },
 		]}">    
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
@@ -1175,7 +1251,7 @@ iframe {
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1236,7 +1312,7 @@ iframe {
 	<!-- 3. Transformation of Bottle into Tape -->
 	<section id="transformation" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
 			
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2' },
+			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1440-h1080-s-no?authuser=2' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPjigC4jgGFPsTdpQ118rUxwq5FSCIBI54QrlWX-O1_iPoJ4KC45xRYPazv-FvDfKdVVAmEQ-IRYlRgBNCphWXxdx2KpwZnqegBRNH1D5F-B0VI3MfrR-RKZsAQ3GrYQXNCe1gsvLuWq7a21GBKAsY=w1440-h1080-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPqYt3xUKJfGBQMJBL2nfMFxXtUXvwAUc45XQFb_Z1WKmp5ph6BTFMlj3NAuhtubvfqA1CpLWkgDpWLOfy-z5_6n1mc2gf2KLh0M-DnWv2jdv0QGiV8_aimnnrqUH6uPPUP87uAO4OgqTUx3g7yb9g=w1440-h1080-s-no?authuser=0' },			
 			{ type: 'video', url: 'https://www.youtube.com/embed/kw20Mvv-2lQ' },
@@ -1247,7 +1323,7 @@ iframe {
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1318,7 +1394,7 @@ iframe {
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1393,7 +1469,7 @@ iframe {
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1460,7 +1536,7 @@ iframe {
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1552,7 +1628,7 @@ iframe {
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1621,7 +1697,7 @@ iframe {
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1714,7 +1790,7 @@ iframe {
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1789,7 +1865,7 @@ iframe {
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1867,7 +1943,7 @@ iframe {
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
 				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
@@ -1947,7 +2023,7 @@ iframe {
 					
 					<!-- Картинка -->
 					<template x-if="items[currentImg].type === 'image'">
-						<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas">
+						<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 					</template>
 					
 					<!-- Видео (Google Drive / iframe) -->
@@ -2409,6 +2485,9 @@ iframe {
 				captchaNum2: Math.floor(Math.random() * 10) + 1,
 				userCaptchaInput: '',
 				isCaptchaValid: true,
+				modalGalleryOpen: false,
+				modalMedia: [],
+				modalCurrentIndex: 0,
                 shippingInfo: {
                     name: '',
                     address: '',
@@ -2486,6 +2565,23 @@ iframe {
                     }
                 },
                 
+				// Открытие модального окна с галереей медиа
+				openModalGallery(mediaArray, index) {
+					this.modalMedia = mediaArray;
+					this.modalCurrentIndex = index;
+					this.modalGalleryOpen = true;
+				},
+
+				// Переключение вперед
+				modalNext() {
+					this.modalCurrentIndex = (this.modalCurrentIndex + 1) % this.modalMedia.length;
+				},
+
+				// Переключение назад
+				modalPrev() {
+					this.modalCurrentIndex = (this.modalCurrentIndex - 1 + this.modalMedia.length) % this.modalMedia.length;
+				},
+				
                 toggleTheme() {
                         this.darkMode = !this.darkMode;
                         localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
