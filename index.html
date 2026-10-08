@@ -1105,6 +1105,7 @@ iframe {
             { type: 'cdn.shopify.com/s/files/1/0102/5523/7175/files/3D_Printers_Office_1500w.webp?v=17701457770' },
             { type: 'image', url: 'https://images.squarespace-cdn.com/content/v1/5c597f4934c4e2e36920ca80/1779265817734-15ANWMBLW119HVIFFXJ9/ChatGPT+Image+May+20%2C+2026%2C+01_39_22+PM.webp?format=1500w' },
             { type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
+            { type: 'video', url: 'https://www.youtube.com/embed/GzDiOcrPyL4' },
         ]}"
         x-effect="if (items[currentImg].type !== 'video') videoPlaying = false">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
@@ -1136,8 +1137,8 @@ iframe {
 								<div class="absolute inset-0 flex items-center justify-center z-40">
 									<button type="button" 
 											@click.stop="videoPlaying = true" 
-											class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-2xl transform transition-transform hover:scale-110 cursor-pointer">
-										<i class="fa-solid fa-play text-2xl ml-1"></i>
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
 									</button>
 								</div>
 							</div>
@@ -1250,8 +1251,8 @@ iframe {
 								<div class="absolute inset-0 flex items-center justify-center z-40">
 									<button type="button" 
 											@click.stop="videoPlaying = true" 
-											class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-2xl transform transition-transform hover:scale-110 cursor-pointer">
-										<i class="fa-solid fa-play text-2xl ml-1"></i>
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
 									</button>
 								</div>
 							</div>
@@ -1355,8 +1356,8 @@ iframe {
 								<div class="absolute inset-0 flex items-center justify-center z-40">
 									<button type="button" 
 											@click.stop="videoPlaying = true" 
-											class="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-2xl transform transition-transform hover:scale-110 cursor-pointer">
-										<i class="fa-solid fa-play text-2xl ml-1"></i>
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
 									</button>
 								</div>
 							</div>
@@ -1429,7 +1430,7 @@ iframe {
 
 
 	<!-- 3. Transformation of Bottle into Tape -->
-	<section id="transformation" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+	<section id="transformation" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1440-h1080-s-no?authuser=2' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPjigC4jgGFPsTdpQ118rUxwq5FSCIBI54QrlWX-O1_iPoJ4KC45xRYPazv-FvDfKdVVAmEQ-IRYlRgBNCphWXxdx2KpwZnqegBRNH1D5F-B0VI3MfrR-RKZsAQ3GrYQXNCe1gsvLuWq7a21GBKAsY=w1440-h1080-s-no?authuser=0' },
@@ -1445,12 +1446,51 @@ iframe {
 					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
-				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<!-- Видео -->
 				<template x-if="items[currentImg].type === 'video'">
-					<div class="w-full h-full relative">
-						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
-						<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="w-full h-full relative group/vid">
+						
+						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+						<template x-if="!videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+								 @click="openModalGallery(items, currentImg)">
+								
+								<!-- Заглушка/фрейм для превью -->
+								<iframe :src="items[currentImg].url" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+
+
+								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+								<div class="absolute inset-0 flex items-center justify-center z-40">
+									<button type="button" 
+											@click.stop="videoPlaying = true" 
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+									</button>
+								</div>
+							</div>
+						</template>
+
+						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+						<template x-if="videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+								<iframe :src="items[currentImg].url + '?autoplay=1'" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+								
+								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+									 @click="videoPlaying = false"
+									 title="Нажмите, чтобы остановить видео">
+								</div>
+							</div>
+						</template>
+
 					</div>
 				</template>
 
@@ -1502,7 +1542,7 @@ iframe {
 
 
     <!-- Pulltrusion (PET conditioning) -->    
-	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, items: [
+	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			
 			{ type: 'image', url: 'https://habrastorage.org/r/w1560/getpro/habr/upload_files/6cd/044/2a8/6cd0442a80defec8eee9bff39793a839.jpg' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczO6ba16GR0kK26U7LtX-ywIY5oH3K9-YS18eMe6NVMDQVFkkXKn5YhHSzn7h3zevGYJZMPhYB7LRhY1sZYd9y2pLM0GAtxl9M_7wI0J2R2urD9vJA4puaKCnBXBLSLeMjIKoM8R626Vk5oUlttvPkhB=w1151-h1067-s-no?authuser=0' },
@@ -1516,12 +1556,51 @@ iframe {
 					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
-				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<!-- Видео -->
 				<template x-if="items[currentImg].type === 'video'">
-					<div class="w-full h-full relative">
-						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
-						<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="w-full h-full relative group/vid">
+						
+						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+						<template x-if="!videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+								 @click="openModalGallery(items, currentImg)">
+								
+								<!-- Заглушка/фрейм для превью -->
+								<iframe :src="items[currentImg].url" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+
+
+								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+								<div class="absolute inset-0 flex items-center justify-center z-40">
+									<button type="button" 
+											@click.stop="videoPlaying = true" 
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+									</button>
+								</div>
+							</div>
+						</template>
+
+						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+						<template x-if="videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+								<iframe :src="items[currentImg].url + '?autoplay=1'" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+								
+								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+									 @click="videoPlaying = false"
+									 title="Нажмите, чтобы остановить видео">
+								</div>
+							</div>
+						</template>
+
 					</div>
 				</template>
 
@@ -1574,7 +1653,7 @@ iframe {
 
 
 	<!-- Filament Welding -->
-	<section id="welding" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+	<section id="welding" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'video', url: 'https://www.youtube.com/embed/Jl8NKu6hZWU' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNpiE8GOVi1EofHW922b11Sx_RDeUKzZIKB4S5xm7rrTI4igTIR-6nURcwESxJy3m6nX12DpBChMbm06rgCFpOSQ_xbBBW3uhMpz2wTRFKDW07thieLXI3wQTLs3wcfS8XtcndM4QoWdBsyA4ALuHA=w1440-h1080-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczOVwQV53-Suze0s6qUf3N--pHT6bcusRtGm_MWADiG5Rco536WPdMlXl2fGyfGrNAMhdOJ5zmiv-2oHvKE4ARbQJSjJGYZifM2uoof1B31vdX8tetL4sPbgvh86XI7Y2WWliREF-108UzKugUeWKUs=w1440-h1080-s-no?authuser=0' },
@@ -1591,12 +1670,51 @@ iframe {
 					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
-				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<!-- Видео -->
 				<template x-if="items[currentImg].type === 'video'">
-					<div class="w-full h-full relative">
-						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
-						<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="w-full h-full relative group/vid">
+						
+						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+						<template x-if="!videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+								 @click="openModalGallery(items, currentImg)">
+								
+								<!-- Заглушка/фрейм для превью -->
+								<iframe :src="items[currentImg].url" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+
+
+								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+								<div class="absolute inset-0 flex items-center justify-center z-40">
+									<button type="button" 
+											@click.stop="videoPlaying = true" 
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+									</button>
+								</div>
+							</div>
+						</template>
+
+						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+						<template x-if="videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+								<iframe :src="items[currentImg].url + '?autoplay=1'" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+								
+								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+									 @click="videoPlaying = false"
+									 title="Нажмите, чтобы остановить видео">
+								</div>
+							</div>
+						</template>
+
 					</div>
 				</template>
 
@@ -1642,7 +1760,7 @@ iframe {
 
 
     <!-- Raw Materials and Colors -->
-	<section id="welding" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, items: [
+	<section id="welding" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'image', url: 'https://habrastorage.org/r/w1560/getpro/habr/upload_files/074/242/6f5/0742426f541712158bc36a0fcd56bf1e.png' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczM9VtXEruPrVorVIhTLttS_Ir3V1X1yuZRzg7z5R0xABLe2QieKuyDhjkq-z5gG0qARWq8OJ-wHZs9h3F1AOsXz13l2-upEKKZdoybzjvh0uUJIwkhuAz9EjtKJP9UGlQniqAhOZW7fsilhawAzVgdJ=w727-h829-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNuwzcSXibV3E3mqNIyZqCusUQ2C2byDkeiLwXnKWwv5TQEuCCgFWIExvhabRYYpt9dOEBpyUl5jkg0dLkVQW9sbNVaHRPrbh-SS5juMpXEg4lFmjNtqo6jFjLI_2InGAFUrOAGL7r2VuAdw70EIeij=w719-h1000-s-no?authuser=0' },
@@ -1658,12 +1776,51 @@ iframe {
 					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
-				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<!-- Видео -->
 				<template x-if="items[currentImg].type === 'video'">
-					<div class="w-full h-full relative">
-						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
-						<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="w-full h-full relative group/vid">
+						
+						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+						<template x-if="!videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+								 @click="openModalGallery(items, currentImg)">
+								
+								<!-- Заглушка/фрейм для превью -->
+								<iframe :src="items[currentImg].url" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+
+
+								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+								<div class="absolute inset-0 flex items-center justify-center z-40">
+									<button type="button" 
+											@click.stop="videoPlaying = true" 
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+									</button>
+								</div>
+							</div>
+						</template>
+
+						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+						<template x-if="videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+								<iframe :src="items[currentImg].url + '?autoplay=1'" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+								
+								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+									 @click="videoPlaying = false"
+									 title="Нажмите, чтобы остановить видео">
+								</div>
+							</div>
+						</template>
+
 					</div>
 				</template>
 
@@ -1734,7 +1891,7 @@ iframe {
 
 
 	<!-- Machine Operation Timelapse -->
-	<section id="welding" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+	<section id="welding" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'video', url: 'https://www.youtube.com/embed/I6aGNNQ39JI' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=2' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPjigC4jgGFPsTdpQ118rUxwq5FSCIBI54QrlWX-O1_iPoJ4KC45xRYPazv-FvDfKdVVAmEQ-IRYlRgBNCphWXxdx2KpwZnqegBRNH1D5F-B0VI3MfrR-RKZsAQ3GrYQXNCe1gsvLuWq7a21GBKAsY=w1440-h1080-s-no?authuser=0' },
@@ -1750,12 +1907,51 @@ iframe {
 					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
-				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<!-- Видео -->
 				<template x-if="items[currentImg].type === 'video'">
-					<div class="w-full h-full relative">
-						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
-						<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="w-full h-full relative group/vid">
+						
+						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+						<template x-if="!videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+								 @click="openModalGallery(items, currentImg)">
+								
+								<!-- Заглушка/фрейм для превью -->
+								<iframe :src="items[currentImg].url" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+
+
+								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+								<div class="absolute inset-0 flex items-center justify-center z-40">
+									<button type="button" 
+											@click.stop="videoPlaying = true" 
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+									</button>
+								</div>
+							</div>
+						</template>
+
+						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+						<template x-if="videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+								<iframe :src="items[currentImg].url + '?autoplay=1'" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+								
+								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+									 @click="videoPlaying = false"
+									 title="Нажмите, чтобы остановить видео">
+								</div>
+							</div>
+						</template>
+
 					</div>
 				</template>
 
@@ -1801,7 +1997,7 @@ iframe {
 
 
     <!-- Features of the Applied Raw Materials -->    
-	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, items: [
+	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			
 			{ type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq0lquMR8IODMJzrBv2atCC_BlMVa1WR8cVL3WDhQu5WkzNELdOny6q78&s=10' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMrojiHPgMMeSwDwW-jsFQKUuUQFCS59NkEs04j_xNlMaoZheLaRM79xhL7W3MwNXign7oK7HEOszr41IKfd6m38VmdNUhV5JQpn3DEspTIZawkay-76LX_sGYDuZRDzHTTE0RAlJj5FfMGZ4OA4iSY=w1900-h1500-s-no?authuser=0' },
@@ -1819,12 +2015,51 @@ iframe {
 					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
-				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<!-- Видео -->
 				<template x-if="items[currentImg].type === 'video'">
-					<div class="w-full h-full relative">
-						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
-						<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="w-full h-full relative group/vid">
+						
+						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+						<template x-if="!videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+								 @click="openModalGallery(items, currentImg)">
+								
+								<!-- Заглушка/фрейм для превью -->
+								<iframe :src="items[currentImg].url" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+
+
+								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+								<div class="absolute inset-0 flex items-center justify-center z-40">
+									<button type="button" 
+											@click.stop="videoPlaying = true" 
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+									</button>
+								</div>
+							</div>
+						</template>
+
+						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+						<template x-if="videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+								<iframe :src="items[currentImg].url + '?autoplay=1'" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+								
+								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+									 @click="videoPlaying = false"
+									 title="Нажмите, чтобы остановить видео">
+								</div>
+							</div>
+						</template>
+
 					</div>
 				</template>
 
@@ -1895,7 +2130,7 @@ iframe {
 
 
 	<!-- Printing Parameters -->
-	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			
 			{ type: 'image', url: 'https://images.unsplash.com/photo-1597765654525-5cb60d312ef6?auto=format&fit=crop&q=80&w=1000' },
 			{ type: 'image', url: 'https://sigmafilament.com/wp-content/uploads/2026/06/pet-filament-pet-vs-petg-thermal-chart.webp' },
@@ -1912,12 +2147,51 @@ iframe {
 					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
-				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<!-- Видео -->
 				<template x-if="items[currentImg].type === 'video'">
-					<div class="w-full h-full relative">
-						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
-						<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="w-full h-full relative group/vid">
+						
+						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+						<template x-if="!videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+								 @click="openModalGallery(items, currentImg)">
+								
+								<!-- Заглушка/фрейм для превью -->
+								<iframe :src="items[currentImg].url" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+
+
+								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+								<div class="absolute inset-0 flex items-center justify-center z-40">
+									<button type="button" 
+											@click.stop="videoPlaying = true" 
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+									</button>
+								</div>
+							</div>
+						</template>
+
+						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+						<template x-if="videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+								<iframe :src="items[currentImg].url + '?autoplay=1'" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+								
+								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+									 @click="videoPlaying = false"
+									 title="Нажмите, чтобы остановить видео">
+								</div>
+							</div>
+						</template>
+
 					</div>
 				</template>
 
@@ -1972,7 +2246,7 @@ iframe {
 
 
     <!-- Not every bottle can be recycled -->    
-	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, items: [
+	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMdbxgV5TLoz6VHdpVzwxpF03RisIxOMjTvSRZ9ulw89Rz6rxIKrsefOkGPbbLasGam6hkUthEvLDSZ6EeuZF4DT9_3gtUOU93WYG5c-qsJX6-KZqxwYQAkv78nz6s_b2cpEFQ5iSFGvUME7DhmoyWl=w612-h612-s-no?authuser=0' },
 			{ type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9L2bewOlsxqBcaCWb7TE6W5JxNsPida-rVpcmZhKHg5WR7xpEWQcj-dw&s=10' },
@@ -1987,12 +2261,51 @@ iframe {
 					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
-				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<!-- Видео -->
 				<template x-if="items[currentImg].type === 'video'">
-					<div class="w-full h-full relative">
-						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
-						<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="w-full h-full relative group/vid">
+						
+						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+						<template x-if="!videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+								 @click="openModalGallery(items, currentImg)">
+								
+								<!-- Заглушка/фрейм для превью -->
+								<iframe :src="items[currentImg].url" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+
+
+								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+								<div class="absolute inset-0 flex items-center justify-center z-40">
+									<button type="button" 
+											@click.stop="videoPlaying = true" 
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+									</button>
+								</div>
+							</div>
+						</template>
+
+						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+						<template x-if="videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+								<iframe :src="items[currentImg].url + '?autoplay=1'" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+								
+								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+									 @click="videoPlaying = false"
+									 title="Нажмите, чтобы остановить видео">
+								</div>
+							</div>
+						</template>
+
 					</div>
 				</template>
 
@@ -2045,7 +2358,7 @@ iframe {
 
 
 	<!-- Application Areas of PET Recycling Machines -->
-	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, items: [
+	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			
 			{ type: 'image', url: 'https://www.raspberrypi.com/app/uploads/2025/08/Petmachine3.webp' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMtw_jQNi8fzVZeppY0cCWtbD6OqMvsb9Dh1wUhHV7U0aJZxgLoj4JKiFKI5bU9Nc_E0_0ePrnqMcjLQNaSf0VUxvQ4mBO301sQXRcN_KHsLtNEw0PZmucIZwH0gAeQ9vZ82hbZ0dl7r4cxg4jWOZuF=w1080-h567-s-no?authuser=0' },
@@ -2065,12 +2378,51 @@ iframe {
 					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 				</template>
 				
-				<!-- YouTube видео. Добавлен класс pointer-events-none для стабильного наведения на контейнер -->
+				<!-- Видео -->
 				<template x-if="items[currentImg].type === 'video'">
-					<div class="w-full h-full relative">
-						<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						<!-- Невидимый оверлей, чтобы при клике внутри видео плеер работал, а по краям срабатывал hover контейнера -->
-						<div class="absolute inset-0 pointer-events-none"></div>
+					<div class="w-full h-full relative group/vid">
+						
+						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+						<template x-if="!videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+								 @click="openModalGallery(items, currentImg)">
+								
+								<!-- Заглушка/фрейм для превью -->
+								<iframe :src="items[currentImg].url" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+
+
+								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+								<div class="absolute inset-0 flex items-center justify-center z-40">
+									<button type="button" 
+											@click.stop="videoPlaying = true" 
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+									</button>
+								</div>
+							</div>
+						</template>
+
+						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+						<template x-if="videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+								<iframe :src="items[currentImg].url + '?autoplay=1'" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+								
+								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+									 @click="videoPlaying = false"
+									 title="Нажмите, чтобы остановить видео">
+								</div>
+							</div>
+						</template>
+
 					</div>
 				</template>
 
@@ -2125,7 +2477,7 @@ iframe {
 
 
 	 <!-- Economics of Pulltrusion Technology -->
-	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, items: [
+	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'image', url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1000' },
 			{ type: 'image', url: 'https://plus.unsplash.com/premium_photo-1715786200772-4dd36839d0e4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMUza5zOwyDDewxsqSBPGtAF5k5gr5wcpySktigAYj5pzMhk86tubvlW_DIYmAiuTFnldQvFaVRakSDpTVEc5vi4T5da8U1Ax7rjxwUeSJQK8RUsVPNSaVZpk4j8EgFZtjqvNn1Gqo5vaCtowV2KrJ0=w2757-h1001-s-no?authuser=0' },
@@ -2145,13 +2497,53 @@ iframe {
 						<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
 					</template>
 					
-					<!-- Видео (Google Drive / iframe) -->
-					<template x-if="items[currentImg].type === 'video'">
-						<div class="w-full h-full relative">
-							<iframe :src="items[currentImg].url" class="w-full h-full border-0 absolute inset-0 -z-10" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-							<div class="absolute inset-0 bg-transparent"></div>
-						</div>
-					</template>
+				<!-- Видео -->
+				<template x-if="items[currentImg].type === 'video'">
+					<div class="w-full h-full relative group/vid">
+						
+						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+						<template x-if="!videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+								 @click="openModalGallery(items, currentImg)">
+								
+								<!-- Заглушка/фрейм для превью -->
+								<iframe :src="items[currentImg].url" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+
+
+								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+								<div class="absolute inset-0 flex items-center justify-center z-40">
+									<button type="button" 
+											@click.stop="videoPlaying = true" 
+											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+									</button>
+								</div>
+							</div>
+						</template>
+
+						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+						<template x-if="videoPlaying">
+							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+								<iframe :src="items[currentImg].url + '?autoplay=1'" 
+										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+										allowfullscreen>
+								</iframe>
+								
+								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+									 @click="videoPlaying = false"
+									 title="Нажмите, чтобы остановить видео">
+								</div>
+							</div>
+						</template>
+
+					</div>
+				</template>
 
 					<!-- Кнопки переключения -->
 					<div class="absolute inset-0 flex items-center justify-between px-4 z-50 pointer-events-none">
