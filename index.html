@@ -15,6 +15,16 @@
         [x-cloak] { display: none !important; }
         html { scroll-behavior: smooth; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1E1E1E; transition: font-size 0.2s ease; }
+        
+        /* Отключает выделение текста на уровне всего документа */
+		body {
+			-webkit-user-select: none; /* Safari */
+			-moz-user-select: none;    /* Firefox */
+			-ms-user-select: none;     /* Internet Explorer/Edge */
+			user-select: none;         /* Стандартное свойство */
+		}
+        
+        
         h1, h2, h3 { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
         .btn-blue-pill { background: linear-gradient(135deg, #2D5BFF 0%, #7090FF 100%); color: white; border-radius: 9999px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; border: none; }
         .btn-blue-pill:hover { background: linear-gradient(135deg, #1a44db 0%, #2D5BFF 100%); transform: translateY(-1px); }
@@ -39,11 +49,18 @@
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
+
+        /* The Superellipse Shape */
+        .transcolor {
+          background: linear-gradient(135deg, rgb(0, 120, 255) 0%, rgb(141, 164, 255) 100%); 
+        }
+
+
         /* The Superellipse Shape */
         .superellipse {
           width: 36px;
           height: 36px;
-          background: linear-gradient(135deg, #2D5BFF 0%, #7090FF 100%);
+          background: linear-gradient(135deg, rgb(20, 70, 255) 0%, rgb(141, 164, 255) 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -353,7 +370,7 @@ iframe {
 			<a href="#" 
 			   @click="activeSection = 'home'" 
 			   class="relative px-6 py-2 text-sm transition-colors rounded-l-full">
-				<div x-show="activeSection === 'home'" class="absolute inset-0 bg-[#007AFF] -skew-x-[20deg]"></div>
+				<div x-show="activeSection === 'home'" class="absolute inset-0 -skew-x-[20deg] transcolor"></div>
 				<span class="relative z-10 font-medium" :class="activeSection === 'home' ? 'text-white font-semibold' : 'text-gray-500 hover:text-gray-800'">Home</span>
 			</a>
 
@@ -361,7 +378,7 @@ iframe {
 			<a href="#shop" 
 			   @click="activeSection = 'shop'" 
 			   class="relative px-6 py-2 text-sm transition-colors">
-				<div x-show="activeSection === 'shop'" class="absolute inset-0 bg-[#007AFF] -skew-x-[20deg]"></div>
+				<div x-show="activeSection === 'shop'" class="absolute inset-0 -skew-x-[20deg] transcolor"></div>
 				<span class="relative z-10 font-medium" :class="activeSection === 'shop' ? 'text-white font-semibold' : 'text-gray-500 hover:text-gray-800'">Shop</span>
 			</a>
 
@@ -369,7 +386,7 @@ iframe {
 			<a href="#about" 
 			   @click="activeSection = 'about'" 
 			   class="relative px-6 py-2 text-sm transition-colors">
-				<div x-show="activeSection === 'about'" class="absolute inset-0 bg-[#007AFF] -skew-x-[20deg]"></div>
+				<div x-show="activeSection === 'about'" class="absolute inset-0 -skew-x-[20deg] transcolor"></div>
 				<span class="relative z-10 font-medium" :class="activeSection === 'about' ? 'text-white font-semibold' : 'text-gray-500 hover:text-gray-800'">About</span>
 			</a>
 
@@ -377,7 +394,7 @@ iframe {
 			<a href="#contact" 
 			   @click="activeSection = 'contact'" 
 			   class="relative px-6 py-2 text-sm transition-colors rounded-r-full">
-				<div x-show="activeSection === 'contact'" class="absolute inset-0 bg-[#007AFF] -skew-x-[20deg]"></div>
+				<div x-show="activeSection === 'contact'" class="absolute inset-0 -skew-x-[20deg] transcolor"></div>
 				<span class="relative z-10 font-medium" :class="activeSection === 'contact' ? 'text-white font-semibold' : 'text-gray-500 hover:text-gray-800'">Contact</span>
 			</a>
 
@@ -616,7 +633,7 @@ iframe {
     <!-- PRODUCT DETAIL MODAL -->
     <div x-show="selectedProduct" x-cloak class="fixed inset-0 z-[110] flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-md" @click="selectedProduct = null"></div>
-        <div class="bg-white w-full max-w-7xl rounded-2xl shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
+        <div class="bg-white w-full max-w-7xl rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 scale-95"
              x-transition:enter-end="opacity-100 scale-100">
@@ -626,7 +643,7 @@ iframe {
             <button @click="selectedProduct = null" class="absolute top-6 right-8 text-gray-400 hover:text-gray-900 text-3xl z-20">&times;</button>
 			-->
 			 <!-- Кнопка закрытия модального окна (крестик в кружке) -->
-			<button @click="selectedProduct = null" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full custom-slider-btn backdrop-blur-sm shadow-md flex items-center justify-center transition-all">
+			<button @click="selectedProduct = null" class="absolute top-6 right-6 z-50 w-10 h-10 rounded-full custom-slider-btn backdrop-blur-sm shadow-md flex items-center justify-center transition-all">
 				<i class="fa-solid fa-xmark text-black"></i>
 			</button>
             
@@ -786,10 +803,10 @@ iframe {
          x-transition:enter-end="opacity-100 scale-100">
          
         <!-- Главный контейнер (картинка/видео + стрелки + крестик + точки) -->
-        <div class="relative w-full flex items-center justify-center rounded-2xl bg-black/50 group">
+        <div class="relative w-full flex items-center justify-center rounded-[2.5rem] bg-black/50 group">
             
             <!-- Кнопка закрытия (крестик) ВНУТРИ верхнего правого угла медиа-контейнера -->
-            <button @click="modalGalleryOpen = false" class="absolute top-4 right-4 z-[100] w-10 h-10 rounded-full custom-slider-btn shadow-xl flex items-center justify-center transition-all cursor-pointer">
+            <button @click="modalGalleryOpen = false" class="absolute top-6 right-6 z-[100] w-10 h-10 rounded-full custom-slider-btn  flex items-center justify-center transition-all cursor-pointer shadow-[0_0_30px_rgba(0,0,0,0.99)]">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
 
@@ -798,14 +815,14 @@ iframe {
                     
                     <!-- Если это картинка -->
                     <template x-if="modalMedia[modalCurrentIndex].type === 'image'">
-                        <div class="w-full rounded-2xl bg-black/60 shadow-[0_0_60px_rgba(255,255,255,0.45)] flex items-center justify-center overflow-hidden">
-                            <img :src="modalMedia[modalCurrentIndex].url" class="w-full max-h-[85vh] object-cover rounded-2xl">
+                        <div class="w-full rounded-[2.5rem] bg-black/60 shadow-[0_0_60px_rgba(255,255,255,0.45)] flex items-center justify-center overflow-hidden">
+                            <img :src="modalMedia[modalCurrentIndex].url" @contextmenu.prevent class="w-full max-h-[85vh] object-cover rounded-2xl">
                         </div>
                     </template>
 
                     <!-- Если это видео (iframe) -->
                     <template x-if="modalMedia[modalCurrentIndex].type === 'video'">
-                        <iframe :src="modalMedia[modalCurrentIndex].url" class="w-full aspect-video max-h-[100vh] border-0 rounded-2xl shadow-[0_0_60px_rgba(255,255,255,0.45)]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe :src="modalMedia[modalCurrentIndex].url" @contextmenu.prevent class="w-full aspect-video max-h-[100vh] border-0 rounded-[2.5rem] shadow-[0_0_30px_rgba(0,0,0,0.99)]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </template>
 
                 </div>
@@ -1098,7 +1115,7 @@ iframe {
 
 
 <!-- ABOUT SECTION -->
-    <section id="about" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
+    <section id="about" class="py-24 px-8 bg-gray-50" @contextmenu.prevent x-data="{ currentImg: 0, videoPlaying: false, items: [
             { type: 'image', url: 'https://www.aalto.fi/sites/default/files/styles/1_91_1200w_630h_n/public/2025-08/3d.jpg' },
             { type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcA48fPsF_tV_-tci1lSpLozdBFFPvu3_JAVSTwDNy1QCdpbdwQujMg3TA&s=10' },
             { type: 'image', url: 'https://i.redd.it/xsy2l9gmj2pe1.jpeg' },
@@ -1187,17 +1204,17 @@ iframe {
                  
             <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">About ReTools</h2>
-                <p class="text-gray-600 leading-relaxed">ReTools was built with one goal in mind — to make 3D Printing more cheaper.</p>
-                <p class="text-gray-600 leading-relaxed">We understand how challenging it can be to find complete and budget-friendly 3D printing supplies. That’s why we created a platform where everything you need is available in one place.</p>
+                <p class="text-gray-600 leading-relaxed text-lg">ReTools was built with one goal in mind — to make 3D Printing more cheaper.</p>
+                <p class="text-gray-600 leading-relaxed text-lg">We understand how challenging it can be to find complete and budget-friendly 3D printing supplies. That’s why we created a platform where everything you need is available in one place.</p>
                 
                 <div class="space-y-3 pt-4">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">🎯</span>
-                        <p class="font-bold text-gray-800">Our Goal: <span class="font-medium text-gray-600">Simplify 3D printing</span></p>
+                        <p class="font-bold text-gray-800 text-lg">Our Goal: <span class="font-medium text-gray-600">Simplify 3D printing</span></p>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">🚀</span>
-                        <p class="font-bold text-gray-800">Our Promise: <span class="font-medium text-gray-600">Affordable, organized, and dependable service</span></p>
+                        <p class="font-bold text-gray-800 text-lg">Our Promise: <span class="font-medium text-gray-600">Affordable, organized, and dependable service</span></p>
                     </div>
                 </div>
 
@@ -1309,7 +1326,7 @@ iframe {
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">💡</span>
                         <!-- <p class="font-bold text-gray-800">Hint: <span class="font-medium text-gray-600">Find more videos and tutorials on our YouTube channel</span></p>-->
-                        <p class="font-bold text-gray-800">Hint: <span class="font-medium text-gray-600">Find more videos and tutorials on our <a href="https://www.youtube.com/@ReInstruments" target="_blank" class="text-red-600 hover:underline font-bold">YouTube</a> channel</span></p>
+                        <p class="font-bold text-gray-800 text-lg">Hint: <span class="font-medium text-gray-600">Find more videos and tutorials on our <a href="https://www.youtube.com/@ReInstruments" target="_blank" class="text-red-600 hover:underline font-bold">YouTube</a> channel</span></p>
                     </div>                    
                 </div>                
 			
@@ -1414,17 +1431,17 @@ iframe {
         <!-- Правая колонка: Текст -->
         <div class="order-1 md:order-2 space-y-6 text-left">
             <h2 class="text-4xl font-bold text-gray-900 mb-4">Operating Principle</h2>
-            <p class="text-gray-600 leading-relaxed">The extruder operates on the technology of direct transformation of PET bottles into a tape, and then into a filament suitable for 3D printing.This technology is called "pulltrusion", and consists of the fact that the PET bottle does not need to be crushed into crumbs used as raw material, but is simply cut into a tape, heated to 180 degrees, and pulled through a hotend-former using a winch. At such a low temperature, the plastic does not emit an odor, unlike the extrusion technology, which requires melting the material to a fluid state with all ensuing consequences. I wouldn't even call this process extrusion in full, rather — PET conditioning — preparing ready-made plastic for 3D printing.</p>
-            <p class="text-gray-600 leading-relaxed">Unlike industrial plants for plastic production, pulltrusion technology does not require expensive equipment (plastic grinder, pellet screw extruder, etc.) and consumes much less electricity. With this extruder, for example, from a single five-liter bottle you can get 16-19 meters of PET filament. The machine can be installed right on the 3D printer (or nearby) and print directly from the machine's feed spool. The machine operates from a 220V network, and there is also a 12V 4A version for work in, so to speak, "field conditions".</p>
+            <p class="text-gray-600 leading-relaxed text-lg">The extruder operates on the technology of direct transformation of PET bottles into a tape, and then into a filament suitable for 3D printing.This technology is called "pulltrusion", and consists of the fact that the PET bottle does not need to be crushed into crumbs used as raw material, but is simply cut into a tape, heated to 180 degrees, and pulled through a hotend-former using a winch. At such a low temperature, the plastic does not emit an odor, unlike the extrusion technology, which requires melting the material to a fluid state with all ensuing consequences. I wouldn't even call this process extrusion in full, rather — PET conditioning — preparing ready-made plastic for 3D printing.</p>
+            <p class="text-gray-600 leading-relaxed text-lg">Unlike industrial plants for plastic production, pulltrusion technology does not require expensive equipment (plastic grinder, pellet screw extruder, etc.) and consumes much less electricity. With this extruder, for example, from a single five-liter bottle you can get 16-19 meters of PET filament. The machine can be installed right on the 3D printer (or nearby) and print directly from the machine's feed spool. The machine operates from a 220V network, and there is also a 12V 4A version for work in, so to speak, "field conditions".</p>
             
             <div class="space-y-3 pt-2">
                 <div class="flex items-center gap-3">
                     <span class="text-2xl">⚡</span>
-                    <p class="font-bold text-gray-800">Power consumption: <span class="font-medium text-gray-600">220V 6W</span></p>
+                    <p class="font-bold text-gray-800 text-lg">Power consumption: <span class="font-medium text-gray-600">220V 6W</span></p>
                 </div>
                 <div class="flex items-center gap-3">
                     <span class="text-2xl">🔋</span>
-                    <p class="font-bold text-gray-800">Mobility: <span class="font-medium text-gray-600">DC 12V 4A battery or power supply operable</span></p>
+                    <p class="font-bold text-gray-800 text-lg">Mobility: <span class="font-medium text-gray-600">DC 12V 4A battery or power supply operable</span></p>
                 </div>
             </div>
         </div>
@@ -1540,14 +1557,14 @@ iframe {
 
                         <div @click="currentStep = 'bottle'" 
                              :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-lg rounded-l-full"
                              style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
                             Bottle
                         </div>
 
                         <div @click="currentStep = 'tape'" 
                              :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-lg"
                              style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
                             Tape
                         </div>
@@ -1555,7 +1572,7 @@ iframe {
 
                         <div @click="currentStep = 'filament'" 
                              :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-lg"
                              style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
                             Filament
                         </div>
@@ -1563,14 +1580,14 @@ iframe {
 
                         <div @click="currentStep = 'join'" 
                              :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-lg"
                              style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
                             Joining
                         </div>
 
                         <div @click="currentStep = 'spool'" 
                              :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-lg"
                              style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
                             Spool
                         </div>
@@ -1578,9 +1595,9 @@ iframe {
 
                         <div @click="currentStep = 'printing'" 
                              :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-3"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-lg pr-3"
                              style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
-                            3D Printing
+                            Print
                         </div>
 
                     </div>
@@ -1596,28 +1613,28 @@ iframe {
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
                         <div>
-                            <p class="font-bold text-gray-800">5L water bottles</p>
+                            <p class="font-bold text-gray-800 text-lg">5L water bottles</p>
                             <p class="text-sm text-gray-500">(16–17 meters of plastic per bottle) (dark blue, light blue, transparent, turquoise)</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
                         <div>
-                            <p class="font-bold text-gray-800">1–2 L beer/carbonated water bottles, etc.</p>
+                            <p class="font-bold text-gray-800 text-lg">1–2 L beer/carbonated water bottles, etc.</p>
                             <p class="text-sm text-gray-500">(8–9 meters of plastic) (dark brown)</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
                         <div>
-                            <p class="font-bold text-gray-800">PET milk bottles</p>
+                            <p class="font-bold text-gray-800 text-lg">PET milk bottles</p>
                             <p class="text-sm text-gray-500">(white plastic)</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
                         <div>
-                            <p class="font-bold text-gray-800">PET energy drink bottles</p>
+                            <p class="font-bold text-gray-800 text-lg">PET energy drink bottles</p>
                             <p class="text-sm text-gray-500">(black plastic)</p>
                         </div>
                     </div>                                         
@@ -1735,14 +1752,14 @@ iframe {
 
                         <div @click="currentStep = 'bottle'" 
                              :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full text-lg"
                              style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
                             Bottle
                         </div>
 
                         <div @click="currentStep = 'tape'" 
                              :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-lg"
                              style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
                             Tape
                         </div>
@@ -1750,7 +1767,7 @@ iframe {
 
                         <div @click="currentStep = 'filament'" 
                              :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-lg"
                              style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
                             Filament
                         </div>
@@ -1758,14 +1775,14 @@ iframe {
 
                         <div @click="currentStep = 'join'" 
                              :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-lg"
                              style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
                             Joining
                         </div>
 
                         <div @click="currentStep = 'spool'" 
                              :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-lg"
                              style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
                             Spool
                         </div>
@@ -1773,9 +1790,9 @@ iframe {
 
                         <div @click="currentStep = 'printing'" 
                              :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-3"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-3 text-lg"
                              style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
-                            3D Printing
+                            Print
                         </div>
 
                     </div>
@@ -1793,15 +1810,15 @@ iframe {
                <div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">📏</span>
-                        <p class="font-bold text-gray-800">Tape width: <span class="font-medium text-gray-600">2-8 mm</span></p>
+                        <p class="font-bold text-gray-800 text-lg">Tape width: <span class="font-medium text-gray-600">2-8 mm</span></p>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">⚙️</span>
-                        <p class="font-bold text-gray-800">Tape speed: <span class="font-medium text-gray-600">4-5 mm/sec</span></p>
+                        <p class="font-bold text-gray-800 text-lg">Tape speed: <span class="font-medium text-gray-600">4-5 mm/sec</span></p>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">💡</span>
-                        <p class="font-bold text-gray-800">Hint: <span class="font-medium text-gray-600">you can order tape width guider in our store or print it and assemble by your own</span></p>
+                        <p class="font-bold text-gray-800 text-lg">Hint: <span class="font-medium text-gray-600">you can order tape width guider in our store or print it and assemble by your own</span></p>
                     </div>                    
                 </div>                 
             </div>
@@ -1965,8 +1982,8 @@ iframe {
                         
             <div class="order-1 md:order-1 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Pulltrusion (PET conditioning)</h2>
-                <p class="text-gray-600 leading-relaxed">Next, the tape enters the inlet funnel of the hotend-former, where heating and twisting of the tape into a tube takes place. The hotend-former is made from a prepared standard 3D printer nozzle (brass, stainless steel), a standard unmodified heat block, and a standard ceramic heating element. By the way, the width of the tape affects the filling percentage of the tube.</p>
-                <p class="text-gray-600 leading-relaxed">At the same time, the shape of the tube is more reminiscent of the letter "C" (c-type filament). The existing cavity in the filament is compensated by over-extrusion during 3D printing (I set from 130 to 150 percent in the slicer). The resulting filament is wound onto a spool using a reduction gearbox on a stepper motor.</p>
+                <p class="text-gray-600 leading-relaxed text-lg">Next, the tape enters the inlet funnel of the hotend-former, where heating and twisting of the tape into a tube takes place. The hotend-former is made from a prepared standard 3D printer nozzle (brass, stainless steel), a standard unmodified heat block, and a standard ceramic heating element. By the way, the width of the tape affects the filling percentage of the tube.</p>
+                <p class="text-gray-600 leading-relaxed text-lg">At the same time, the shape of the tube is more reminiscent of the letter "C" (c-type filament). The existing cavity in the filament is compensated by over-extrusion during 3D printing (I set from 130 to 150 percent in the slicer). The resulting filament is wound onto a spool using a reduction gearbox on a stepper motor.</p>
 				
 				<div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
@@ -2149,7 +2166,7 @@ iframe {
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">🎥</span>
                         <!-- <p class="font-bold text-gray-800">Hint: <span class="font-medium text-gray-600">Find more videos and tutorials on our YouTube channel</span></p>-->
-                        <p class="font-bold text-gray-800">Video tutorial: <span class="font-medium text-gray-600">Filament welding process</span></p>
+                        <p class="font-bold text-gray-800  text-lg">Video tutorial: <span class="font-medium text-gray-600">Filament welding process</span></p>
                     </div>                    
                 </div>                 
             </div>
@@ -4053,6 +4070,25 @@ window.addEventListener("mouseup", () => {
     outline.style.boxShadow = '0 0 0 rgba(45, 91, 255, 0)';
     outline.style.backgroundColor = 'rgba(45, 91, 255, 0.5)';
 });
+
+// Запрет правого клика по всему документу
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+
+
+// Запрет копирования (Ctrl+C / Cmd+C)
+document.addEventListener('copy', (e) => {
+    e.preventDefault();
+    // Опционально: можно вывести предупреждение
+    // alert('Копирование материалов сайта запрещено!');
+});
+
+// Запрет вызова контекстного меню (правый клик) по всему сайту
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+});
+
     </script>
     
 <div class="cursor-dot"></div>
