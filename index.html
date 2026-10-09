@@ -785,23 +785,23 @@ iframe {
          x-transition:enter-start="opacity-0 scale-95"
          x-transition:enter-end="opacity-100 scale-100">
          
-        <!-- Кнопка закрытия (крестик) -->
-        <button @click="modalGalleryOpen = false" class="absolute -top-12 right-0 z-50 w-10 h-10 rounded-full custom-slider-btn flex items-center justify-center transition-all cursor-pointer">
-            <i class="fa-solid fa-xmark text-xl"></i>
-        </button>
-
-        <!-- Главный контейнер (картинка/видео + стрелки + точки НА НИХ) -->
+        <!-- Главный контейнер (картинка/видео + стрелки + крестик + точки) -->
         <div class="relative w-full flex items-center justify-center rounded-2xl bg-black/50 group">
             
+            <!-- Кнопка закрытия (крестик) ВНУТРИ верхнего правого угла медиа-контейнера -->
+            <button @click="modalGalleryOpen = false" class="absolute top-4 right-4 z-[100] w-10 h-10 rounded-full custom-slider-btn shadow-xl flex items-center justify-center transition-all cursor-pointer">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
             <template x-if="modalMedia.length > 0">
                 <div class="w-full flex items-center justify-center">
                     
-					<!-- Если это картинка -->
-					<template x-if="modalMedia[modalCurrentIndex].type === 'image'">
-						<div class="w-full rounded-2xl bg-black/60 shadow-[0_0_60px_rgba(255,255,255,0.45)] flex items-center justify-center overflow-hidden">
-							<img :src="modalMedia[modalCurrentIndex].url" class="w-full max-h-[85vh] object-cover rounded-2xl">
-						</div>
-					</template>
+                    <!-- Если это картинка -->
+                    <template x-if="modalMedia[modalCurrentIndex].type === 'image'">
+                        <div class="w-full rounded-2xl bg-black/60 shadow-[0_0_60px_rgba(255,255,255,0.45)] flex items-center justify-center overflow-hidden">
+                            <img :src="modalMedia[modalCurrentIndex].url" class="w-full max-h-[85vh] object-cover rounded-2xl">
+                        </div>
+                    </template>
 
                     <!-- Если это видео (iframe) -->
                     <template x-if="modalMedia[modalCurrentIndex].type === 'video'">
@@ -1320,110 +1320,173 @@ iframe {
 
 
 
-    <!-- Operating Principle --> 
-	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [			
-			{ type: 'image', url: 'https://habrastorage.org/r/w1560/getpro/habr/upload_files/eba/1bf/ac2/eba1bfac2ec1291f7db7ca29b9263666.png' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1392-h1200-s-no?authuser=0' },
-			{ type: 'video', url: 'https://www.youtube.com/embed/GzDiOcrPyL4' },
-		]}">    
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
-				
-				<!-- Картинка -->
-				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
-				</template>
-				
-				<!-- Видео -->
-				<template x-if="items[currentImg].type === 'video'">
-					<div class="w-full h-full relative group/vid">
-						
-						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
-						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
-								 @click="openModalGallery(items, currentImg)">
-								
-								<!-- Заглушка/фрейм для превью -->
-								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
-										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-										allowfullscreen>
-								</iframe>
 
-
-								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
-								<div class="absolute inset-0 flex items-center justify-center z-40">
-									<button type="button" 
-											@click.stop="videoPlaying = true" 
-											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
-										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
-									</button>
-								</div>
-							</div>
-						</template>
-
-						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
-						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
-								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
-										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-										allowfullscreen>
-								</iframe>
-								
-								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
-								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
-									 @click="videoPlaying = false"
-									 title="Нажмите, чтобы остановить видео">
-								</div>
-							</div>
-						</template>
-
-					</div>
-				</template>
-
-				 
-				<!-- Кнопки переключения -->
-				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
-					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
-						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
-					</button>
-					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
-						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
-					</button>
-				</div>
-
-				<!-- Индикаторы (точки) -->
-				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
-					<template x-for="(item, idx) in items" :key="idx">
-						<button @click="currentImg = idx" 
-								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
-								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
-						</button>
-					</template>
-				</div>
-			</div>
+<!-- Operating Principle_new -->  
+<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [            
+        { type: 'image', url: 'https://habrastorage.org/r/w1560/getpro/habr/upload_files/eba/1bf/ac2/eba1bfac2ec1291f7db7ca29b9263666.png' },
+        { type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1392-h1200-s-no?authuser=0' },
+        { type: 'video', url: 'https://www.youtube.com/embed/GzDiOcrPyL4' },
+    ]}">    
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        
+        <!-- Левая колонка: Галерея + Панель шагов под ней -->
+        <div class="flex flex-col order-2 md:order-1">
+            <!-- Контейнер галереи -->
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+                
+                <!-- Картинка -->
+                <template x-if="items[currentImg].type === 'image'">
+                    <img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300 cursor-pointer" alt="Application Areas" @click="openModalGallery(items, currentImg)">
+                </template>
+                
+                <!-- Видео -->
+                <template x-if="items[currentImg].type === 'video'">
+                    <div class="w-full h-full relative group/vid">
                         
-            <div class="order-1 md:order-2 space-y-6 text-left">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Operating Principle</h2>
-                <p class="text-gray-600 leading-relaxed">The extruder operates on the technology of direct transformation of PET bottles into a tape, and then into a filament suitable for 3D printing.This technology is called "pulltrusion", and consists of the fact that the PET bottle does not need to be crushed into crumbs used as raw material, but is simply cut into a tape, heated to 180 degrees, and pulled through a hotend-former using a winch. At such a low temperature, the plastic does not emit an odor, unlike the extrusion technology, which requires melting the material to a fluid state with all ensuing consequences. I wouldn't even call this process extrusion in full, rather — PET conditioning — preparing ready-made plastic for 3D printing.</p>
-                <p class="text-gray-600 leading-relaxed">Unlike industrial plants for plastic production, pulltrusion technology does not require expensive equipment (plastic grinder, pellet screw extruder, etc.) and consumes much less electricity. With this extruder, for example, from a single five-liter bottle you can get 16-19 meters of PET filament. The machine can be installed right on the 3D printer (or nearby) and print directly from the machine's feed spool. The machine operates from a 220V network, and there is also a 12V 4A version for work in, so to speak, "field conditions".</p>
-				
-                <div class="space-y-3 pt-2">
-                    <div class="flex items-center gap-3">
-                        <span class="text-2xl">⚡</span>
-                        <p class="font-bold text-gray-800">Power consumption: <span class="font-medium text-gray-600">220V 6W</span></p>
+                        <!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+                        <template x-if="!videoPlaying">
+                            <div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+                                 @click="openModalGallery(items, currentImg)">
+                                
+                                <!-- Заглушка/фрейм для превью -->
+                                <iframe :src="items[currentImg].url" 
+                                        class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                </iframe>
+
+                                <!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+                                <div class="absolute inset-0 flex items-center justify-center z-40">
+                                    <button type="button" 
+                                            @click.stop="videoPlaying = true" 
+                                            class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+                                        <i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+                        <template x-if="videoPlaying">
+                            <div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+                                <iframe :src="items[currentImg].url + '?autoplay=1'" 
+                                        class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                </iframe>
+                                
+                                <!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+                                <div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+                                     @click="videoPlaying = false"
+                                     title="Нажмите, чтобы остановить видео">
+                                </div>
+                            </div>
+                        </template>
+
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-2xl">🔋</span>
-                        <p class="font-bold text-gray-800">Mobility: <span class="font-medium text-gray-600">DC 12V 4A battery or power supply operable</span></p>
-                    </div>
+                </template>
+                 
+                <!-- Кнопки переключения -->
+                <div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                    <button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+                        <i class="fa-solid fa-chevron-left pointer-events-none"></i>
+                    </button>
+                    <button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
+                        <i class="fa-solid fa-chevron-right pointer-events-none"></i>
+                    </button>
                 </div>
 
+                <!-- Индикаторы (точки) -->
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+                    <template x-for="(item, idx) in items" :key="idx">
+                        <button @click="currentImg = idx" 
+                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+                        </button>
+                    </template>
+                </div>
             </div>
 
+            <!-- Панель шагов со скруглением слева и стрелкой справа (с полной окантовкой) -->
+            <div class="max-w-2l w-full mx-auto mt-10 px-4" x-data="{ currentStep: 'bottle' }">
+                <div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
+                     style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
+                    
+                    <div class="flex bg-white text-xs font-medium rounded-l-full overflow-hidden w-full"
+                         style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
+                        
+
+                        <div @click="currentStep = 'bottle'" 
+                             :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full"
+                             style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
+                            Bottle
+                        </div>
+
+                        <div @click="currentStep = 'tape'" 
+                             :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Tape
+                        </div>
+
+
+                        <div @click="currentStep = 'filament'" 
+                             :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
+                            Filament
+                        </div>
+
+
+                        <div @click="currentStep = 'join'" 
+                             :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Joining
+                        </div>
+
+                        <div @click="currentStep = 'spool'" 
+                             :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Spool
+                        </div>
+
+
+                        <div @click="currentStep = 'printing'" 
+                             :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-3"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
+                            3D Printing
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        
         </div>
-    </section>
+        
+        <!-- Правая колонка: Текст -->
+        <div class="order-1 md:order-2 space-y-6 text-left">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Operating Principle</h2>
+            <p class="text-gray-600 leading-relaxed">The extruder operates on the technology of direct transformation of PET bottles into a tape, and then into a filament suitable for 3D printing.This technology is called "pulltrusion", and consists of the fact that the PET bottle does not need to be crushed into crumbs used as raw material, but is simply cut into a tape, heated to 180 degrees, and pulled through a hotend-former using a winch. At such a low temperature, the plastic does not emit an odor, unlike the extrusion technology, which requires melting the material to a fluid state with all ensuing consequences. I wouldn't even call this process extrusion in full, rather — PET conditioning — preparing ready-made plastic for 3D printing.</p>
+            <p class="text-gray-600 leading-relaxed">Unlike industrial plants for plastic production, pulltrusion technology does not require expensive equipment (plastic grinder, pellet screw extruder, etc.) and consumes much less electricity. With this extruder, for example, from a single five-liter bottle you can get 16-19 meters of PET filament. The machine can be installed right on the 3D printer (or nearby) and print directly from the machine's feed spool. The machine operates from a 220V network, and there is also a 12V 4A version for work in, so to speak, "field conditions".</p>
+            
+            <div class="space-y-3 pt-2">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">⚡</span>
+                    <p class="font-bold text-gray-800">Power consumption: <span class="font-medium text-gray-600">220V 6W</span></p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">🔋</span>
+                    <p class="font-bold text-gray-800">Mobility: <span class="font-medium text-gray-600">DC 12V 4A battery or power supply operable</span></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
 
 
 
@@ -1437,7 +1500,10 @@ iframe {
 		]}"> 
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 			
-			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+        <!-- Левая колонка: Галерея + Панель шагов под ней -->
+        <div class="flex flex-col order-2 md:order-2">
+            <!-- Контейнер галереи -->
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -1513,18 +1579,82 @@ iframe {
 					</template>
 				</div>
 			</div>
+
+
+            <!-- Панель шагов со скруглением слева и стрелкой справа (с полной окантовкой) -->
+            <div class="max-w-2l w-full mx-auto mt-10 px-4" x-data="{ currentStep: 'tape' }">
+                <div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
+                     style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
+                    
+                    <div class="flex bg-white text-xs font-medium rounded-l-full overflow-hidden w-full"
+                         style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
+                        
+
+                        <div @click="currentStep = 'bottle'" 
+                             :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full"
+                             style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
+                            Bottle
+                        </div>
+
+                        <div @click="currentStep = 'tape'" 
+                             :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Tape
+                        </div>
+
+
+                        <div @click="currentStep = 'filament'" 
+                             :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
+                            Filament
+                        </div>
+
+
+                        <div @click="currentStep = 'join'" 
+                             :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Joining
+                        </div>
+
+                        <div @click="currentStep = 'spool'" 
+                             :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Spool
+                        </div>
+
+
+                        <div @click="currentStep = 'printing'" 
+                             :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-3"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
+                            3D Printing
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+
+
+
 			
             <div class="space-y-6 order-1 md:order-1 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Transformation of Bottle into Tape</h2>
-                <p class="text-gray-600 leading-relaxed text-lg">Carried out using a bearing-based bottle cutter. At this stage, you can adjust the angle of the bottle (according to its diameter) and the width of the resulting tape using a changable preadjusted tape width guider.</p>
+                <p class="text-gray-600 leading-relaxed text-lg">First, the bottom of the bottle is cut off and the label is removed. Next, the bottle is placed on the bottle cutter's guide. Then, the bottle passes through the bearing-equipped cutter via a special guide insert that limits the width of the strip being cut. At this stage, you can adjust the angle of the bottle (according to its diameter) and the width of the resulting tape using a changable preadjusted tape width guider.</p>
                <div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">📏</span>
-                        <p class="font-bold text-gray-800">Ribbon width: <span class="font-medium text-gray-600">2-8 mm</span></p>
+                        <p class="font-bold text-gray-800">Tape width: <span class="font-medium text-gray-600">2-8 mm</span></p>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">⚙️</span>
-                        <p class="font-bold text-gray-800">Ribbon speed: <span class="font-medium text-gray-600">4-5 mm/sec</span></p>
+                        <p class="font-bold text-gray-800">Tape speed: <span class="font-medium text-gray-600">4-5 mm/sec</span></p>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">💡</span>
@@ -1547,7 +1677,11 @@ iframe {
 			{ type: 'video', url: 'https://www.youtube.com/embed/STsMWqoz_iY' },
 		]}">    
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+        
+        <!-- Левая колонка: Галерея + Панель шагов под ней -->
+        <div class="flex flex-col order-2 md:order-1">
+            <!-- Контейнер галереи -->
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -1623,6 +1757,68 @@ iframe {
 					</template>
 				</div>
 			</div>
+
+
+            <!-- Панель шагов со скруглением слева и стрелкой справа (с полной окантовкой) -->
+            <div class="max-w-2l w-full mx-auto mt-10 px-4" x-data="{ currentStep: 'filament' }">
+                <div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
+                     style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
+                    
+                    <div class="flex bg-white text-xs font-medium rounded-l-full overflow-hidden w-full"
+                         style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
+                        
+
+                        <div @click="currentStep = 'bottle'" 
+                             :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full"
+                             style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
+                            Bottle
+                        </div>
+
+                        <div @click="currentStep = 'tape'" 
+                             :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Tape
+                        </div>
+
+
+                        <div @click="currentStep = 'filament'" 
+                             :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
+                            Filament
+                        </div>
+
+
+                        <div @click="currentStep = 'join'" 
+                             :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Joining
+                        </div>
+
+                        <div @click="currentStep = 'spool'" 
+                             :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Spool
+                        </div>
+
+
+                        <div @click="currentStep = 'printing'" 
+                             :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-3"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
+                            3D Printing
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+
                         
             <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Pulltrusion (PET conditioning)</h2>
@@ -1661,7 +1857,10 @@ iframe {
 		]}"> 
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 			
-			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+        <!-- Левая колонка: Галерея + Панель шагов под ней -->
+        <div class="flex flex-col order-2 md:order-2">
+            <!-- Контейнер галереи -->
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -1737,10 +1936,72 @@ iframe {
 					</template>
 				</div>
 			</div>
+
+
+            <!-- Панель шагов со скруглением слева и стрелкой справа (с полной окантовкой) -->
+            <div class="max-w-2l w-full mx-auto mt-10 px-4" x-data="{ currentStep: 'join' }">
+                <div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
+                     style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
+                    
+                    <div class="flex bg-white text-xs font-medium rounded-l-full overflow-hidden w-full"
+                         style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
+                        
+
+                        <div @click="currentStep = 'bottle'" 
+                             :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full"
+                             style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
+                            Bottle
+                        </div>
+
+                        <div @click="currentStep = 'tape'" 
+                             :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Tape
+                        </div>
+
+
+                        <div @click="currentStep = 'filament'" 
+                             :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
+                            Filament
+                        </div>
+
+
+                        <div @click="currentStep = 'join'" 
+                             :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Joining
+                        </div>
+
+                        <div @click="currentStep = 'spool'" 
+                             :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Spool
+                        </div>
+
+
+                        <div @click="currentStep = 'printing'" 
+                             :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-3"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
+                            3D Printing
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+
 			
             <div class="space-y-6 order-1 md:order-1 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Filament Welding</h2>
-                <p class="text-gray-600 leading-relaxed text-lg">The machine is equipped with a filament welding device. The filament welder consists of two clothespins with aluminum sponges. To heat the filament in the welder, a NiCr wire coil with a cross-section of 0.2 mm is used, with a total thread length of 200 mm, operating from a built-in 12V power supply. The ends of the filament are installed in the clothespins, when the button is pressed, 12V is supplied to the coil, the ends of the filament are heated by the coil, melted, connected together, and formed by one of the clothespins (any) by pushing the welded pair inside the clothespin. The weld seam is cooled by aluminum sponges. Thus, you can weld and accumulate filament on different spools, sorting threads by colors.</p>
+                <p class="text-gray-600 leading-relaxed text-lg">The machine is equipped with a filament welding device. The filament welder consists of two clothespins with teflon molds. To heat the filament in the welder, a NiCr wire coil with a cross-section of 0.2 mm is used, with a total thread length of 200 mm, operating from a built-in 12V power supply. The ends of the filament are installed in the clothespins, when the button is pressed, 12V is supplied to the coil, the ends of the filament are heated by the coil, melted, connected together, and formed by one of the clothespins (any) by pushing the welded pair inside the clothespin. The weld seam is cooled in teflon molds in 1-2 seconds. Thus, you can weld and accumulate filament on different spools, sorting filament by colors.</p>
                 <div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
                         <span class="text-2xl">🎥</span>
@@ -1767,7 +2028,11 @@ iframe {
 			{ type: 'video', url: 'https://www.youtube.com/embed/Jl8NKu6hZWU' },
 		]}">    
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+        
+        <!-- Левая колонка: Галерея + Панель шагов под ней -->
+        <div class="flex flex-col order-2 md:order-1">
+            <!-- Контейнер галереи -->
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -1843,6 +2108,68 @@ iframe {
 					</template>
 				</div>
 			</div>
+
+
+            <!-- Панель шагов со скруглением слева и стрелкой справа (с полной окантовкой) -->
+            <div class="max-w-2l w-full mx-auto mt-10 px-4" x-data="{ currentStep: 'spool' }">
+                <div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
+                     style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
+                    
+                    <div class="flex bg-white text-xs font-medium rounded-l-full overflow-hidden w-full"
+                         style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
+                        
+
+                        <div @click="currentStep = 'bottle'" 
+                             :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full"
+                             style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
+                            Bottle
+                        </div>
+
+                        <div @click="currentStep = 'tape'" 
+                             :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Tape
+                        </div>
+
+
+                        <div @click="currentStep = 'filament'" 
+                             :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
+                            Filament
+                        </div>
+
+
+                        <div @click="currentStep = 'join'" 
+                             :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Joining
+                        </div>
+
+                        <div @click="currentStep = 'spool'" 
+                             :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Spool
+                        </div>
+
+
+                        <div @click="currentStep = 'printing'" 
+                             :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-3"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
+                            3D Printing
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+
                         
             <div class="order-1 md:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Raw Materials and Colors</h2>
@@ -2137,7 +2464,11 @@ iframe {
 			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
 		]}">    
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+			
+        <!-- Левая колонка: Галерея + Панель шагов под ней -->
+        <div class="flex flex-col order-2 md:order-2">
+            <!-- Контейнер галереи -->
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -2213,6 +2544,68 @@ iframe {
 					</template>
 				</div>
 			</div>
+
+
+            <!-- Панель шагов со скруглением слева и стрелкой справа (с полной окантовкой) -->
+            <div class="max-w-2l w-full mx-auto mt-10 px-4" x-data="{ currentStep: 'printing' }">
+                <div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
+                     style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
+                    
+                    <div class="flex bg-white text-xs font-medium rounded-l-full overflow-hidden w-full"
+                         style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
+                        
+
+                        <div @click="currentStep = 'bottle'" 
+                             :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full"
+                             style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
+                            Bottle
+                        </div>
+
+                        <div @click="currentStep = 'tape'" 
+                             :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Tape
+                        </div>
+
+
+                        <div @click="currentStep = 'filament'" 
+                             :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
+                            Filament
+                        </div>
+
+
+                        <div @click="currentStep = 'join'" 
+                             :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Joining
+                        </div>
+
+                        <div @click="currentStep = 'spool'" 
+                             :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Spool
+                        </div>
+
+
+                        <div @click="currentStep = 'printing'" 
+                             :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-3"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
+                            3D Printing
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+
             
             <div class="space-y-6 order-1 md:order-1 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Printing Parameters</h2>
@@ -2252,7 +2645,7 @@ iframe {
 			
 		]}">  
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-			<div class="order-2 md:order-2 relative group aspect-[4/5] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+			<div class="order-2 md:order-2 relative group aspect-[4/4] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -2330,8 +2723,8 @@ iframe {
 			</div>
                         
             <div class="order-1 md:order-2 space-y-6 text-left">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Not every bottle can be recycled</h2>
-                <p class="text-gray-600 leading-relaxed text-lg">Not every bottle can be recycled. For example, 5L bottles don't fit into the recycling machine. During our experiments with various types of PET packaging, we discovered that containers with overly thick walls, non-standard geometry, or massive volumes exceed the physical limitations of standard intake slots and cutting mechanisms. Commercial recycling hardware relies heavily on automated recognition databases, meaning unbranded containers, custom-shaped bottles, or foreign imports featuring unfamiliar barcodes are frequently rejected by standard sorting systems. Additionally, containers with complex chemical coatings, heavy texturing, or stubborn glue residues require additional preparation steps. Careful selection of your raw plastic source is essential to ensure a smooth cutting process, consistent ribbon width, and overall high-quality filament production for your 3D printing needs.</p>
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Not every bottle can be recycled in supermarket</h2>
+                <p class="text-gray-600 leading-relaxed text-lg">For example, 5L bottles don't fit into the recycling machine. During our experiments with various types of PET packaging, we discovered that containers with overly thick walls, non-standard geometry, or massive volumes exceed the physical limitations of standard intake slots and cutting mechanisms. Commercial recycling hardware relies heavily on automated recognition databases, meaning unbranded containers, custom-shaped bottles, or foreign imports featuring unfamiliar barcodes are frequently rejected by standard sorting systems. Additionally, containers with complex chemical coatings, heavy texturing, or stubborn glue residues require additional preparation steps. Careful selection of your raw plastic source is essential to ensure a smooth cutting process, consistent ribbon width, and overall high-quality filament production for your 3D printing needs.</p>
                 
                 <div class="space-y-3 pt-2">
                     <div class="flex items-center gap-3">
@@ -2369,8 +2762,11 @@ iframe {
 			
 		]}"> 
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-            
-			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+			
+			<!-- Левая колонка: Галерея + Панель шагов под ней -->
+			<div class="flex flex-col">
+            <!-- Контейнер галереи -->
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate"> 
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -2446,7 +2842,69 @@ iframe {
 					</template>
 				</div>
 			</div>
-            
+			
+			<div style="display: none;">
+				<div class="max-w-md w-full mx-auto mt-10 px-4" x-data="{ currentStep: 'delivery' }">
+					<div class="flex rounded-full overflow-hidden border border-gray-200 bg-white shadow-sm text-xs font-medium">
+						
+						<!-- Basket -->
+						<div @click="currentStep = 'basket'" 
+							 :class="currentStep === 'basket' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
+							Basket
+						</div>
+
+						<!-- Select -->
+						<div @click="currentStep = 'select'" 
+							 :class="currentStep === 'select' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+							Select
+						</div>
+
+						<!-- Buy -->
+						<div @click="currentStep = 'buy'" 
+							 :class="currentStep === 'buy' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+							Buy
+						</div>
+
+						<!-- Delivery (Активный по умолчанию) -->
+						<div @click="currentStep = 'delivery'" 
+							 :class="currentStep === 'delivery' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
+							Delivery
+						</div>
+
+						<!-- Confirm -->
+						<div @click="currentStep = 'confirm'" 
+							 :class="currentStep === 'confirm' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+							Confirm
+						</div>
+
+						<!-- Done! -->
+						<div @click="currentStep = 'done'" 
+							 :class="currentStep === 'done' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+							 class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+							 style="clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -10px; z-index: 1;">
+							Done
+						</div>
+
+                    </div>
+                </div>		
+			</div>
+			
+			
+			</div>
+			
+			
+			
+            <!-- Правая колонка: Текст -->
             <div class="space-y-6 order-1 md:order-1 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Application Areas of PET Recycling Machines</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">There are quite a few scenarios for using pulltrusion machines, as they are very compact and economical (effectively operating a 12V heater at 160–180 °C and 1 stepper motor). Here are some of them:</p>
@@ -2474,22 +2932,18 @@ iframe {
 
 
 
-
+<div style="display: none;">
 	 <!-- Economics of Pulltrusion Technology -->
 	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'image', url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1000' },
 			{ type: 'image', url: 'https://plus.unsplash.com/premium_photo-1715786200772-4dd36839d0e4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMUza5zOwyDDewxsqSBPGtAF5k5gr5wcpySktigAYj5pzMhk86tubvlW_DIYmAiuTFnldQvFaVRakSDpTVEc5vi4T5da8U1Ax7rjxwUeSJQK8RUsVPNSaVZpk4j8EgFZtjqvNn1Gqo5vaCtowV2KrJ0=w2757-h1001-s-no?authuser=0' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNnaQcdxYmvovBnOlUc7td7HkBe0B2K-Gkgp1mJY4NFz8ow0A0CFN9VGWZKahhbUrXwF7Kxij4NVYNp4TnpbQaz8LoyJTAk_NgTlzkoMh4VaSDDd5hIk-CmpuQAqWwbpvUhZq-QYnAM8NRLzg8TqNOD=w1433-h733-s-no?authuser=0' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPBgiV6GHKFfN9aHh9plAubV9hBIi9cgtsooJl_Yc4Ztce1znFFvEp4nY46-k5Pj678VkbQG6zTNwO0VVsaNL6IaZAiTZIinD9BchxUsM-D_y2o4G4d_wIlHvwLEvXTcnGOTh7Qwb6jNbjidavOpTpy=w720-h404-s-no?authuser=0' },
-			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
 		]}"> 
 		<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 			
 			<!-- Левая колонка: Галерея + Панель шагов под ней -->
-			<div class="order-2 md:order-2 flex flex-col">
-				<!-- Контейнер галереи -->
-				<div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate">     
+			<div class="flex flex-col">
+            <!-- Контейнер галереи -->
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate">     
 					
 					<!-- Картинка -->
 					<template x-if="items[currentImg].type === 'image'">
@@ -2617,12 +3071,17 @@ iframe {
 							Done
 						</div>
 
-					</div>
-				</div>
-			</div>
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+
+		
 			
 			<!-- Правая колонка: Текст -->
-			<div class="space-y-6 order-1 md:order-2 text-left">
+			<div class="space-y-6 text-left">
 				<h2 class="text-4xl font-bold text-gray-900 mb-4">Economics of Pulltrusion Technology</h2>
 				<p class="text-gray-600 leading-relaxed text-lg">How much will a spool of filament obtained by drawing PET tape cost us? Let's calculate! One 5-liter water bottle yields 18–19 meters of plastic (c-type filament, 1.6–1.75 mm). A standard spool contains 300 meters of plastic. Thus, 1 spool requires 16 five-liter PET bottles. The average price of a 5-liter PET bottle on platforms like Avito is about 5 rubles. Total: 80 rubles for the raw materials needed to produce 1 spool of plastic. Electricity costs should also be taken into account, which are about 3 times less than 7.5 hours of 3D printer operation — exactly how long it takes to fill one spool with plastic.</p>
 				<div class="space-y-3 pt-2">
@@ -2637,19 +3096,182 @@ iframe {
 					<div class="flex items-center gap-3">
 						<span class="text-2xl">💡</span>
 						<p class="font-medium text-gray-500">Using plastic obtained from PET containers as draft material during 3D model design iterations (saves $$)</p>
-					</div>
-					<div class="flex items-center gap-3">
-						<span class="text-2xl">💡</span>
-						<p class="font-medium text-gray-500">Promoting a culture of plastic consumption.</p>
 					</div>                                                                       
 				</div>                 
 			</div>
 		</div>
 	</section>
+</div>
 
 
+<!-- Economics of Pulltrusion Technology -->
+<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
+        { type: 'image', url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1000' },
+        { type: 'image', url: 'https://plus.unsplash.com/premium_photo-1715786200772-4dd36839d0e4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+    ]}"> 
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        
+        <!-- Левая колонка: Галерея + Панель шагов под ней -->
+        <div class="flex flex-col">
+            <!-- Контейнер галереи -->
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate">     
+                
+                <!-- Картинка -->
+                <template x-if="items[currentImg].type === 'image'">
+                    <img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300 cursor-pointer" alt="Application Areas" @click="openModalGallery(items, currentImg)">
+                </template>
+                
+                <!-- Видео -->
+                <template x-if="items[currentImg].type === 'video'">
+                    <div class="w-full h-full relative group/vid">
+                        
+                        <!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
+                        <template x-if="!videoPlaying">
+                            <div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+                                 @click="openModalGallery(items, currentImg)">
+                                
+                                <!-- Заглушка/фрейм для превью -->
+                                <iframe :src="items[currentImg].url" 
+                                        class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                </iframe>
 
-	
+                                <!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
+                                <div class="absolute inset-0 flex items-center justify-center z-40">
+                                    <button type="button" 
+                                            @click.stop="videoPlaying = true" 
+                                            class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
+                                        <i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+
+                        <!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
+                        <template x-if="videoPlaying">
+                            <div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+                                <iframe :src="items[currentImg].url + '?autoplay=1'" 
+                                        class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                </iframe>
+                                
+                                <!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
+                                <div class="absolute inset-0 cursor-pointer bg-transparent z-20"
+                                     @click="videoPlaying = false"
+                                     title="Нажмите, чтобы остановить видео">
+                                </div>
+                            </div>
+                        </template>
+
+                    </div>
+                </template>
+
+                <!-- Кнопки переключения -->
+                <div class="absolute inset-0 flex items-center justify-between px-4 z-50 pointer-events-none">
+                    <button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors bg-white/90 hover:bg-white text-gray-800 opacity-0 group-hover:opacity-100">
+                        <i class="fa-solid fa-chevron-left pointer-events-none"></i>
+                    </button>
+                    <button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors bg-white/90 hover:bg-white text-gray-800 opacity-0 group-hover:opacity-100">
+                        <i class="fa-solid fa-chevron-right pointer-events-none"></i>
+                    </button>
+                </div>
+
+                <!-- Индикаторы (точки) -->
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
+                    <template x-for="(item, idx) in items" :key="idx">
+                        <button @click="currentImg = idx" 
+                                class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
+                                :class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
+                        </button>
+                    </template>
+                </div>    
+            </div>
+
+            <!-- Панель шагов со скруглением слева и стрелкой справа (с полной окантовкой) -->
+            <div class="max-w-2l w-full mx-auto mt-10 px-4" x-data="{ currentStep: 'delivery' }">
+                <div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
+                     style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
+                    
+                    <div class="flex bg-white text-xs font-medium rounded-l-full overflow-hidden w-full"
+                         style="clip-path: polygon(0% 0%, 95.8% 0%, 99.8% 50%, 95.8% 100%, 0% 100%);">
+                        
+                        <!-- Basket -->
+                        <div @click="currentStep = 'basket'" 
+                             :class="currentStep === 'basket' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full"
+                             style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
+                            Basket
+                        </div>
+
+                        <!-- Select -->
+                        <div @click="currentStep = 'select'" 
+                             :class="currentStep === 'select' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Select
+                        </div>
+
+                        <!-- Buy -->
+                        <div @click="currentStep = 'buy'" 
+                             :class="currentStep === 'buy' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Buy
+                        </div>
+
+                        <!-- Delivery -->
+                        <div @click="currentStep = 'delivery'" 
+                             :class="currentStep === 'delivery' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
+                            Delivery
+                        </div>
+
+                        <!-- Confirm -->
+                        <div @click="currentStep = 'confirm'" 
+                             :class="currentStep === 'confirm' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
+                            Confirm
+                        </div>
+
+                        <!-- Done -->
+                        <div @click="currentStep = 'done'" 
+                             :class="currentStep === 'done' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
+                             class="flex-1 py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-3"
+                             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
+                            Done
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Правая колонка: Текст -->
+        <div class="space-y-6 text-left">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Economics of Pulltrusion Technology</h2>
+            <p class="text-gray-600 leading-relaxed text-lg">How much will a spool of filament obtained by drawing PET tape cost us? Let's calculate! One 5-liter water bottle yields 18–19 meters of plastic (c-type filament, 1.6–1.75 mm). A standard spool contains 300 meters of plastic. Thus, 1 spool requires 16 five-liter PET bottles. The average price of a 5-liter PET bottle on platforms like Avito is about 5 rubles. Total: 80 rubles for the raw materials needed to produce 1 spool of plastic. Electricity costs should also be taken into account, which are about 3 times less than 7.5 hours of 3D printer operation — exactly how long it takes to fill one spool with plastic.</p>
+            <div class="space-y-3 pt-2">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">💡</span>
+                    <p class="font-medium text-gray-500">Printing where access to purchased plastic is difficult, while PET bottles are available almost everywhere!</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">💡</span>
+                    <p class="font-medium text-gray-500">Saving your time, money, and energy spent on ordering, waiting, and delivering plastic to your printing location. The machine always stands in the lab and produces the required amount of plastic for work</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">💡</span>
+                    <p class="font-medium text-gray-500">Using plastic obtained from PET containers as draft material during 3D model design iterations (saves $$)</p>
+                </div>                                                             
+            </div>             
+        </div>
+    </div>
+</section>
 
 
 
