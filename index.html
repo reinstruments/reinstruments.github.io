@@ -979,6 +979,7 @@ iframe {
 
 
 
+
 <!-- GLOBAL MEDIA GALLERY MODAL -->
 <div x-show="modalGalleryOpen" x-cloak class="fixed inset-0 z-[120] flex items-center justify-center p-4">
     <!-- Фоновое затемнение -->
@@ -990,29 +991,50 @@ iframe {
          x-transition:enter-start="opacity-0 scale-95"
          x-transition:enter-end="opacity-100 scale-100">
          
-        <!-- Кнопка закрытия (крестик) -->
-        <button @click="modalGalleryOpen = false" class="absolute -top-12 right-0 z-50 w-10 h-10 rounded-full custom-slider-btn flex items-center justify-center transition-all cursor-pointer">
-            <i class="fa-solid fa-xmark text-xl"></i>
-        </button>
-
-        <!-- Главный контейнер (картинка/видео + стрелки + точки НА НИХ) -->
-        <div class="relative w-full flex items-center justify-center rounded-2xl bg-black/50 group">
+        <!-- Главный контейнер (картинка/видео + стрелки + крестик + точки) -->
+        <div class="relative w-full flex items-center justify-center rounded-xl bg-black/50 group">
             
-            <template x-if="modalMedia.length > 0">
-                <div class="w-full flex items-center justify-center">
-                    
-					<!-- Если это картинка -->
-					<template x-if="modalMedia[modalCurrentIndex].type === 'image'">
-						<div class="w-full rounded-2xl bg-black/60 shadow-[0_0_60px_rgba(255,255,255,0.45)] flex items-center justify-center overflow-hidden">
-							<img :src="modalMedia[modalCurrentIndex].url" class="w-full max-h-[85vh] object-cover rounded-2xl">
-						</div>
-					</template>
+            <!-- Кнопка закрытия (крестик) ВНУТРИ верхнего правого угла медиа-контейнера -->
+            <!--
+            <button @click="modalGalleryOpen = false" class="absolute top-4 right-4 z-[100] w-10 h-10 rounded-full custom-slider-btn  flex items-center justify-center transition-all cursor-pointer shadow-[0_0_30px_rgba(0,0,0,0.99)]">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+			-->
 
-                    <!-- Если это видео (iframe) -->
-                    <template x-if="modalMedia[modalCurrentIndex].type === 'video'">
-                        <iframe :src="modalMedia[modalCurrentIndex].url" class="w-full aspect-video max-h-[100vh] border-0 rounded-2xl shadow-[0_0_60px_rgba(255,255,255,0.45)]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			<!-- Кнопка закрытия (крестик) скрыта на мобилках и появляется от 768px и выше -->
+			<button @click="modalGalleryOpen = false" class="absolute top-4 right-4 z-[100] w-10 h-10 rounded-full custom-slider-btn hidden md:flex items-center justify-center transition-all cursor-pointer shadow-[0_0_30px_rgba(0,0,0,0.99)]">
+				<i class="fa-solid fa-xmark text-xl"></i>
+			</button>
+
+
+
+			<template x-if="modalMedia.length > 0">
+                <div class="w-full flex flex-col items-center justify-center">
+                    
+                    <!-- Если это картинка -->
+                    <template x-if="modalMedia[modalCurrentIndex].type === 'image'">
+                        <div class="w-full rounded-xl bg-black/60 shadow-[0_0_60px_rgba(255,255,255,0.45)] flex items-center justify-center overflow-hidden">
+                            <img :src="modalMedia[modalCurrentIndex].url" @contextmenu.prevent class="w-full max-h-[85vh] object-cover rounded-xl">
+                        </div>
                     </template>
 
+
+                    <!-- Если это видео (iframe) -->
+                    <!--
+                    <template x-if="modalMedia[modalCurrentIndex].type === 'video'">
+                        <iframe :src="modalMedia[modalCurrentIndex].url" @contextmenu.prevent class="w-full aspect-video max-h-[100vh] border-0 rounded-xl shadow-[0_0_60px_rgba(255,255,255,0.45)]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </template>
+					-->
+					
+					<!-- Если это видео (iframe) с принудительным масштабированием -->                   
+                    <template x-if="modalMedia[modalCurrentIndex].type === 'video'">
+                        <div class="w-full aspect-video max-h-[85vh] rounded-xl bg-black/60 shadow-[0_0_60px_rgba(255,255,255,0.45)] relative overflow-hidden flex items-center justify-center">
+                            <div class="absolute inset-0 w-[200%] h-[200%] -top-[50%] -left-[50%] flex items-center justify-center scale-[0.5]">
+                                <iframe :src="modalMedia[modalCurrentIndex].url" @contextmenu.prevent class="w-full h-full border-0 rounded-xl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </template>
+				
                 </div>
             </template>
 
