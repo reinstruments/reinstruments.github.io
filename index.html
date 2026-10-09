@@ -216,9 +216,10 @@
         }
         
         
-        .dark .control-btn, 
+        .dark .control-btn,
+        .dark .bg-gray-100,
         .dark .bg-gray-50 {
-            background-color: #2D2D2D !important;
+            background-color: #5d5d5d !important;
             color: #FFF;
         }
 
@@ -338,7 +339,7 @@ iframe {
     max-width: 100%; /* Убираем жесткое ограничение в 42rem для экранов меньше 1024px */
     margin-left: auto;
     margin-right: auto;
-    margin-top: 1.5rem;
+    margin-top: 2.5rem;
     padding-left: 0;
     padding-right: 0;
 }
@@ -463,7 +464,9 @@ iframe {
 .step-btn.inactive:hover {
     color: #000000;
 }
+
     </style>
+    
 </head>
 <body x-data="ReTools" :style="{ fontSize: fontSize + 'px' }">
 
@@ -1178,7 +1181,7 @@ iframe {
     </header>
 
     <!-- THE PROBLEM WE SOLVE -->
-    <section class="py-20 px-8 bg-gray-50">
+    <section class="py-20 px-8 bg-gray-100">
         <div class="max-w-7xl mx-auto text-center">
             <h2 class="text-3xl font-bold mb-12">The Problem We Solve</h2>
             <div class="grid md:grid-cols-3 gap-6 mb-8">
@@ -1290,7 +1293,7 @@ iframe {
 
 
 <!-- ABOUT SECTION -->
-    <section id="about" class="custom-section bg-gray-50" @contextmenu.prevent x-data="{ currentImg: 0, videoPlaying: false, items: [
+    <section id="about" class="custom-section bg-gray-100" @contextmenu.prevent x-data="{ currentImg: 0, videoPlaying: false, items: [
             { type: 'image', url: 'https://www.aalto.fi/sites/default/files/styles/1_91_1200w_630h_n/public/2025-08/3d.jpg' },
             { type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcA48fPsF_tV_-tci1lSpLozdBFFPvu3_JAVSTwDNy1QCdpbdwQujMg3TA&s=10' },
             { type: 'image', url: 'https://i.redd.it/xsy2l9gmj2pe1.jpeg' },
@@ -1300,8 +1303,10 @@ iframe {
             { type: 'video', url: 'https://www.youtube.com/embed/GzDiOcrPyL4' },
         ]}"
         x-effect="if (items[currentImg].type !== 'video') videoPlaying = false">
+        
         <div class="custom-grid">
-            <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+			
+            <div class="order-2 lg:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
                 
                 <!-- Картинка -->
                 <template x-if="items[currentImg].type === 'image'">
@@ -1377,7 +1382,7 @@ iframe {
                 </div>
             </div>
                  
-            <div class="order-1 md:order-2 space-y-6 text-left">
+            <div class="order-1 lg:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">About ReTools</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">ReTools was built with one goal in mind — to make 3D Printing more cheaper.</p>
                 <p class="text-gray-600 leading-relaxed text-lg">We understand how challenging it can be to find complete and budget-friendly 3D printing supplies. That’s why we created a platform where everything you need is available in one place.</p>
@@ -1416,7 +1421,7 @@ iframe {
 		]}">
 		<div class="custom-grid">
 			
-			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+			<div class="order-2 lg:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -1493,7 +1498,7 @@ iframe {
 				</div>
 			</div>
 			
-			<div class="space-y-6 order-1 md:order-1 text-left">
+			<div class="order-1 lg:order-1 space-y-6 text-left">
 				<h2 class="text-4xl font-bold text-gray-900 mb-4">PET Bottle Filament Extruder</h2>
 				<p class="text-gray-600 leading-relaxed text-lg">Filament prices haven't been pleasing lately at all. It is also frustrating that some parts have to be reprinted multiple times to get the desired results. The process of developing and printing a part can sometimes be quite iterative and meditative. What if you had unlimited plastic? A sort of "superpower" — filament-man? Would this help you in your 3D creative work?</p>
 				<p class="text-gray-600 leading-relaxed text-lg">We present to your attention RePet Compact — a compact PET bottle filament extruder!</p>
@@ -1514,8 +1519,10 @@ iframe {
 
 
 
+
+
 <!-- Operating Principle_new -->  
-<section id="extruder" class="custom-section bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [            
+<section id="extruder" class="custom-section bg-gray-100" x-data="{ currentImg: 0, videoPlaying: false, items: [            
         { type: 'image', url: 'https://habrastorage.org/r/w1560/getpro/habr/upload_files/eba/1bf/ac2/eba1bfac2ec1291f7db7ca29b9263666.png' },
         { type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1392-h1200-s-no?authuser=0' },
         { type: 'video', url: 'https://www.youtube.com/embed/GzDiOcrPyL4' },
@@ -1523,7 +1530,7 @@ iframe {
     <div class="custom-grid">
         
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
-        <div class="flex flex-col order-2 md:order-1">
+        <div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
             <div class="relative group aspect-[4/4] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
                 
@@ -1605,7 +1612,7 @@ iframe {
         </div>
         
         <!-- Правая колонка: Текст -->
-        <div class="order-1 md:order-2 space-y-6 text-left">
+        <div class="order-1 lg:order-2 space-y-6 text-left">
             <h2 class="text-4xl font-bold text-gray-900 mb-4">Operating Principle</h2>
             <p class="text-gray-600 leading-relaxed text-lg">The extruder operates on the technology of direct transformation of PET bottles into a tape, and then into a filament suitable for 3D printing.This technology is called "pulltrusion", and consists of the fact that the PET bottle does not need to be crushed into crumbs used as raw material, but is simply cut into a tape, heated to 180 degrees, and pulled through a hotend-former using a winch. At such a low temperature, the plastic does not emit an odor, unlike the extrusion technology, which requires melting the material to a fluid state with all ensuing consequences. I wouldn't even call this process extrusion in full, rather — PET conditioning — preparing ready-made plastic for 3D printing.</p>
             <p class="text-gray-600 leading-relaxed text-lg">Unlike industrial plants for plastic production, pulltrusion technology does not require expensive equipment (plastic grinder, pellet screw extruder, etc.) and consumes much less electricity. With this extruder, for example, from a single five-liter bottle you can get 16-19 meters of PET filament. The machine can be installed right on the 3D printer (or nearby) and print directly from the machine's feed spool. The machine operates from a 220V network, and there is also a 12V 4A version for work in, so to speak, "field conditions".</p>
@@ -1829,7 +1836,7 @@ iframe {
 
 
 	<!-- Transformation of Bottle into Tape -->
-	<section id="transformation" class="custom-section bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [		
+	<section id="transformation" class="custom-section bg-gray-100" x-data="{ currentImg: 0, videoPlaying: false, items: [		
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1440-h1080-s-no?authuser=2' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPjigC4jgGFPsTdpQ118rUxwq5FSCIBI54QrlWX-O1_iPoJ4KC45xRYPazv-FvDfKdVVAmEQ-IRYlRgBNCphWXxdx2KpwZnqegBRNH1D5F-B0VI3MfrR-RKZsAQ3GrYQXNCe1gsvLuWq7a21GBKAsY=w1440-h1080-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPqYt3xUKJfGBQMJBL2nfMFxXtUXvwAUc45XQFb_Z1WKmp5ph6BTFMlj3NAuhtubvfqA1CpLWkgDpWLOfy-z5_6n1mc2gf2KLh0M-DnWv2jdv0QGiV8_aimnnrqUH6uPPUP87uAO4OgqTUx3g7yb9g=w1440-h1080-s-no?authuser=0' },			
@@ -1838,7 +1845,7 @@ iframe {
         <div class="custom-grid">
 			
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
-        <div class="flex flex-col order-2 md:order-1">
+        <div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
             <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
@@ -1976,7 +1983,7 @@ iframe {
 
 
 			
-            <div class="space-y-6 order-1 md:order-2 text-left">
+            <div class="order-1 lg:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Transformation of Bottle into Tape</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">First, the bottom of the bottle is cut off and the label is removed. Next, the bottle is placed on the bottle cutter's guide. Then, the bottle passes through the bearing-equipped cutter via a special guide insert that limits the width of the strip being cut. At this stage, you can adjust the angle of the bottle (according to its diameter) and the width of the resulting tape using a changable preadjusted tape width guider.</p>
                <div class="space-y-3 pt-2">
@@ -2176,7 +2183,7 @@ iframe {
 
 
 	<!-- Filament Welding -->
-	<section id="welding" class="custom-section bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="welding" class="custom-section bg-gray-100" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'video', url: 'https://www.youtube.com/embed/Jl8NKu6hZWU' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNpiE8GOVi1EofHW922b11Sx_RDeUKzZIKB4S5xm7rrTI4igTIR-6nURcwESxJy3m6nX12DpBChMbm06rgCFpOSQ_xbBBW3uhMpz2wTRFKDW07thieLXI3wQTLs3wcfS8XtcndM4QoWdBsyA4ALuHA=w1440-h1080-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczOVwQV53-Suze0s6qUf3N--pHT6bcusRtGm_MWADiG5Rco536WPdMlXl2fGyfGrNAMhdOJ5zmiv-2oHvKE4ARbQJSjJGYZifM2uoof1B31vdX8tetL4sPbgvh86XI7Y2WWliREF-108UzKugUeWKUs=w1440-h1080-s-no?authuser=0' },
@@ -2187,7 +2194,7 @@ iframe {
         <div class="custom-grid">
 			
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
-        <div class="flex flex-col order-2 md:order-1">
+        <div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
             <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
@@ -2325,7 +2332,7 @@ iframe {
      </div>
 
 			
-            <div class="space-y-6 order-1 md:order-2 text-left">
+            <div class="order-1 lg:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Filament Welding</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">The machine is equipped with a filament welding device. The filament welder consists of two clothespins with teflon molds. To heat the filament in the welder, a NiCr wire coil with a cross-section of 0.2 mm is used, with a total thread length of 200 mm, operating from a built-in 12V power supply. The ends of the filament are installed in the clothespins, when the button is pressed, 12V is supplied to the coil, the ends of the filament are heated by the coil, melted, connected together, and formed by one of the clothespins (any) by pushing the welded pair inside the clothespin. The weld seam is cooled in teflon molds in 1-2 seconds. Thus, you can weld and accumulate filament on different spools, sorting filament by colors.</p>
                 <div class="space-y-3 pt-2">
@@ -2538,7 +2545,7 @@ iframe {
 
 
 <!-- Printing Parameters -->
-	<section id="extruder" class="custom-section bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="extruder" class="custom-section bg-gray-100" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			
 			{ type: 'image', url: 'https://images.unsplash.com/photo-1597765654525-5cb60d312ef6?auto=format&fit=crop&q=80&w=1000' },
 			{ type: 'image', url: 'https://sigmafilament.com/wp-content/uploads/2026/06/pet-filament-pet-vs-petg-thermal-chart.webp' },
@@ -2550,7 +2557,7 @@ iframe {
         <div class="custom-grid">
 			
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
-        <div class="flex flex-col order-2 md:order-1">
+        <div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
             <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
@@ -2688,7 +2695,7 @@ iframe {
      </div>
 
             
-            <div class="space-y-6 order-1 md:order-2 text-left">
+            <div class="order-1 lg:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Printing Parameters</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">Printing with this filament is carried out at nozzle temperatures of 270–280°C and a bed temperature of 85°C — it is necessary to fine-tune the nozzle temperature based on the ease of pushing the filament through the extruder. A delicate part cooling fan is required during printing; otherwise, if cooling is insufficient, the plastic cools slowly and crystallizes. On larger models, I set the cooling fan within the 20–30% range. Several 3D printers were tested: a FlyingBear Ghost 5 Direct (teflon tube throat) and a Uni printer with a Titan Aero extruder (all metal throat, brass cube). No difference has been noticed so far. I use over-extrusion to compensate for the internal cavity within the filament (130–150%), as the filament is formed in the shape of a tube. An example of printing with this plastic is the machine itself.</p>
                 
@@ -2843,7 +2850,7 @@ iframe {
 
 
     <!-- Not every bottle can be recycled -->    
-	<section id="extruder" class="custom-section bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="extruder" class="custom-section bg-gray-100" x-data="{ currentImg: 0, videoPlaying: false, items: [
 	
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMdbxgV5TLoz6VHdpVzwxpF03RisIxOMjTvSRZ9ulw89Rz6rxIKrsefOkGPbbLasGam6hkUthEvLDSZ6EeuZF4DT9_3gtUOU93WYG5c-qsJX6-KZqxwYQAkv78nz6s_b2cpEFQ5iSFGvUME7DhmoyWl=w612-h612-s-no?authuser=0' },
 			{ type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9L2bewOlsxqBcaCWb7TE6W5JxNsPida-rVpcmZhKHg5WR7xpEWQcj-dw&s=10' },
@@ -2852,7 +2859,7 @@ iframe {
 			
 		]}">  
         <div class="custom-grid">
-			<div class="order-2 md:order-2 relative group aspect-[4/4] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+			<div class="order-2 lg:order-1 relative group aspect-[4/4] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -2929,7 +2936,7 @@ iframe {
 				</div>
 			</div>
                         
-            <div class="order-1 md:order-2 space-y-6 text-left">
+            <div class="order-1 lg:order-2 space-y-6 text-left">
                 <h2 class="text-4xl font-bold text-gray-900 mb-4">Not every bottle can be recycled in supermarket</h2>
                 <p class="text-gray-600 leading-relaxed text-lg">For example, 5L bottles don't fit into the recycling machine. During our experiments with various types of PET packaging, we discovered that containers with overly thick walls, non-standard geometry, or massive volumes exceed the physical limitations of standard intake slots and cutting mechanisms. Commercial recycling hardware relies heavily on automated recognition databases, meaning unbranded containers, custom-shaped bottles, or foreign imports featuring unfamiliar barcodes are frequently rejected by standard sorting systems. Additionally, containers with complex chemical coatings, heavy texturing, or stubborn glue residues require additional preparation steps. Careful selection of your raw plastic source is essential to ensure a smooth cutting process, consistent ribbon width, and overall high-quality filament production for your 3D printing needs.</p>
                 
@@ -3141,14 +3148,14 @@ iframe {
 
 <div style="display: none;">
 	 <!-- Economics of Pulltrusion Technology -->
-	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="extruder" class="py-24 px-8 bg-gray-100" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'image', url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1000' },
 			{ type: 'image', url: 'https://plus.unsplash.com/premium_photo-1715786200772-4dd36839d0e4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
 		]}"> 
 		<div class="custom-grid">
 			
 			<!-- Левая колонка: Галерея + Панель шагов под ней -->
-			<div class="flex flex-col">
+			<div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
             <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate">     
 					
@@ -3288,7 +3295,7 @@ iframe {
 		
 			
 			<!-- Правая колонка: Текст -->
-			<div class="space-y-6 text-left">
+			<div class="order-1 lg:order-2 space-y-6 text-left">
 				<h2 class="text-4xl font-bold text-gray-900 mb-4">Economics of Pulltrusion Technology</h2>
 				<p class="text-gray-600 leading-relaxed text-lg">How much will a spool of filament obtained by drawing PET tape cost us? Let's calculate! One 5-liter water bottle yields 18–19 meters of plastic (c-type filament, 1.6–1.75 mm). A standard spool contains 300 meters of plastic. Thus, 1 spool requires 16 five-liter PET bottles. The average price of a 5-liter PET bottle on platforms like Avito is about 5 rubles. Total: 80 rubles for the raw materials needed to produce 1 spool of plastic. Electricity costs should also be taken into account, which are about 3 times less than 7.5 hours of 3D printer operation — exactly how long it takes to fill one spool with plastic.</p>
 				<div class="space-y-3 pt-2">
@@ -3312,14 +3319,14 @@ iframe {
 
 
 <!-- Economics of Pulltrusion Technology -->
-<section id="extruder" class="custom-section bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
+<section id="extruder" class="custom-section bg-gray-100" x-data="{ currentImg: 0, videoPlaying: false, items: [
         { type: 'image', url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1000' },
         { type: 'image', url: 'https://plus.unsplash.com/premium_photo-1715786200772-4dd36839d0e4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
     ]}"> 
     <div class="custom-grid">
         
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
-        <div class="flex flex-col">
+        <div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
             <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate">     
                 
@@ -3462,7 +3469,7 @@ iframe {
         </div>
         
         <!-- Правая колонка: Текст -->
-        <div class="space-y-6 text-left">
+        <div class="order-1 lg:order-2 space-y-6 text-left">
             <h2 class="text-4xl font-bold text-gray-900 mb-4">Economics of Pulltrusion Technology</h2>
             <p class="text-gray-600 leading-relaxed text-lg">How much will a spool of filament obtained by drawing PET tape cost us? Let's calculate! One 5-liter water bottle yields 18–19 meters of plastic (c-type filament, 1.6–1.75 mm). A standard spool contains 300 meters of plastic. Thus, 1 spool requires 16 five-liter PET bottles. The average price of a 5-liter PET bottle on platforms like Avito is about 5 rubles. Total: 80 rubles for the raw materials needed to produce 1 spool of plastic. Electricity costs should also be taken into account, which are about 3 times less than 7.5 hours of 3D printer operation — exactly how long it takes to fill one spool with plastic.</p>
             <div class="space-y-3 pt-2">
@@ -3623,7 +3630,7 @@ iframe {
 
 
     <!-- CONTACT SECTION -->
-   <footer id="contact" class="py-20 px-8 border-t border-gray-100">
+   <footer id="contact" class="py-20 px-8 border-t border-gray-100 ">
     <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <div class="text-left space-y-6">
             <h2 class="text-4xl font-bold text-gray-900">Contact Us</h2>
