@@ -3,7 +3,7 @@
 const PRODUCTS_DATA = [
     { 
         id: 1, 
-        name: 'RePet Extruder', 
+        name: 'RePet Filament Extruder', 
         price: 199.99, 
         rating: 5, 
         isVisible: true, 

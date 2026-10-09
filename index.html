@@ -29,6 +29,16 @@
         .btn-blue-pill { background: linear-gradient(135deg, #2D5BFF 0%, #7090FF 100%); color: white; border-radius: 9999px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; border: none; }
         .btn-blue-pill:hover { background: linear-gradient(135deg, #1a44db 0%, #2D5BFF 100%); transform: translateY(-1px); }
         .btn-outline-pill { background: transparent; color: #2D5BFF; border: 2px solid #D1D5DB; border-radius: 9999px; font-weight: 600; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        
+        
+        /* Эффект при наведении */
+		.btn-outline-pill:hover {
+			border-color: #2D5BFF; /* Рамка становится синей в тон текста */
+			background-color: rgba(45, 91, 255, 0.05); /* Появляется еле заметная синяя заливка */
+			color: #1a42db; /* Текст становится чуть темнее */
+		}
+        
+        
         .card-shadow { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
         .hero-bg-gradient { 
             background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 50%, #dbeafe 100%); 
@@ -497,7 +507,7 @@ iframe {
     </div>
 
 	<!-- NAVIGATION -->
-    <nav class="bg-white px-4 py-4 flex items-center justify-between sticky top-0 z-40 border-b border-gray-50">
+    <nav class="bg-white px-4 py-4 flex items-center justify-between sticky top-0 z-40 border-b border-gray-50 shadow-xl">
         <div class="logo-container">
           <div class="superellipse">
             <span class="logo-text-white">Re</span>
@@ -1153,12 +1163,12 @@ iframe {
                         <p class="text-2xl font-bold text-gray-900" x-text="products[heroActiveIndex].name"></p>
                         <p class="text-xl font-black text-blue-600" x-text="formatPrice(products[heroActiveIndex].price)"></p>
                     </div>
-                    <div class="flex gap-3">
-                        <button @click="addToCart(products[heroActiveIndex])" class="btn-blue-pill flex-1 py-3 text-sm shadow-lg shadow-blue-200">
-                            <i class="fa-solid fa-bolt mr-2"></i>Quick Order
-                        </button>
-                        <a href="#shop" class="btn-outline-pill px-6 py-3 text-sm bg-white border-none">View All</a>
-                    </div>
+					<div class="flex gap-3">
+						<button @click="addToCart(products[heroActiveIndex])" class="btn-blue-pill flex-1 py-3 text-sm shadow-lg shadow-blue-200 flex items-center justify-center">
+							<i class="fa-solid fa-bolt ml-0.5 mr-0.5"></i>Quick Order
+						</button>
+						<a href="#shop" class="btn-outline-pill flex-1 py-2 text-sm bg-white border-none text-center flex items-center justify-center">View All</a>
+					</div>
                 </div>
             </div>
             
