@@ -319,7 +319,7 @@ iframe {
     gap: 1.5rem;            /* gap-6 для мобилок (уменьшенное расстояние) */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .custom-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr)); /* md:grid-cols-2 */
         gap: 2.5rem;        /* md:gap-10 (расстояние между медиа и текстом на ПК) */
@@ -327,6 +327,142 @@ iframe {
     }
 }
 
+
+
+
+
+
+/* Основной контейнер панели шагов */
+.step-nav-container {
+    width: 100%;
+    max-width: 100%; /* Убираем жесткое ограничение в 42rem для экранов меньше 1024px */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1.5rem;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+@media (min-width: 640px) {
+    .step-nav-container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+
+/* На экранах от 1024px и шире возвращаем комфортную максимальную ширину, если это необходимо */
+@media (min-width: 1024px) {
+    .step-nav-container {
+        max-width: 56rem; 
+        margin-top: 2.5rem;
+    }
+}
+
+/* Внешняя рамка-окантовка со стрелкой справа */
+.step-nav-wrapper {
+    position: relative;
+    padding: 1px;
+    background-color: #e5e7eb;
+    border-radius: 9999px 0 0 9999px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);
+}
+
+/* Внутренняя лента кнопок */
+.step-nav-inner {
+    display: flex;
+    background-color: #ffffff;
+    font-size: 10px;
+    font-weight: 500;
+    border-radius: 9999px 0 0 9999px;
+    overflow: hidden;
+    width: 100%;
+    clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);
+}
+
+@media (min-width: 640px) {
+    .step-nav-inner {
+        font-size: 0.75rem;
+    }
+}
+
+/* Базовый стиль для каждой кнопки шага */
+.step-btn {
+    flex: 1;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    position: relative;
+    padding-left: 0.125rem;
+    padding-right: 0.125rem;
+    font-size: 11px;
+}
+
+@media (min-width: 640px) {
+    .step-btn {
+        font-size: 0.875rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .step-btn {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Первая кнопка (Bottle) со скруглением слева */
+.step-btn-first {
+    border-top-left-radius: 9999px;
+    border-bottom-left-radius: 9999px;
+    clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
+    margin-right: -10px;
+    z-index: 1;
+}
+
+/* Промежуточные кнопки (Tape, Filament, Joining, Spool) со стрелками */
+.step-btn-middle {
+    clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
+    margin-left: -6px;
+    margin-right: -10px;
+}
+
+/* Последняя кнопка (Print) */
+.step-btn-last {
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+    margin-left: -6px;
+    padding-right: 0.25rem;
+    z-index: 1;
+}
+
+@media (min-width: 1024px) {
+    .step-btn-last {
+        padding-right: 0.75rem;
+    }
+}
+
+/* Активное состояние кнопки */
+.step-btn.active {
+    background-color: #00b4a6;
+    color: #ffffff;
+    font-weight: 700;
+    z-index: 20;
+}
+
+/* Неактивное состояние */
+.step-btn.inactive {
+    color: #4b5563;
+    background-color: #ffffff;
+}
+.step-btn.inactive:hover {
+    color: #000000;
+}
     </style>
 </head>
 <body x-data="ReTools" :style="{ fontSize: fontSize + 'px' }">
@@ -860,7 +996,7 @@ iframe {
 
                     <!-- Если это видео (iframe) -->
                     <template x-if="modalMedia[modalCurrentIndex].type === 'video'">
-                        <iframe :src="modalMedia[modalCurrentIndex].url" @contextmenu.prevent class="w-full aspect-video max-h-[100vh] border-0 rounded-[2.5rem] shadow-[0_0_30px_rgba(0,0,0,0.99)]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe :src="modalMedia[modalCurrentIndex].url" @contextmenu.prevent class="w-full aspect-video max-h-[100vh] border-0 rounded-[2.5rem] shadow-[0_0_60px_rgba(255,255,255,0.45)]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </template>
 
                 </div>
@@ -1147,6 +1283,7 @@ iframe {
             </template>
         </div>
     </section>
+
 
 
 
@@ -1492,202 +1629,6 @@ iframe {
 
 
 
-<div style="display: none;">
-    <!-- Features of the Applied Raw Materials -->    
-	<section id="extruder" class="custom-section bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
-			{ type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq0lquMR8IODMJzrBv2atCC_BlMVa1WR8cVL3WDhQu5WkzNELdOny6q78&s=10' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMrojiHPgMMeSwDwW-jsFQKUuUQFCS59NkEs04j_xNlMaoZheLaRM79xhL7W3MwNXign7oK7HEOszr41IKfd6m38VmdNUhV5JQpn3DEspTIZawkay-76LX_sGYDuZRDzHTTE0RAlJj5FfMGZ4OA4iSY=w1900-h1500-s-no?authuser=0' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczOQtOOtsfh3R5mpUO5ApVYM1F1WCFYTGn-PmXfsto-_fKurLSPqVMvvWtlI5SWXbACl1OcVziqTnl_2N1pk9Nw_0Rh9DfWJKqpysFSnaY-arY8PcYnmKpO7pwthkndSNUaZU94w2h7j5b50p2gCscKl=w1400-h1000-s-no?authuser=0' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczOykhBDNxZOou6XNNF94BGlnS_4oeYytgTZWBaf2I4_0Uc51X5Ha6L5rSVcSPRDm-1RauC2fSrkIXmmlfJLjYs4rOICrqi-Ah7xYtjJVyHxq7Lm2L2eGosPozygUbxa7equ1y5bL9LLFQWZie5VwkPF=w527-h442-s-no?authuser=0' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczOpF7-cYL5GPP1AXH9GVXoB30740_fXhKzl0xDRDpIF51a78MVKi-dBHLs8RDUEdK6bUPK6fFVRtVYkJO2NpUuikGW9rd4Zdlr0-9rFIci893HPrtwpr7uIbvckuhkYAdQc8vOXb8rgD_vscFwyXh-m=w1900-h1600-s-no?authuser=0' },
-			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNbdlVzJJGYSjv3974pAO6phCXx5SDGF79ajneYvzPv3v7BIHV98sDdncGv9FXzUgG_Gg7etPUyTQAUuhCSCaeuhGOWVbXSpMwJLGpfcVrHAw-ducHNYjkAKygdcQtlHVqit8osNoUQlkZj2M6Pd8tz=w2500-h2000-s-no?authuser=0' },
-			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
-		]}">    
-        <div class="custom-grid">
-			
-        <!-- Левая колонка: Галерея + Панель шагов под ней -->
-        <div class="flex flex-col order-2 md:order-2">
-            <!-- Контейнер галереи -->
-            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
-				
-				<!-- Картинка -->
-				<template x-if="items[currentImg].type === 'image'">
-					<img :src="items[currentImg].url" class="w-full h-full object-cover transition-all duration-300" alt="Application Areas" @click="openModalGallery(items, currentImg)">
-				</template>
-				
-				<!-- Видео -->
-				<template x-if="items[currentImg].type === 'video'">
-					<div class="w-full h-full relative group/vid">
-						
-						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
-						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
-								 @click="openModalGallery(items, currentImg)">
-								
-								<!-- Заглушка/фрейм для превью -->
-								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
-										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-										allowfullscreen>
-								</iframe>
-
-
-								<!-- Кнопка Play (запускает видео на месте, строго поверх всего) -->
-								<div class="absolute inset-0 flex items-center justify-center z-40">
-									<button type="button" 
-											@click.stop="videoPlaying = true" 
-											class="w-20 h-20 rounded-full bg-transparent text-white flex items-center justify-center transform transition-transform hover:scale-110 cursor-pointer">
-										<i class="fa-solid fa-play text-2xl ml-1 drop-shadow-md"></i>
-									</button>
-								</div>
-							</div>
-						</template>
-
-						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
-						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
-								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
-										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-										allowfullscreen>
-								</iframe>
-								
-								<!-- Прозрачный слой поверх плеера для остановки по клику в любом месте видео -->
-								<div class="absolute inset-0 cursor-pointer bg-transparent z-20"
-									 @click="videoPlaying = false"
-									 title="Нажмите, чтобы остановить видео">
-								</div>
-							</div>
-						</template>
-
-					</div>
-				</template>
-
-				 
-				<!-- Кнопки переключения -->
-				<div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
-					<button @click="currentImg = (currentImg - 1 + items.length) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
-						<i class="fa-solid fa-chevron-left pointer-events-none"></i>
-					</button>
-					<button @click="currentImg = (currentImg + 1) % items.length" class="pointer-events-auto w-10 h-10 custom-slider-btn rounded-full flex items-center justify-center shadow text-sm cursor-pointer transition-colors">
-						<i class="fa-solid fa-chevron-right pointer-events-none"></i>
-					</button>
-				</div>
-
-				<!-- Индикаторы (точки) -->
-				<div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-50">
-					<template x-for="(item, idx) in items" :key="idx">
-						<button @click="currentImg = idx" 
-								class="w-2.5 h-2.5 rounded-full transition-all cursor-pointer shadow"
-								:class="currentImg === idx ? 'bg-blue-600 w-6' : 'bg-white/70 hover:bg-white'">
-						</button>
-					</template>
-				</div>
-			</div>
-
-
-		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'bottle' }">
-			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
-				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
-				
-				<div class="flex bg-white text-[10px] sm:text-xs md:text-medium rounded-l-full overflow-hidden w-full"
-					 style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
-					
-					<!-- Bottle -->
-					<div @click="currentStep = 'bottle'" 
-						 :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
-						Bottle
-					</div>
-
-					<!-- Tape -->
-					<div @click="currentStep = 'tape'" 
-						 :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Tape
-					</div>
-
-					<!-- Filament -->
-					<div @click="currentStep = 'filament'" 
-						 :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
-						<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
-					</div>
-
-					<!-- Joining -->
-					<div @click="currentStep = 'join'" 
-						 :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						<span class="sm:hidden">Join</span><span class="hidden sm:inline">Join</span>
-					</div>
-
-					<!-- Spool -->
-					<div @click="currentStep = 'spool'" 
-						 :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Spool
-					</div>
-
-					<!-- Print -->
-					<div @click="currentStep = 'printing'" 
-						 :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-1 md:pr-3 text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
-						Print
-					</div>
-
-				</div>
-			</div>
-		</div>
-        
-        </div>
-                        
-            <div class="order-1 md:order-1 space-y-6 text-left">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Features of the Applied Raw Materials</h2>
-                <p class="text-gray-600 leading-relaxed text-lg">During experiments, various types of PET packaging with thick and thin walls were tested. When working with thick-walled containers, it is necessary to simply reduce the width of the tape using the steel limiter on the bottle cutter. Paper labels on the containers must be removed using a heat gun. Plastic labels are easily removed manually. Washing off adhesive residue is not required.</p>
-                <div class="space-y-4 pt-2">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
-                        <div>
-                            <p class="font-bold text-gray-800 text-lg">5L water bottles</p>
-                            <p class="text-sm text-gray-500">(16–17 meters of plastic per bottle) (dark blue, light blue, transparent, turquoise)</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
-                        <div>
-                            <p class="font-bold text-gray-800 text-lg">1–2 L beer/carbonated water bottles, etc.</p>
-                            <p class="text-sm text-gray-500">(8–9 meters of plastic) (dark brown)</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
-                        <div>
-                            <p class="font-bold text-gray-800 text-lg">PET milk bottles</p>
-                            <p class="text-sm text-gray-500">(white plastic)</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><i class="fa-solid fa-wine-bottle"></i></div>
-                        <div>
-                            <p class="font-bold text-gray-800 text-lg">PET energy drink bottles</p>
-                            <p class="text-sm text-gray-500">(black plastic)</p>
-                        </div>
-                    </div>                                         
-                </div>
-            </div>
-
-        </div>
-    </section>
-</div>
-
-
 
 
 
@@ -1782,59 +1723,58 @@ iframe {
                 </div>
             </div>
 
-            <!-- Панель шагов -->
-            <div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'bottle' }">
-                <div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
-                     style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
-                    
-                    <div class="flex bg-white text-[10px] sm:text-xs md:text-medium rounded-l-full overflow-hidden w-full"
-                         style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
-                        
-                        <div @click="currentStep = 'bottle'" 
-                             :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full text-[11px] sm:text-sm md:text-[11px] px-0.5"
-                             style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
-                            Bottle
-                        </div>
+			<!-- Панель шагов -->
+			<div class="step-nav-container" x-data="{ currentStep: 'bottle' }">
+				<div class="step-nav-wrapper">
+					<div class="step-nav-inner">
+						
+						<!-- Bottle -->
+						<div @click="currentStep = 'bottle'" 
+							 :class="currentStep === 'bottle' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-first" style="z-index: 1;">
+							Bottle
+						</div>
 
-                        <div @click="currentStep = 'tape'" 
-                             :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-                            Tape
-                        </div>
+						<!-- Tape -->
+						<div @click="currentStep = 'tape'" 
+							 :class="currentStep === 'tape' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Tape
+						</div>
 
-                        <div @click="currentStep = 'filament'" 
-                             :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
-                            <span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
-                        </div>
+						<!-- Filament -->
+						<div @click="currentStep = 'filament'" 
+							 :class="currentStep === 'filament' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 3;">
+							<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
+						</div>
 
-                        <div @click="currentStep = 'join'" 
-                             :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-                            <span class="sm:hidden">Join</span><span class="hidden sm:inline">Joining</span>
-                        </div>
+						<!-- Joining -->
+						<div @click="currentStep = 'join'" 
+							 :class="currentStep === 'join' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							<span class="sm:hidden">Join</span><span class="hidden sm:inline">Joining</span>
+						</div>
 
-                        <div @click="currentStep = 'spool'" 
-                             :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-                             style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-                            Spool
-                        </div>
+						<!-- Spool -->
+						<div @click="currentStep = 'spool'" 
+							 :class="currentStep === 'spool' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Spool
+						</div>
 
-                        <div @click="currentStep = 'printing'" 
-                             :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-                             class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-1 md:pr-3 text-[11px] sm:text-sm md:text-[11px] px-0.5"
-                             style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
-                            Print
-                        </div>
+						<!-- Print -->
+						<div @click="currentStep = 'printing'" 
+							 :class="currentStep === 'printing' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-last">
+							Print
+						</div>
 
-                    </div>
-                </div>
-            </div>
+					</div>
+				</div>
+			</div>
+            
+            
         </div>
                     
         <!-- Правая колонка: Текст -->
@@ -1978,67 +1918,60 @@ iframe {
 			</div>
 
 
-		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'tape' }">
-			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
-				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
-				
-				<div class="flex bg-white text-[10px] sm:text-xs md:text-medium rounded-l-full overflow-hidden w-full"
-					 style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
-					
-					<!-- Bottle -->
-					<div @click="currentStep = 'bottle'" 
-						 :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
-						Bottle
-					</div>
+			<!-- Панель шагов -->
+			<div class="step-nav-container" x-data="{ currentStep: 'tape' }">
+				<div class="step-nav-wrapper">
+					<div class="step-nav-inner">
+						
+						<!-- Bottle -->
+						<div @click="currentStep = 'bottle'" 
+							 :class="currentStep === 'bottle' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-first" style="z-index: 1;">
+							Bottle
+						</div>
 
-					<!-- Tape -->
-					<div @click="currentStep = 'tape'" 
-						 :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Tape
-					</div>
+						<!-- Tape -->
+						<div @click="currentStep = 'tape'" 
+							 :class="currentStep === 'tape' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Tape
+						</div>
 
-					<!-- Filament -->
-					<div @click="currentStep = 'filament'" 
-						 :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
-						<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
-					</div>
+						<!-- Filament -->
+						<div @click="currentStep = 'filament'" 
+							 :class="currentStep === 'filament' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 3;">
+							<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
+						</div>
 
-					<!-- Joining -->
-					<div @click="currentStep = 'join'" 
-						 :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						<span class="sm:hidden">Join</span><span class="hidden sm:inline">Join</span>
-					</div>
+						<!-- Joining -->
+						<div @click="currentStep = 'join'" 
+							 :class="currentStep === 'join' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							<span class="sm:hidden">Join</span><span class="hidden sm:inline">Joining</span>
+						</div>
 
-					<!-- Spool -->
-					<div @click="currentStep = 'spool'" 
-						 :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Spool
-					</div>
+						<!-- Spool -->
+						<div @click="currentStep = 'spool'" 
+							 :class="currentStep === 'spool' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Spool
+						</div>
 
-					<!-- Print -->
-					<div @click="currentStep = 'printing'" 
-						 :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-1 md:pr-3 text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
-						Print
-					</div>
+						<!-- Print -->
+						<div @click="currentStep = 'printing'" 
+							 :class="currentStep === 'printing' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-last">
+							Print
+						</div>
 
+					</div>
 				</div>
 			</div>
-		</div>
+     
+     
         
-        </div>
+     </div>
 
 
 
@@ -2158,67 +2091,62 @@ iframe {
 			</div>
 
 
-		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'filament' }">
-			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
-				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
-				
-				<div class="flex bg-white text-[10px] sm:text-xs md:text-medium rounded-l-full overflow-hidden w-full"
-					 style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
-					
-					<!-- Bottle -->
-					<div @click="currentStep = 'bottle'" 
-						 :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
-						Bottle
-					</div>
+			<!-- Панель шагов -->
+			<div class="step-nav-container" x-data="{ currentStep: 'filament' }">
+				<div class="step-nav-wrapper">
+					<div class="step-nav-inner">
+						
+						<!-- Bottle -->
+						<div @click="currentStep = 'bottle'" 
+							 :class="currentStep === 'bottle' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-first" style="z-index: 1;">
+							Bottle
+						</div>
 
-					<!-- Tape -->
-					<div @click="currentStep = 'tape'" 
-						 :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Tape
-					</div>
+						<!-- Tape -->
+						<div @click="currentStep = 'tape'" 
+							 :class="currentStep === 'tape' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Tape
+						</div>
 
-					<!-- Filament -->
-					<div @click="currentStep = 'filament'" 
-						 :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
-						<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
-					</div>
+						<!-- Filament -->
+						<div @click="currentStep = 'filament'" 
+							 :class="currentStep === 'filament' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 3;">
+							<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
+						</div>
 
-					<!-- Joining -->
-					<div @click="currentStep = 'join'" 
-						 :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						<span class="sm:hidden">Join</span><span class="hidden sm:inline">Join</span>
-					</div>
+						<!-- Joining -->
+						<div @click="currentStep = 'join'" 
+							 :class="currentStep === 'join' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							<span class="sm:hidden">Join</span><span class="hidden sm:inline">Joining</span>
+						</div>
 
-					<!-- Spool -->
-					<div @click="currentStep = 'spool'" 
-						 :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Spool
-					</div>
+						<!-- Spool -->
+						<div @click="currentStep = 'spool'" 
+							 :class="currentStep === 'spool' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Spool
+						</div>
 
-					<!-- Print -->
-					<div @click="currentStep = 'printing'" 
-						 :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-1 md:pr-3 text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
-						Print
-					</div>
+						<!-- Print -->
+						<div @click="currentStep = 'printing'" 
+							 :class="currentStep === 'printing' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-last">
+							Print
+						</div>
 
+					</div>
 				</div>
 			</div>
-		</div>
         
-        </div>
+        
+        
+        
+        
+     </div>
 
                         
             <div class="order-1 md:order-1 space-y-6 text-left">
@@ -2339,67 +2267,62 @@ iframe {
 			</div>
 
 
-		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'join' }">
-			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
-				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
-				
-				<div class="flex bg-white text-[10px] sm:text-xs md:text-medium rounded-l-full overflow-hidden w-full"
-					 style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
-					
-					<!-- Bottle -->
-					<div @click="currentStep = 'bottle'" 
-						 :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
-						Bottle
-					</div>
+			<!-- Панель шагов -->
+			<div class="step-nav-container" x-data="{ currentStep: 'join' }">
+				<div class="step-nav-wrapper">
+					<div class="step-nav-inner">
+						
+						<!-- Bottle -->
+						<div @click="currentStep = 'bottle'" 
+							 :class="currentStep === 'bottle' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-first" style="z-index: 1;">
+							Bottle
+						</div>
 
-					<!-- Tape -->
-					<div @click="currentStep = 'tape'" 
-						 :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Tape
-					</div>
+						<!-- Tape -->
+						<div @click="currentStep = 'tape'" 
+							 :class="currentStep === 'tape' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Tape
+						</div>
 
-					<!-- Filament -->
-					<div @click="currentStep = 'filament'" 
-						 :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
-						<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
-					</div>
+						<!-- Filament -->
+						<div @click="currentStep = 'filament'" 
+							 :class="currentStep === 'filament' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 3;">
+							<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
+						</div>
 
-					<!-- Joining -->
-					<div @click="currentStep = 'join'" 
-						 :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						<span class="sm:hidden">Join</span><span class="hidden sm:inline">Join</span>
-					</div>
+						<!-- Joining -->
+						<div @click="currentStep = 'join'" 
+							 :class="currentStep === 'join' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							<span class="sm:hidden">Join</span><span class="hidden sm:inline">Joining</span>
+						</div>
 
-					<!-- Spool -->
-					<div @click="currentStep = 'spool'" 
-						 :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Spool
-					</div>
+						<!-- Spool -->
+						<div @click="currentStep = 'spool'" 
+							 :class="currentStep === 'spool' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Spool
+						</div>
 
-					<!-- Print -->
-					<div @click="currentStep = 'printing'" 
-						 :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-1 md:pr-3 text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
-						Print
-					</div>
+						<!-- Print -->
+						<div @click="currentStep = 'printing'" 
+							 :class="currentStep === 'printing' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-last">
+							Print
+						</div>
 
+					</div>
 				</div>
 			</div>
-		</div>
         
-        </div>
+        
+        
+        
+        
+     </div>
 
 			
             <div class="space-y-6 order-1 md:order-2 text-left">
@@ -2513,67 +2436,62 @@ iframe {
 			</div>
 
 
-		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'spool' }">
-			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
-				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
-				
-				<div class="flex bg-white text-[10px] sm:text-xs md:text-medium rounded-l-full overflow-hidden w-full"
-					 style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
-					
-					<!-- Bottle -->
-					<div @click="currentStep = 'bottle'" 
-						 :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
-						Bottle
-					</div>
+			<!-- Панель шагов -->
+			<div class="step-nav-container" x-data="{ currentStep: 'spool' }">
+				<div class="step-nav-wrapper">
+					<div class="step-nav-inner">
+						
+						<!-- Bottle -->
+						<div @click="currentStep = 'bottle'" 
+							 :class="currentStep === 'bottle' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-first" style="z-index: 1;">
+							Bottle
+						</div>
 
-					<!-- Tape -->
-					<div @click="currentStep = 'tape'" 
-						 :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Tape
-					</div>
+						<!-- Tape -->
+						<div @click="currentStep = 'tape'" 
+							 :class="currentStep === 'tape' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Tape
+						</div>
 
-					<!-- Filament -->
-					<div @click="currentStep = 'filament'" 
-						 :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
-						<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
-					</div>
+						<!-- Filament -->
+						<div @click="currentStep = 'filament'" 
+							 :class="currentStep === 'filament' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 3;">
+							<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
+						</div>
 
-					<!-- Joining -->
-					<div @click="currentStep = 'join'" 
-						 :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						<span class="sm:hidden">Join</span><span class="hidden sm:inline">Join</span>
-					</div>
+						<!-- Joining -->
+						<div @click="currentStep = 'join'" 
+							 :class="currentStep === 'join' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							<span class="sm:hidden">Join</span><span class="hidden sm:inline">Joining</span>
+						</div>
 
-					<!-- Spool -->
-					<div @click="currentStep = 'spool'" 
-						 :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Spool
-					</div>
+						<!-- Spool -->
+						<div @click="currentStep = 'spool'" 
+							 :class="currentStep === 'spool' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Spool
+						</div>
 
-					<!-- Print -->
-					<div @click="currentStep = 'printing'" 
-						 :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-1 md:pr-3 text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
-						Print
-					</div>
+						<!-- Print -->
+						<div @click="currentStep = 'printing'" 
+							 :class="currentStep === 'printing' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-last">
+							Print
+						</div>
 
+					</div>
 				</div>
 			</div>
-		</div>
         
-        </div>
+        
+        
+        
+        
+     </div>
 
                         
             <div class="order-1 md:order-1 space-y-6 text-left">
@@ -2712,67 +2630,62 @@ iframe {
 			</div>
 
 
-		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'printing' }">
-			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
-				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
-				
-				<div class="flex bg-white text-[10px] sm:text-xs md:text-medium rounded-l-full overflow-hidden w-full"
-					 style="clip-path: polygon(0% 0%, 96% 0%, 99.9% 50%, 96% 100%, 0% 100%);">
-					
-					<!-- Bottle -->
-					<div @click="currentStep = 'bottle'" 
-						 :class="currentStep === 'bottle' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative rounded-l-full text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); margin-right: -10px; z-index: 1;">
-						Bottle
-					</div>
+			<!-- Панель шагов -->
+			<div class="step-nav-container" x-data="{ currentStep: 'printing' }">
+				<div class="step-nav-wrapper">
+					<div class="step-nav-inner">
+						
+						<!-- Bottle -->
+						<div @click="currentStep = 'bottle'" 
+							 :class="currentStep === 'bottle' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-first" style="z-index: 1;">
+							Bottle
+						</div>
 
-					<!-- Tape -->
-					<div @click="currentStep = 'tape'" 
-						 :class="currentStep === 'tape' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Tape
-					</div>
+						<!-- Tape -->
+						<div @click="currentStep = 'tape'" 
+							 :class="currentStep === 'tape' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Tape
+						</div>
 
-					<!-- Filament -->
-					<div @click="currentStep = 'filament'" 
-						 :class="currentStep === 'filament' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 3;">
-						<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
-					</div>
+						<!-- Filament -->
+						<div @click="currentStep = 'filament'" 
+							 :class="currentStep === 'filament' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 3;">
+							<span class="sm:hidden">Fil.</span><span class="hidden sm:inline">Filament</span>
+						</div>
 
-					<!-- Joining -->
-					<div @click="currentStep = 'join'" 
-						 :class="currentStep === 'join' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[10px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						<span class="sm:hidden">Join</span><span class="hidden sm:inline">Join</span>
-					</div>
+						<!-- Joining -->
+						<div @click="currentStep = 'join'" 
+							 :class="currentStep === 'join' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							<span class="sm:hidden">Join</span><span class="hidden sm:inline">Joining</span>
+						</div>
 
-					<!-- Spool -->
-					<div @click="currentStep = 'spool'" 
-						 :class="currentStep === 'spool' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%); margin-left: -6px; margin-right: -10px; z-index: 2;">
-						Spool
-					</div>
+						<!-- Spool -->
+						<div @click="currentStep = 'spool'" 
+							 :class="currentStep === 'spool' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-middle" style="z-index: 2;">
+							Spool
+						</div>
 
-					<!-- Print -->
-					<div @click="currentStep = 'printing'" 
-						 :class="currentStep === 'printing' ? 'bg-[#00b4a6] text-white font-bold z-20' : 'text-gray-600 bg-white hover:text-black'"
-						 class="flex-1 py-2 md:py-3 text-center flex items-center justify-center cursor-pointer transition-colors relative pr-1 md:pr-3 text-[11px] sm:text-sm md:text-[11px] px-0.5"
-						 style="clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%); margin-left: -6px; z-index: 1;">
-						Print
-					</div>
+						<!-- Print -->
+						<div @click="currentStep = 'printing'" 
+							 :class="currentStep === 'printing' ? 'active' : 'inactive'"
+							 class="step-btn step-btn-last">
+							Print
+						</div>
 
+					</div>
 				</div>
 			</div>
-		</div>
+       
+       
+       
+       
         
-        </div>
+     </div>
 
             
             <div class="space-y-6 order-1 md:order-2 text-left">
