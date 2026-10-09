@@ -1153,7 +1153,7 @@ iframe {
 
 
 <!-- ABOUT SECTION -->
-    <section id="about" class="py-24 px-8 bg-gray-50" @contextmenu.prevent x-data="{ currentImg: 0, videoPlaying: false, items: [
+    <section id="about" class="custom-section bg-gray-50" @contextmenu.prevent x-data="{ currentImg: 0, videoPlaying: false, items: [
             { type: 'image', url: 'https://www.aalto.fi/sites/default/files/styles/1_91_1200w_630h_n/public/2025-08/3d.jpg' },
             { type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcA48fPsF_tV_-tci1lSpLozdBFFPvu3_JAVSTwDNy1QCdpbdwQujMg3TA&s=10' },
             { type: 'image', url: 'https://i.redd.it/xsy2l9gmj2pe1.jpeg' },
@@ -1163,7 +1163,7 @@ iframe {
             { type: 'video', url: 'https://www.youtube.com/embed/GzDiOcrPyL4' },
         ]}"
         x-effect="if (items[currentImg].type !== 'video') videoPlaying = false">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div class="custom-grid">
             <div class="order-2 md:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
                 
                 <!-- Картинка -->
@@ -1269,7 +1269,7 @@ iframe {
 
 
 	<!-- PET Bottle Filament Extruder -->
-	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="extruder" class="custom-section bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1440-h1080-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1392-h1200-s-no?authuser=0' },
@@ -1277,7 +1277,8 @@ iframe {
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNnaQcdxYmvovBnOlUc7td7HkBe0B2K-Gkgp1mJY4NFz8ow0A0CFN9VGWZKahhbUrXwF7Kxij4NVYNp4TnpbQaz8LoyJTAk_NgTlzkoMh4VaSDDd5hIk-CmpuQAqWwbpvUhZq-QYnAM8NRLzg8TqNOD=w1433-h733-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPBgiV6GHKFfN9aHh9plAubV9hBIi9cgtsooJl_Yc4Ztce1znFFvEp4nY46-k5Pj678VkbQG6zTNwO0VVsaNL6IaZAiTZIinD9BchxUsM-D_y2o4G4d_wIlHvwLEvXTcnGOTh7Qwb6jNbjidavOpTpy=w1924-h1080-s-no?authuser=0' },
 		]}">
-		<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+		<div class="custom-grid">
+			
 			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
@@ -1377,12 +1378,12 @@ iframe {
 
 
 <!-- Operating Principle_new -->  
-<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [            
+<section id="extruder" class="custom-section bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [            
         { type: 'image', url: 'https://habrastorage.org/r/w1560/getpro/habr/upload_files/eba/1bf/ac2/eba1bfac2ec1291f7db7ca29b9263666.png' },
         { type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMajsOOUNvj3ylUR2Rq6C250YDWKEZwF-yP_tIhVLd4jZwYn16VqOM5oK4klKnMRE0f8mrSf5D0C0mh3yLApbhti8NayVBFi_DV-XJz2HwLlecokk2qOavro_G8tJaX3LqFJ2wWM70W1xg2L8NSE4so=w1392-h1200-s-no?authuser=0' },
         { type: 'video', url: 'https://www.youtube.com/embed/GzDiOcrPyL4' },
     ]}">    
-    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <div class="custom-grid">
         
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="flex flex-col order-2 md:order-1">
@@ -1493,7 +1494,7 @@ iframe {
 
 <div style="display: none;">
     <!-- Features of the Applied Raw Materials -->    
-	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="extruder" class="custom-section bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTq0lquMR8IODMJzrBv2atCC_BlMVa1WR8cVL3WDhQu5WkzNELdOny6q78&s=10' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMrojiHPgMMeSwDwW-jsFQKUuUQFCS59NkEs04j_xNlMaoZheLaRM79xhL7W3MwNXign7oK7HEOszr41IKfd6m38VmdNUhV5JQpn3DEspTIZawkay-76LX_sGYDuZRDzHTTE0RAlJj5FfMGZ4OA4iSY=w1900-h1500-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczOQtOOtsfh3R5mpUO5ApVYM1F1WCFYTGn-PmXfsto-_fKurLSPqVMvvWtlI5SWXbACl1OcVziqTnl_2N1pk9Nw_0Rh9DfWJKqpysFSnaY-arY8PcYnmKpO7pwthkndSNUaZU94w2h7j5b50p2gCscKl=w1400-h1000-s-no?authuser=0' },
@@ -1502,7 +1503,7 @@ iframe {
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNbdlVzJJGYSjv3974pAO6phCXx5SDGF79ajneYvzPv3v7BIHV98sDdncGv9FXzUgG_Gg7etPUyTQAUuhCSCaeuhGOWVbXSpMwJLGpfcVrHAw-ducHNYjkAKygdcQtlHVqit8osNoUQlkZj2M6Pd8tz=w2500-h2000-s-no?authuser=0' },
 			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
 		]}">    
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div class="custom-grid">
 			
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="flex flex-col order-2 md:order-2">
@@ -1586,7 +1587,7 @@ iframe {
 
 
 		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w-md md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-2 sm:px-4" x-data="{ currentStep: 'bottle' }">
+		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'bottle' }">
 			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
 				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
 				
@@ -1782,7 +1783,7 @@ iframe {
             </div>
 
             <!-- Панель шагов -->
-            <div class="max-w md:max-w-2xl w-full mx-auto mt-4 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'bottle' }">
+            <div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'bottle' }">
                 <div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
                      style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
                     
@@ -1978,7 +1979,7 @@ iframe {
 
 
 		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-2 sm:px-4" x-data="{ currentStep: 'tape' }">
+		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'tape' }">
 			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
 				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
 				
@@ -2068,13 +2069,13 @@ iframe {
 
 
     <!-- Pulltrusion (PET conditioning) -->    
-	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="extruder" class="custom-section bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczP3XNCSVAtoOsUmg_lwNckks6LN3CwudCnHGMyDQv5QarFBkeBdVvHdIJkKjSkrjXp5O__JOfnqM8TbsYavfQTZeNoJQ8Q8QbSnRshJ2i6pN46eVHN_tEGnO12hlasaOp7XWgdft7BRiCsT5orwiA4=w1080-h1440-s-no?authuser=0' },
 			{ type: 'image', url: 'https://habrastorage.org/r/w1560/getpro/habr/upload_files/6cd/044/2a8/6cd0442a80defec8eee9bff39793a839.jpg' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczO6ba16GR0kK26U7LtX-ywIY5oH3K9-YS18eMe6NVMDQVFkkXKn5YhHSzn7h3zevGYJZMPhYB7LRhY1sZYd9y2pLM0GAtxl9M_7wI0J2R2urD9vJA4puaKCnBXBLSLeMjIKoM8R626Vk5oUlttvPkhB=w1151-h1067-s-no?authuser=0' },
 			{ type: 'video', url: 'https://www.youtube.com/embed/STsMWqoz_iY' },
 		]}">    
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div class="custom-grid">
         
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="flex flex-col order-2 md:order-2">
@@ -2158,7 +2159,7 @@ iframe {
 
 
 		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w-md md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-2 sm:px-4" x-data="{ currentStep: 'filament' }">
+		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'filament' }">
 			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
 				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
 				
@@ -2247,7 +2248,7 @@ iframe {
 
 
 	<!-- Filament Welding -->
-	<section id="welding" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="welding" class="custom-section bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'video', url: 'https://www.youtube.com/embed/Jl8NKu6hZWU' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNpiE8GOVi1EofHW922b11Sx_RDeUKzZIKB4S5xm7rrTI4igTIR-6nURcwESxJy3m6nX12DpBChMbm06rgCFpOSQ_xbBBW3uhMpz2wTRFKDW07thieLXI3wQTLs3wcfS8XtcndM4QoWdBsyA4ALuHA=w1440-h1080-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczOVwQV53-Suze0s6qUf3N--pHT6bcusRtGm_MWADiG5Rco536WPdMlXl2fGyfGrNAMhdOJ5zmiv-2oHvKE4ARbQJSjJGYZifM2uoof1B31vdX8tetL4sPbgvh86XI7Y2WWliREF-108UzKugUeWKUs=w1440-h1080-s-no?authuser=0' },
@@ -2255,7 +2256,7 @@ iframe {
 			{ type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlgomZpL_4SG1Tg_OPp244dOjY0G91vRWb-dT8s7B3tZW4TIbWZqsO1A8t&s=10' },
 			{ type: 'image', url: 'https://media.printables.com/media/prints/209258/images/1920818_e6880d56-5280-4157-9a17-ab4cee39e7fb/thumbs/inside/1280x960/jpg/img_20220518_224505.webp' },
 		]}"> 
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div class="custom-grid">
 			
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="flex flex-col order-2 md:order-1">
@@ -2339,7 +2340,7 @@ iframe {
 
 
 		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w-md md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-2 sm:px-4" x-data="{ currentStep: 'join' }">
+		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'join' }">
 			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
 				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
 				
@@ -2421,7 +2422,7 @@ iframe {
 
 
     <!-- Raw Materials and Colors -->
-	<section id="welding" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="welding" class="custom-section bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'image', url: 'https://habrastorage.org/r/w1560/getpro/habr/upload_files/074/242/6f5/0742426f541712158bc36a0fcd56bf1e.png' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczM9VtXEruPrVorVIhTLttS_Ir3V1X1yuZRzg7z5R0xABLe2QieKuyDhjkq-z5gG0qARWq8OJ-wHZs9h3F1AOsXz13l2-upEKKZdoybzjvh0uUJIwkhuAz9EjtKJP9UGlQniqAhOZW7fsilhawAzVgdJ=w727-h829-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNuwzcSXibV3E3mqNIyZqCusUQ2C2byDkeiLwXnKWwv5TQEuCCgFWIExvhabRYYpt9dOEBpyUl5jkg0dLkVQW9sbNVaHRPrbh-SS5juMpXEg4lFmjNtqo6jFjLI_2InGAFUrOAGL7r2VuAdw70EIeij=w719-h1000-s-no?authuser=0' },
@@ -2429,7 +2430,7 @@ iframe {
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPTMYy_jK9Rw7oUmKP1qi-MgpbwUDjD1qbcgMTGq3fcFphvZrL2v0zrcVr3Y0MampFVtBhDm-VJh6S3dBeZR7MI5zp800sVRmdO85oNu7I2pY71RcR3iaxrZ0ZMfvU9wy0H8BwtfdaUVI7OoSAL3IMG=w2013-h2013-s-no?authuser=0' },
 			{ type: 'video', url: 'https://www.youtube.com/embed/Jl8NKu6hZWU' },
 		]}">    
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div class="custom-grid">
         
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="flex flex-col order-2 md:order-2">
@@ -2513,7 +2514,7 @@ iframe {
 
 
 		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w-md md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-2 sm:px-4" x-data="{ currentStep: 'spool' }">
+		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'spool' }">
 			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
 				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
 				
@@ -2619,7 +2620,7 @@ iframe {
 
 
 <!-- Printing Parameters -->
-	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="extruder" class="custom-section bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			
 			{ type: 'image', url: 'https://images.unsplash.com/photo-1597765654525-5cb60d312ef6?auto=format&fit=crop&q=80&w=1000' },
 			{ type: 'image', url: 'https://sigmafilament.com/wp-content/uploads/2026/06/pet-filament-pet-vs-petg-thermal-chart.webp' },
@@ -2628,7 +2629,7 @@ iframe {
 			{ type: 'image', url: 'https://i.redd.it/vmlqkleq2f4g1.jpg' },
 			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
 		]}">    
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div class="custom-grid">
 			
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="flex flex-col order-2 md:order-1">
@@ -2712,7 +2713,7 @@ iframe {
 
 
 		<!-- Панель шагов со скруглением слева и стрелкой справа (адаптивная) -->
-		<div class="max-w-md md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-2 sm:px-4" x-data="{ currentStep: 'printing' }">
+		<div class="max-w md:max-w-2xl w-full mx-auto mt-6 md:mt-10 px-0 sm:px-2" x-data="{ currentStep: 'printing' }">
 			<div class="relative p-[1px] bg-gray-200 rounded-l-full shadow-sm"
 				 style="clip-path: polygon(0% 0%, 96% 0%, 100% 50%, 96% 100%, 0% 100%);">
 				
@@ -2820,14 +2821,14 @@ iframe {
 
 
 	<!-- Machine Operation Timelapse -->
-	<section id="welding" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="welding" class="custom-section bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			{ type: 'video', url: 'https://www.youtube.com/embed/I6aGNNQ39JI' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczPgBo_7C2KwYIJ29EcqmHAEeoHDVBybO91Sahj1ToHJkACOVb3g30ML3A9b0hHjlYlEcQGDfqFwYMcxBBIyB-EXlrKRQsKIbTNDVMUB-Q0PIoiSc7orZfNCbUUYc66n28OBII436Wof0A8sfKhzE5M=w1244-h933-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczOT1vbn-IIPAujBq1J8FZrbGTGVUAHYqJQc28PRpKmV9V1UfYkChx3zH_uNU7yVaGipzs0WUEhc0qVefE39HpySKxbx-ijJ4c3JmC0ZJ8ANZTqzQv4ZN_kMjZLdwcKVy0IbaAg6iFmej3rlaSWnS3E=w1440-h1080-s-no?authuser=0' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczNIQNQ3M4iaYGgDpb-AUzzTf_7ORwB8hdhsG59lhKyD32xQjOnLBFRlKU0gH1dd5dIuQTCaiJRFozb7Xds1dPBVtTFHQiyMQi0IXloz--BgBveLkqgv6tYZgZyX4SfyzU3UFcZgWlu3vHkUmf-VOmw=w1440-h1080-s-no?authuser=0' },			
 			
 		]}"> 
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div class="custom-grid">
 			
 			<div class="order-2 md:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
@@ -2929,7 +2930,7 @@ iframe {
 
 
     <!-- Not every bottle can be recycled -->    
-	<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="extruder" class="custom-section bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
 	
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMdbxgV5TLoz6VHdpVzwxpF03RisIxOMjTvSRZ9ulw89Rz6rxIKrsefOkGPbbLasGam6hkUthEvLDSZ6EeuZF4DT9_3gtUOU93WYG5c-qsJX6-KZqxwYQAkv78nz6s_b2cpEFQ5iSFGvUME7DhmoyWl=w612-h612-s-no?authuser=0' },
 			{ type: 'image', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9L2bewOlsxqBcaCWb7TE6W5JxNsPida-rVpcmZhKHg5WR7xpEWQcj-dw&s=10' },
@@ -2937,7 +2938,7 @@ iframe {
 			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
 			
 		]}">  
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div class="custom-grid">
 			<div class="order-2 md:order-2 relative group aspect-[4/4] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
@@ -3042,7 +3043,7 @@ iframe {
 
 
 	<!-- Application Areas of PET Recycling Machines -->
-	<section id="extruder" class="py-24 px-8 bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
+	<section id="extruder" class="custom-section bg-white" x-data="{ currentImg: 0, videoPlaying: false, items: [
 			
 			{ type: 'image', url: 'https://www.raspberrypi.com/app/uploads/2025/08/Petmachine3.webp' },
 			{ type: 'image', url: 'https://lh3.googleusercontent.com/pw/AP1GczMtw_jQNi8fzVZeppY0cCWtbD6OqMvsb9Dh1wUhHV7U0aJZxgLoj4JKiFKI5bU9Nc_E0_0ePrnqMcjLQNaSf0VUxvQ4mBO301sQXRcN_KHsLtNEw0PZmucIZwH0gAeQ9vZ82hbZ0dl7r4cxg4jWOZuF=w1080-h567-s-no?authuser=0' },
@@ -3054,7 +3055,7 @@ iframe {
 			{ type: 'video', url: 'https://drive.google.com/file/d/1SF9vcNE9mLlR-rOrfgBYs9brZMLN31sH/preview' },
 			
 		]}"> 
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div class="custom-grid">
 			
 			<!-- Левая колонка: Галерея + Панель шагов под ней -->
 			<div class="flex flex-col order-2 md:order-2">
@@ -3231,7 +3232,7 @@ iframe {
 			{ type: 'image', url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1000' },
 			{ type: 'image', url: 'https://plus.unsplash.com/premium_photo-1715786200772-4dd36839d0e4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
 		]}"> 
-		<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+		<div class="custom-grid">
 			
 			<!-- Левая колонка: Галерея + Панель шагов под ней -->
 			<div class="flex flex-col">
@@ -3398,11 +3399,11 @@ iframe {
 
 
 <!-- Economics of Pulltrusion Technology -->
-<section id="extruder" class="py-24 px-8 bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
+<section id="extruder" class="custom-section bg-gray-50" x-data="{ currentImg: 0, videoPlaying: false, items: [
         { type: 'image', url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=1000' },
         { type: 'image', url: 'https://plus.unsplash.com/premium_photo-1715786200772-4dd36839d0e4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
     ]}"> 
-    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <div class="custom-grid">
         
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="flex flex-col">
@@ -3481,6 +3482,7 @@ iframe {
                     </template>
                 </div>    
             </div>
+            
 <div style="display: none;">
             <!-- Панель шагов со скруглением слева и стрелкой справа (с полной окантовкой) -->
             <div class="max-w-2l w-full mx-auto mt-10 px-4" x-data="{ currentStep: 'delivery' }">
@@ -3541,7 +3543,9 @@ iframe {
                     </div>
                 </div>
             </div>
-</div>            
+</div>
+
+
         </div>
         
         <!-- Правая колонка: Текст -->
@@ -3697,6 +3701,13 @@ iframe {
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
 
     <!-- CONTACT SECTION -->
    <footer id="contact" class="py-20 px-8 border-t border-gray-100">
@@ -3870,6 +3881,9 @@ iframe {
 
     
 </footer>
+
+
+
 
     <script>
         const now = new Date();
