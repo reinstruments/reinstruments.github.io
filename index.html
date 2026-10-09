@@ -482,7 +482,7 @@ iframe {
                 <i class="fa-solid" :class="isMuted ? 'fa-volume-xmark text-red-500' : 'fa-volume-high text-blue-600'"></i>
                 <span x-text="isMuted ? 'Muted' : 'Music On'"></span>
             </button>
-            <input type="range" min="0" max="1" step="0.1" x-model="volume" @input="updateVolume" class="w-16 h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+            <input type="range" min="0" max="1" step="0.1" x-model="volume" @input="updateVolume" class="w-16 h-1 bg-gray-200 rounded-xl appearance-none cursor-pointer accent-blue-600">
         </div>
 
         <div class="control-btn">
@@ -682,7 +682,7 @@ iframe {
         <!-- Клик по фону (закрытие) -->
 		<div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="showAuth = false; authError = ''; showPassword = false; refreshCaptcha()"></div>
         
-        <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl relative z-10 overflow-y-auto max-h-[90vh]"
+        <div class="bg-white w-full max-w-md rounded-xl p-10 shadow-2xl relative z-10 overflow-y-auto max-h-[90vh]"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 scale-90"
              x-transition:enter-end="opacity-100 scale-100">
@@ -730,20 +730,20 @@ iframe {
 						
                         <div class="space-y-1">
                             <label class="text-xs font-bold text-gray-600 ml-1">Full Name</label>
-                            <input type="text" x-model="userName" placeholder="John Smith" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" x-model="userName" placeholder="John Smith" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                         <div class="space-y-1">
                             <label class="text-xs font-bold text-gray-600 ml-1">Street Address</label>
-                            <input type="text" x-model="shippingInfo.address" placeholder="123 Study Lane" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" x-model="shippingInfo.address" placeholder="123 Study Lane" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                         <div class="grid grid-cols-2 gap-3">
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-gray-600 ml-1">City</label>
-                                <input type="text" x-model="shippingInfo.city" placeholder="Basel" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                                <input type="text" x-model="shippingInfo.city" placeholder="Basel" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-gray-600 ml-1">Zip Code</label>
-                                <input type="text" x-model="shippingInfo.zip" placeholder="1001" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                                <input type="text" x-model="shippingInfo.zip" placeholder="1001" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                         </div>
                     </div>
@@ -751,7 +751,7 @@ iframe {
                 
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-gray-600 ml-1">Email Address</label>
-                    <input type="email" x-model="authEmail" placeholder="name@email.com" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="email" x-model="authEmail" placeholder="name@email.com" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
 
                 <!-- Поле ввода пароля с кнопкой показа/скрытия -->
@@ -762,7 +762,7 @@ iframe {
                                x-model="authPassword" 
                                placeholder="••••••••" 
                                required 
-                               class="w-full p-4 pr-12 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                               class="w-full p-4 pr-12 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
                         
                         <button type="button" @click="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none">
                             <!-- Иконка: глаз закрыт -->
@@ -787,12 +787,12 @@ iframe {
 						   x-model="userCaptchaInput" 
 						   placeholder="Введите ответ" 
 						   required 
-						   class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+						   class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
 				</div>                                               
                 
                 <!-- Блок вывода ошибки в нижней части модального окна -->
                 <template x-if="authError">
-                    <div class="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-2xl text-center" x-text="authError"></div>
+                    <div class="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-xl text-center" x-text="authError"></div>
                 </template>
 
                 <button type="submit" class="btn-blue-pill w-full py-4 text-lg mt-4 shadow-lg shadow-blue-100">
@@ -810,7 +810,7 @@ iframe {
     <!-- PRODUCT DETAIL MODAL -->
     <div x-show="selectedProduct" x-cloak class="fixed inset-0 z-[110] flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-md" @click="selectedProduct = null"></div>
-        <div class="bg-white w-full max-w-7xl rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
+        <div class="bg-white w-full max-w-7xl rounded-xl shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 scale-95"
              x-transition:enter-end="opacity-100 scale-100">
@@ -918,7 +918,7 @@ iframe {
                             <h3 class="font-bold text-lg">Customer Reviews</h3>
                             <div class="space-y-4">
                                 <template x-for="rev in selectedProduct.reviews">
-                                    <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                                    <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
                                         <div class="flex justify-between items-center mb-1">
                                             <span class="font-bold text-sm text-gray-800" x-text="rev.user"></span>
                                             <span class="text-[10px] text-gray-400 font-medium" x-text="rev.date"></span>
@@ -937,7 +937,7 @@ iframe {
 
 
                             <!-- New Review Form with Stars -->
-                            <div class="mt-6 p-6 bg-blue-50/50 rounded-2xl border border-blue-100/50">
+                            <div class="mt-6 p-6 bg-blue-50/50 rounded-xl border border-blue-100/50">
                                 <p class="text-sm font-bold text-gray-800 mb-3">Leave a Review</p>
                                 
                                 <!-- Star Rating Input -->
@@ -980,7 +980,7 @@ iframe {
          x-transition:enter-end="opacity-100 scale-100">
          
         <!-- Главный контейнер (картинка/видео + стрелки + крестик + точки) -->
-        <div class="relative w-full flex items-center justify-center rounded-[2.5rem] bg-black/50 group">
+        <div class="relative w-full flex items-center justify-center rounded-xl bg-black/50 group">
             
             <!-- Кнопка закрытия (крестик) ВНУТРИ верхнего правого угла медиа-контейнера -->
             <button @click="modalGalleryOpen = false" class="absolute top-6 right-6 z-[100] w-10 h-10 rounded-full custom-slider-btn  flex items-center justify-center transition-all cursor-pointer shadow-[0_0_30px_rgba(0,0,0,0.99)]">
@@ -992,14 +992,14 @@ iframe {
                     
                     <!-- Если это картинка -->
                     <template x-if="modalMedia[modalCurrentIndex].type === 'image'">
-                        <div class="w-full rounded-[2.5rem] bg-black/60 shadow-[0_0_60px_rgba(255,255,255,0.45)] flex items-center justify-center overflow-hidden">
-                            <img :src="modalMedia[modalCurrentIndex].url" @contextmenu.prevent class="w-full max-h-[85vh] object-cover rounded-2xl">
+                        <div class="w-full rounded-xl bg-black/60 shadow-[0_0_60px_rgba(255,255,255,0.45)] flex items-center justify-center overflow-hidden">
+                            <img :src="modalMedia[modalCurrentIndex].url" @contextmenu.prevent class="w-full max-h-[85vh] object-cover rounded-xl">
                         </div>
                     </template>
 
                     <!-- Если это видео (iframe) -->
                     <template x-if="modalMedia[modalCurrentIndex].type === 'video'">
-                        <iframe :src="modalMedia[modalCurrentIndex].url" @contextmenu.prevent class="w-full aspect-video max-h-[100vh] border-0 rounded-[2.5rem] shadow-[0_0_60px_rgba(255,255,255,0.45)]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe :src="modalMedia[modalCurrentIndex].url" @contextmenu.prevent class="w-full aspect-video max-h-[100vh] border-0 rounded-xl shadow-[0_0_60px_rgba(255,255,255,0.45)]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </template>
 
                 </div>
@@ -1044,7 +1044,7 @@ iframe {
 <!-- PROFILE EDIT MODAL -->
 <div x-show="showProfileModal" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="showProfileModal = false; profileError = ''; showPassword = false;"></div>
-    <div class="bg-white w-full max-w-md rounded-[2.5rem] p-10 shadow-2xl relative z-10 overflow-y-auto max-h-[90vh]"
+    <div class="bg-white w-full max-w-md rounded-xl p-10 shadow-2xl relative z-10 overflow-y-auto max-h-[90vh]"
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0 scale-90"
          x-transition:enter-end="opacity-100 scale-100">
@@ -1077,28 +1077,28 @@ iframe {
 
             <div class="space-y-1">
                 <label class="text-xs font-bold text-gray-600 ml-1">Full Name</label>
-                <input type="text" x-model="userName" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" x-model="userName" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
             </div>
             
             <div class="space-y-1">
                 <label class="text-xs font-bold text-gray-600 ml-1">Street Address</label>
-                <input type="text" x-model="shippingInfo.address" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="text" x-model="shippingInfo.address" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
             <div class="grid grid-cols-2 gap-3">
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-gray-600 ml-1">City</label>
-                    <input type="text" x-model="shippingInfo.city" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="text" x-model="shippingInfo.city" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-gray-600 ml-1">Zip Code</label>
-                    <input type="text" x-model="shippingInfo.zip" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="text" x-model="shippingInfo.zip" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
 
             <div class="space-y-1">
                 <label class="text-xs font-bold text-gray-600 ml-1">Email Address</label>
-                <input type="email" x-model="authEmail" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="email" x-model="authEmail" required class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
             <div class="space-y-1">
@@ -1107,7 +1107,7 @@ iframe {
                     <input :type="showPassword ? 'text' : 'password'" 
                            x-model="authPassword" 
                            required 
-                           class="w-full p-4 pr-12 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                           class="w-full p-4 pr-12 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
                     
                     <button type="button" @click="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none">
                         <svg x-show="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1123,7 +1123,7 @@ iframe {
 
             <!-- Блок вывода ошибки -->
             <template x-if="profileError">
-                <div class="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-2xl text-center" x-text="profileError"></div>
+                <div class="p-3 bg-red-50 text-red-600 text-xs font-bold rounded-xl text-center" x-text="profileError"></div>
             </template>
             
             <div class="pt-2">
@@ -1132,7 +1132,7 @@ iframe {
         </form>
 
         <div class="mt-4 pt-4 border-t border-gray-100 text-center">
-            <button @click="deleteProfile" class="w-full py-3 text-sm font-bold text-red-500 hover:bg-red-50 rounded-2xl transition-colors">
+            <button @click="deleteProfile" class="w-full py-3 text-sm font-bold text-red-500 hover:bg-red-50 rounded-xl transition-colors">
                 Delete Profile
             </button>
         </div>
@@ -1141,13 +1141,13 @@ iframe {
     
     
     <!-- HOME / HERO SECTION -->
-    <header class="px-4 md:px-8 py-8 md:py-12">
-        <div class="hero-bg-gradient max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 px-8 md:px-20 py-16 md:py-24 rounded-[2rem] shadow-xl overflow-hidden">
-            <div class="md:w-1/2 space-y-8 text-left">
-                <h1 class="text-5xl md:text-7xl font-extrabold leading-tight text-gray-900">Smarter Recycling <br> <span class="text-blue-600">Tools</span></h1>
+    <header class="px-4 lg:px-8 py-8 lg:py-12">
+        <div class="hero-bg-gradient max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 px-8 lg:px-20 py-16 lg:py-24 rounded-xl shadow-xl overflow-hidden">
+            <div class="lg:w-1/2 space-y-8 text-left">
+                <h1 class="text-5xl lg:text-7xl font-extrabold leading-tight text-gray-900">Smarter Recycling <br> <span class="text-blue-600">Tools</span></h1>
                 <p class="text-gray-500 text-lg">Everything you need to succeed, all in one hub.</p>
                 
-                <div class="bg-white/50 backdrop-blur-md p-6 rounded-3xl border border-white/50 max-w-sm space-y-4">
+                <div class="bg-white/50 backdrop-blur-md p-6 rounded-xl border border-white/50 max-w-sm space-y-4">
                     <div class="flex flex-col gap-1">
                         <p class="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Flash Deal</p>
                         <p class="text-2xl font-bold text-gray-900" x-text="products[heroActiveIndex].name"></p>
@@ -1162,7 +1162,7 @@ iframe {
                 </div>
             </div>
             
-            <div class="md:w-1/2 relative h-[300px] md:h-[450px] w-full flex items-center justify-center">
+            <div class="lg:w-1/2 relative h-[300px] lg:h-[450px] w-full flex items-center justify-center">
                 <template x-for="(p, index) in products" :key="'hero-'+p.id">
                     <div x-show="heroActiveIndex === index" 
                          x-transition:enter="transition opacity duration-1000 ease-in-out"
@@ -1173,7 +1173,7 @@ iframe {
                          x-transition:leave-end="opacity-0 scale-105"
                          class="absolute inset-0 flex items-center justify-center">
                         <img :src="p.images[0]" 
-                             class="w-full h-full max-w-md object-cover rounded-[2.5rem] shadow-2xl border-8 border-white">
+                             class="w-full h-full max-w-md object-cover rounded-xl shadow-2xl border-8 border-white">
                     </div>
                 </template>
             </div>
@@ -1185,23 +1185,23 @@ iframe {
         <div class="max-w-7xl mx-auto text-center">
             <h2 class="text-3xl font-bold mb-12">The Problem We Solve</h2>
             <div class="grid md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow">
+                <div class="bg-white p-8 rounded-xl border border-gray-100 card-shadow">
                     <div class="w-16 h-16 bg-red-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl"><i class="fa-solid fa-dollar-sign"></i></div>
                     <h3 class="text-xl font-bold mb-3">Save your money</h3>
                     <p class="text-gray-500 text-sm">You will be able to produce an unlimited amount of filament from readily available raw materials.</p>
                 </div>
-                <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow">
+                <div class="bg-white p-8 rounded-xl border border-gray-100 card-shadow">
                     <div class="w-16 h-16 bg-yellow-400 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl"><i class="fa-solid fa-magnifying-glass"></i></div>
                     <h3 class="text-xl font-bold mb-3">Everything here!</h3>
                     <p class="text-gray-500 text-sm">Finding quality 3D printer filament supplies takes time and effort.</p>
                 </div>
-                <div class="bg-white p-8 rounded-3xl border border-gray-100 card-shadow">
+                <div class="bg-white p-8 rounded-xl border border-gray-100 card-shadow">
                     <div class="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl"><i class="fa-solid fa-clock"></i></div>
                     <h3 class="text-xl font-bold mb-3">Time-Consuming</h3>
                     <p class="text-gray-500 text-sm">No more need to order and wait filament. Start producing filament at your workspace now!</p>
                 </div>
             </div>
-            <div class="bg-blue-50 p-6 rounded-2xl flex items-center gap-6 max-w-7xl mx-auto border border-blue-100">
+            <div class="bg-blue-50 p-6 rounded-xl flex items-center gap-6 max-w-7xl mx-auto border border-blue-100">
                 <div class="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-xl"><i class="fa-solid fa-lightbulb"></i></div>
                 <p class="text-gray-800 text-left font-medium"><strong>ReTools</strong> brings everything into one platform — affordable, organized, and customer-friendly.</p>
             </div>
@@ -1212,9 +1212,9 @@ iframe {
     <section id="shop" class="max-w-7xl mx-auto px-8 py-20">
         <h2 class="text-3xl font-bold mb-10 text-left">Collections</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8"> <template x-for="p in visibleProducts" :key="p.id">
-                <div class="bg-white p-4 md:p-5 rounded-[2rem] border border-gray-100 card-shadow group flex flex-col">
+                <div class="bg-white p-4 md:p-5 rounded-xl border border-gray-100 card-shadow group flex flex-col">
                     
-			<div class="relative aspect-square mb-4 overflow-hidden rounded-2xl bg-gray-50">
+			<div class="relative aspect-square mb-4 overflow-hidden rounded-xl bg-gray-50">
 				
 				<!-- YouTube видео для карточки в каталоге -->
 				<template x-if="p.youtubeId && p.currentImg === p.images.length">
@@ -1306,7 +1306,7 @@ iframe {
         
         <div class="custom-grid">
 			
-            <div class="order-2 lg:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+            <div class="order-2 lg:order-1 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 -rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
                 
                 <!-- Картинка -->
                 <template x-if="items[currentImg].type === 'image'">
@@ -1319,12 +1319,12 @@ iframe {
 						
 						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
 						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
 								 @click="openModalGallery(items, currentImg)">
 								
 								<!-- Заглушка/фрейм для превью -->
 								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -1343,9 +1343,9 @@ iframe {
 
 						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
 						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
 								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -1421,7 +1421,7 @@ iframe {
 		]}">
 		<div class="custom-grid">
 			
-			<div class="order-2 lg:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+			<div class="order-2 lg:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -1434,12 +1434,12 @@ iframe {
 						
 						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
 						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
 								 @click="openModalGallery(items, currentImg)">
 								
 								<!-- Заглушка/фрейм для превью -->
 								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -1458,9 +1458,9 @@ iframe {
 
 						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
 						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
 								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -1532,7 +1532,7 @@ iframe {
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
-            <div class="relative group aspect-[4/4] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+            <div class="relative group aspect-[4/4] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
                 
                 <!-- Картинка -->
                 <template x-if="items[currentImg].type === 'image'">
@@ -1545,12 +1545,12 @@ iframe {
                         
                         <!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
                         <template x-if="!videoPlaying">
-                            <div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+                            <div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
                                  @click="openModalGallery(items, currentImg)">
                                 
                                 <!-- Заглушка/фрейм для превью -->
                                 <iframe :src="items[currentImg].url" 
-                                        class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+                                        class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                         allowfullscreen>
                                 </iframe>
@@ -1568,9 +1568,9 @@ iframe {
 
                         <!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
                         <template x-if="videoPlaying">
-                            <div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+                            <div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
                                 <iframe :src="items[currentImg].url + '?autoplay=1'" 
-                                        class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+                                        class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                         allowfullscreen>
                                 </iframe>
@@ -1658,7 +1658,7 @@ iframe {
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="order-2 lg:order-2 flex flex-col">
             <!-- Контейнер галереи -->
-            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
                 
                 <!-- Картинка -->
                 <template x-if="items[currentImg].type === 'image'">
@@ -1671,11 +1671,11 @@ iframe {
                         
                         <!-- Состояние 1: Видео НЕ играет -->
                         <template x-if="!videoPlaying">
-                            <div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+                            <div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
                                  @click="openModalGallery(items, currentImg)">
                                 
                                 <iframe :src="items[currentImg].url" 
-                                        class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+                                        class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                         allowfullscreen>
                                 </iframe>
@@ -1692,9 +1692,9 @@ iframe {
 
                         <!-- Состояние 2: Видео играет -->
                         <template x-if="videoPlaying">
-                            <div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+                            <div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
                                 <iframe :src="items[currentImg].url + '?autoplay=1'" 
-                                        class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+                                        class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                         allowfullscreen>
                                 </iframe>
@@ -1847,7 +1847,7 @@ iframe {
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
-            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -1860,12 +1860,12 @@ iframe {
 						
 						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
 						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
 								 @click="openModalGallery(items, currentImg)">
 								
 								<!-- Заглушка/фрейм для превью -->
 								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -1884,9 +1884,9 @@ iframe {
 
 						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
 						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
 								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2020,7 +2020,7 @@ iframe {
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="order-2 lg:order-2 flex flex-col">
             <!-- Контейнер галереи -->
-            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -2033,12 +2033,12 @@ iframe {
 						
 						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
 						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
 								 @click="openModalGallery(items, currentImg)">
 								
 								<!-- Заглушка/фрейм для превью -->
 								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2057,9 +2057,9 @@ iframe {
 
 						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
 						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
 								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2196,7 +2196,7 @@ iframe {
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
-            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -2209,12 +2209,12 @@ iframe {
 						
 						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
 						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
 								 @click="openModalGallery(items, currentImg)">
 								
 								<!-- Заглушка/фрейм для превью -->
 								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2233,9 +2233,9 @@ iframe {
 
 						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
 						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
 								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2365,7 +2365,7 @@ iframe {
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="order-2 lg:order-2 flex flex-col">
             <!-- Контейнер галереи -->
-            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -2378,12 +2378,12 @@ iframe {
 						
 						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
 						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
 								 @click="openModalGallery(items, currentImg)">
 								
 								<!-- Заглушка/фрейм для превью -->
 								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2402,9 +2402,9 @@ iframe {
 
 						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
 						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
 								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2561,7 +2561,7 @@ iframe {
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
-            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -2574,12 +2574,12 @@ iframe {
 						
 						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
 						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
 								 @click="openModalGallery(items, currentImg)">
 								
 								<!-- Заглушка/фрейм для превью -->
 								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2598,9 +2598,9 @@ iframe {
 
 						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
 						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
 								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2748,7 +2748,7 @@ iframe {
 		]}"> 
         <div class="custom-grid">
 			
-			<div class="order-2 lg:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+			<div class="order-2 lg:order-2 relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -2761,12 +2761,12 @@ iframe {
 						
 						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
 						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
 								 @click="openModalGallery(items, currentImg)">
 								
 								<!-- Заглушка/фрейм для превью -->
 								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2785,9 +2785,9 @@ iframe {
 
 						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
 						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
 								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2857,7 +2857,7 @@ iframe {
 			
 		]}">  
         <div class="custom-grid">
-			<div class="order-2 lg:order-1 relative group aspect-[4/4] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+			<div class="order-2 lg:order-1 relative group aspect-[4/4] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105">
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -2870,12 +2870,12 @@ iframe {
 						
 						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
 						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
 								 @click="openModalGallery(items, currentImg)">
 								
 								<!-- Заглушка/фрейм для превью -->
 								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2894,9 +2894,9 @@ iframe {
 
 						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
 						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
 								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -2978,7 +2978,7 @@ iframe {
 			<!-- Левая колонка: Галерея + Панель шагов под ней -->
 			<div class="order-2 lg:order-2 flex flex-col">
             <!-- Контейнер галереи -->
-            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate"> 
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate"> 
 				
 				<!-- Картинка -->
 				<template x-if="items[currentImg].type === 'image'">
@@ -2991,12 +2991,12 @@ iframe {
 						
 						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
 						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
 								 @click="openModalGallery(items, currentImg)">
 								
 								<!-- Заглушка/фрейм для превью -->
 								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -3015,9 +3015,9 @@ iframe {
 
 						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
 						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
 								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -3155,7 +3155,7 @@ iframe {
 			<!-- Левая колонка: Галерея + Панель шагов под ней -->
 			<div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
-            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate">     
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate">     
 					
 					<!-- Картинка -->
 					<template x-if="items[currentImg].type === 'image'">
@@ -3168,12 +3168,12 @@ iframe {
 						
 						<!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
 						<template x-if="!videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
 								 @click="openModalGallery(items, currentImg)">
 								
 								<!-- Заглушка/фрейм для превью -->
 								<iframe :src="items[currentImg].url" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -3192,9 +3192,9 @@ iframe {
 
 						<!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
 						<template x-if="videoPlaying">
-							<div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+							<div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
 								<iframe :src="items[currentImg].url + '?autoplay=1'" 
-										class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+										class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 										allowfullscreen>
 								</iframe>
@@ -3326,7 +3326,7 @@ iframe {
         <!-- Левая колонка: Галерея + Панель шагов под ней -->
         <div class="order-2 lg:order-1 flex flex-col">
             <!-- Контейнер галереи -->
-            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-[3rem] shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate">     
+            <div class="relative group aspect-[4/3] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl bg-gray-100 rotate-1 transition-transform duration-300 hover:rotate-0 hover:scale-105 isolation-isolate">     
                 
                 <!-- Картинка -->
                 <template x-if="items[currentImg].type === 'image'">
@@ -3339,12 +3339,12 @@ iframe {
                         
                         <!-- Состояние 1: Видео НЕ играет (Показываем превью с кнопкой Play) -->
                         <template x-if="!videoPlaying">
-                            <div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden cursor-pointer z-30"
+                            <div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden cursor-pointer z-30"
                                  @click="openModalGallery(items, currentImg)">
                                 
                                 <!-- Заглушка/фрейм для превью -->
                                 <iframe :src="items[currentImg].url" 
-                                        class="w-full h-full border-0 absolute inset-0 rounded-[3rem] pointer-events-none z-10"
+                                        class="w-full h-full border-0 absolute inset-0 rounded-xl pointer-events-none z-10"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                         allowfullscreen>
                                 </iframe>
@@ -3362,9 +3362,9 @@ iframe {
 
                         <!-- Состояние 2: Видео играет (Активный плеер и прозрачный слой для остановки) -->
                         <template x-if="videoPlaying">
-                            <div class="absolute inset-0 w-full h-full rounded-[3rem] overflow-hidden z-30">
+                            <div class="absolute inset-0 w-full h-full rounded-xl overflow-hidden z-30">
                                 <iframe :src="items[currentImg].url + '?autoplay=1'" 
-                                        class="w-full h-full border-0 absolute inset-0 rounded-[3rem] z-10"
+                                        class="w-full h-full border-0 absolute inset-0 rounded-xl z-10"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                         allowfullscreen>
                                 </iframe>
@@ -3543,20 +3543,20 @@ iframe {
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Shipping Information</p>
                     <div class="space-y-1">
                         <label class="text-xs font-bold text-gray-600 ml-1">Full Name</label>
-                        <input type="text" x-model="shippingInfo.name" placeholder="John Smith" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none">
+                        <input type="text" x-model="shippingInfo.name" placeholder="John Smith" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none">
                     </div>
                     <div class="space-y-1">
                         <label class="text-xs font-bold text-gray-600 ml-1">Street Address</label>
-                        <input type="text" x-model="shippingInfo.address" placeholder="123 Study Lane" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none">
+                        <input type="text" x-model="shippingInfo.address" placeholder="123 Study Lane" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none">
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div class="space-y-1">
                             <label class="text-xs font-bold text-gray-600 ml-1">City</label>
-                            <input type="text" x-model="shippingInfo.city" placeholder="Basel" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none">
+                            <input type="text" x-model="shippingInfo.city" placeholder="Basel" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none">
                         </div>
                         <div class="space-y-1">
                             <label class="text-xs font-bold text-gray-600 ml-1">Zip Code</label>
-                            <input type="text" x-model="shippingInfo.zip" placeholder="1001" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none">
+                            <input type="text" x-model="shippingInfo.zip" placeholder="1001" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none">
                         </div>
                     </div>
                 </div>
@@ -3573,7 +3573,7 @@ iframe {
                     <template x-if="payMethod !== 'cash'">
                         <div class="space-y-1 mt-4" x-transition>
                             <label class="text-xs font-bold text-gray-600 ml-1" x-text="payMethod === 'card' ? 'Card Number' : payMethod.charAt(0).toUpperCase() + payMethod.slice(1) + ' Number'"></label>
-                            <input type="text" x-model="paymentNumber" :placeholder="payMethod === 'card' ? '0000 0000 0000 0000' : '09XX XXX XXXX'" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" x-model="paymentNumber" :placeholder="payMethod === 'card' ? '0000 0000 0000 0000' : '09XX XXX XXXX'" class="w-full p-4 border border-gray-100 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                     </template>
                 </div>
@@ -3590,7 +3590,7 @@ iframe {
                     <p class="text-gray-500 text-sm">Your order #SH-2026 has been placed.</p>
                 </div>
 
-                <div class="bg-gray-50 rounded-2xl p-6 space-y-4">
+                <div class="bg-gray-50 rounded-xl p-6 space-y-4">
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Order Summary</p>
                     <template x-for="item in lastOrder.items">
                         <div class="flex justify-between text-sm">
@@ -3689,7 +3689,7 @@ iframe {
      
 <div style="display: none;">
 		
-	<div class="mt-10 p-6 bg-white rounded-lg shadow-md" 
+	<div class="mt-10 p-6 bg-white rounded-xl shadow-md" 
 		 x-data="{ 
 			 allUsers: [],
 			 loadUsers() {
