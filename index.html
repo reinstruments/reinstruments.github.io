@@ -983,7 +983,7 @@ iframe {
 <!-- GLOBAL MEDIA GALLERY MODAL -->
 <div x-show="modalGalleryOpen" x-cloak class="fixed inset-0 z-[120] flex items-center justify-center p-4">
     <!-- Фоновое затемнение -->
-    <div class="absolute inset-0 bg-black/80 backdrop-blur-md" @click="modalGalleryOpen = false"></div>
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-md" @click="modalGalleryOpen = false; modalMedia = [];"></div>
 
     <!-- Контейнер модального окна -->
     <div class="relative z-10 max-w-7xl w-full max-h-[90vh] flex flex-col items-center justify-center"
@@ -1002,7 +1002,7 @@ iframe {
 			-->
 
 			<!-- Кнопка закрытия (крестик) скрыта на мобилках и появляется от 768px и выше -->
-			<button @click="modalGalleryOpen = false" class="absolute top-4 right-4 z-[100] w-10 h-10 rounded-full custom-slider-btn hidden md:flex items-center justify-center transition-all cursor-pointer shadow-[0_0_30px_rgba(0,0,0,0.99)]">
+			<button @click="modalGalleryOpen = false; modalMedia = [];" class="absolute top-4 right-4 z-[100] w-10 h-10 rounded-full custom-slider-btn hidden md:flex items-center justify-center transition-all cursor-pointer shadow-[0_0_30px_rgba(0,0,0,0.99)]">
 				<i class="fa-solid fa-xmark text-xl"></i>
 			</button>
 
